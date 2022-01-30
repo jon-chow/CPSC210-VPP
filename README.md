@@ -1,10 +1,7 @@
-<h1>
-    <span style="color:rgb(180,180,255)">CPSC 210 PROJECT</span>
-    <br><span style="color:rgb(255,180,50);font-size:24px">Virtual Pixel-Pet</span>
-</h1>
+# CPSC 210 PROJECT <br><span style="font-size:24px">Virtual Pixel-Pet</span>
 
-<h2>📖 Table of Contents</h2>
-<ul style="font-size:18px;list-style-type:square">
+## 📖 Table of Contents
+<ul style="font-size:18px;list-style-type:circle">
     <li><a href="#project-overview">Project Overview</a></li>
     <li><a href="#user-stories">User Stories</a></li>
 </ul>
@@ -23,3 +20,10 @@ vastness of **OOP** in both a **structural** and **creative** manner.
 
 ## User Stories
 
+<p style="font-size:16px;">"As a user, I want to be able to..."</p>
+<ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
+    <li>"...choose the type of animal and the breed of my pet"</li>
+    <li>"...buy items at a shop and store them in my inventory"</li>
+    <li>"...give treats/toys/food to my pet from my inventory"</li>
+    <li>"...learn about my pet's health and personalities"</li>
+</ul>
