@@ -10,11 +10,5 @@ public class PixelPetGame {
 
     public PixelPetGame() {
         Dog dog1 = new Dog("Inu", "Shiba Inu");
-
-        try {
-            adoptionClinic.listDogBreeds();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

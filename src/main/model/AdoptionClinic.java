@@ -16,18 +16,7 @@ public class AdoptionClinic {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void listDogBreeds() {
-        try {
-            System.out.println(this.fetchDogBreeds());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
-    private ArrayList<String> fetchDogBreeds() throws Exception {
+    public ArrayList<String> fetchDogBreeds() throws Exception {
         File breedsDataDir = new File("data/petBreeds/DogBreeds.json");
         String content = FileUtils.readFileToString(breedsDataDir, "utf-8");
         JSONObject breedsJson = new JSONObject(content);
