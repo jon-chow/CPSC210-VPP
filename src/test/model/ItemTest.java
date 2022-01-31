@@ -1,17 +1,17 @@
 package model;
 
-import model.pets.Pet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-class PetTest {
+class ItemTest {
     @BeforeEach
     void runBefore() {
-        Pet pet1 = new Pet("Pet1");
+        Item item1 = new Item("Chicken", "Food");
     }
 
     @Test
-    void consumeItemTest() {
+    void consumeTest() {
 
     }
 }

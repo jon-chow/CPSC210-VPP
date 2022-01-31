@@ -1,6 +1,7 @@
 package model.pets;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.apache.commons.io.FileUtils;
 import org.json.*;
@@ -15,6 +16,7 @@ public class Dog extends Pet {
     public Dog(String name, String breed) {
         super(name);
         super.setBreed(breed);
+        super.setSpritesDir(super.getSpritesDir() + "dogs/");
 
         try {
             this.fetchBreedData();
@@ -53,24 +55,25 @@ public class Dog extends Pet {
             JSONArray personalities = data.getJSONArray("personalities");
             JSONArray likes = data.getJSONArray("likes");
             JSONArray dislikes = data.getJSONArray("dislikes");
-            String spriteDir = data.getString("spritesDirectory");
 
-            for (int i = 0; i < personalities.length(); i++) {
-                String personality = personalities.getString(i);
-                super.addPersonality(personality);
-            }
+            this.setPersonalities(jsonArrayToStringList(personalities));
+            this.setLikes(jsonArrayToStringList(likes));
+            this.setDislikes(jsonArrayToStringList(dislikes));
 
-            for (int i = 0; i < likes.length(); i++) {
-                String like = likes.getString(i);
-                super.addLikes(like);
-            }
-
-            for (int i = 0; i < dislikes.length(); i++) {
-                String dislike = dislikes.getString(i);
-                super.addDislikes(dislike);
-            }
-
-            super.setSpritesDir(spriteDir);
+            this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir"));
         }
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    private ArrayList<String> jsonArrayToStringList(JSONArray jsonArr) {
+        ArrayList<String> list = new ArrayList<>();
+
+        for (int i = 0; i < jsonArr.length(); i++) {
+            String str = jsonArr.getString(i);
+            list.add(str);
+        }
+        return list;
     }
 }

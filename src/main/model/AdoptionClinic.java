@@ -9,8 +9,34 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class AdoptionClinic {
-    public AdoptionClinic() {
+    private ArrayList<Pet> pets;
 
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public AdoptionClinic() {
+        this.pets = new ArrayList<>();
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public void addPet(Pet pet) {
+
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public void removePet(Pet pet) {
+
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public int findPetByName(String name) {
+        return 0;
     }
 
     // MODIFIES:
@@ -22,13 +48,18 @@ public class AdoptionClinic {
         JSONObject breedsJson = new JSONObject(content);
         JSONArray breedsArray = breedsJson.getJSONArray("breeds");
 
-        ArrayList<String> dogBreeds = new ArrayList<>();
+        ArrayList<String> listOfBreeds = new ArrayList<>();
         for (int i = 0; i < breedsArray.length(); i++) {
             JSONObject breedData = breedsArray.getJSONObject(i);
             String breedName = breedData.getString("breedName");
-            dogBreeds.add(breedName);
+            listOfBreeds.add(breedName);
         }
 
-        return dogBreeds;
+        return listOfBreeds;
+    }
+
+    // GETTERS
+    public ArrayList<Pet> getPets() {
+        return pets;
     }
 }

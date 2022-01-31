@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class Player {
     private int money;
 
+    private String playerName;
+
     private ArrayList<Item> inventory;
 
     // MODIFIES:
@@ -14,7 +16,15 @@ public class Player {
     // EFFECTS:
     public Player() {
         this.money = 5000;
+        this.playerName = "Player";
         this.inventory = new ArrayList<>();
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public void renamePlayer(String name) {
+
     }
 
     // MODIFIES:
@@ -49,6 +59,13 @@ public class Player {
     // REQUIRES:
     // EFFECTS:
     public void interactWith(Pet pet) {
+
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public void cleanUp() {
 
     }
 

@@ -5,7 +5,7 @@ import model.Item;
 import java.util.ArrayList;
 
 public class Pet {
-    private String spritesDir;
+    private String spritesDir = "data/sprites/";
 
     private String name;
     private String animalType;
@@ -21,6 +21,9 @@ public class Pet {
     private int hunger;
     private int thirst;
     private int health;
+
+    private final double likesMultiplier = 1.5;
+    private final double dislikesMultiplier = 0.5;
 
     // MODIFIES:
     // REQUIRES:
@@ -87,6 +90,16 @@ public class Pet {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
+    public void decrementCareLevels(int happiness, int hunger, int thirst, int health) {
+//        this.happiness -= happiness;
+//        this.hunger -= hunger;
+//        this.thirst -= thirst;
+//        this.health -= health;
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
     public void addPersonality(String personality) {
         // this.personalities.add(personality);
     }
@@ -127,6 +140,10 @@ public class Pet {
     }
 
     // GETTERS
+    public String getSpritesDir() {
+        return spritesDir;
+    }
+
     public String getName() {
         return this.name;
     }

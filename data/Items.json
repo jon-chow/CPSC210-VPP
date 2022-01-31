@@ -1,0 +1,9 @@
+{
+  "items": [
+    {
+      "itemName": "Chicken",
+      "itemType": "Food",
+      "carePoints": [15, 20, 10, 5]
+    }
+  ]
+}
