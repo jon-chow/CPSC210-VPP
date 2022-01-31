@@ -1,0 +1,25 @@
+{
+  "breeds": [
+    {
+      "breedName": "Shiba Inu",
+      "personalities": ["Keen","Charming"],
+      "likes": ["","",""],
+      "dislikes": ["","",""],
+      "spritesDirectory": "data/sprites/dogs/shiba_inu"
+    },
+    {
+      "breedName": "Husky",
+      "personalities": ["Intelligent","Gentle"],
+      "likes": ["Salmon Chunks"],
+      "dislikes": ["",""],
+      "spritesDirectory": "data/sprites/dogs/husky"
+    },
+    {
+      "breedName": "Pug",
+      "personalities": ["Affectionate","Charming"],
+      "likes": ["","",""],
+      "dislikes": ["","",""],
+      "spritesDirectory": "data/sprites/dogs/pug"
+    }
+  ]
+}
