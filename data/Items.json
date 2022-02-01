@@ -4,6 +4,16 @@
       "itemName": "Chicken",
       "itemType": "Food",
       "carePoints": [15, 20, 10, 5]
+    },
+    {
+      "itemName": "Squeaky Mouse",
+      "itemType": "Toy",
+      "carePoints": [30, 0, 0, 0]
+    },
+    {
+      "itemName": "Bone",
+      "itemType": "Toy",
+      "carePoints": [21, 0, 0, 0]
     }
   ]
 }

@@ -21,6 +21,7 @@ public class Pet {
     private int hunger;
     private int thirst;
     private int health;
+    private int numWaste;
 
     private final double likesMultiplier = 1.5;
     private final double dislikesMultiplier = 0.5;
@@ -39,10 +40,11 @@ public class Pet {
         this.dislikes = new ArrayList<>();
 
         this.age = 0;
-        happiness = 100;
-        hunger = 100;
-        thirst = 100;
-        health = 100;
+        this.happiness = 100;
+        this.hunger = 100;
+        this.thirst = 100;
+        this.health = 100;
+        this.numWaste = 0;
     }
 
     // MODIFIES:
@@ -55,14 +57,21 @@ public class Pet {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void makeNoise() {
+    public String makeNoise() {
+        return "";
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
+    public void createWaste(int numWaste) {
 
     }
 
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void natureCalls() {
+    public void removeWaste(int numWaste) {
 
     }
 
@@ -76,6 +85,13 @@ public class Pet {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
+    public boolean checkIfDislikes(Item item) {
+        return false;
+    }
+
+    // MODIFIES:
+    // REQUIRES:
+    // EFFECTS:
     public boolean checkIsDead() {
         return false;
     }
@@ -83,8 +99,8 @@ public class Pet {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void alertCareStats() {
-
+    public ArrayList<Integer> alertCareStats() {
+        return new ArrayList<>();
     }
 
     // MODIFIES:
@@ -192,6 +208,10 @@ public class Pet {
         return this.health;
     }
 
+    public int getNumWaste() {
+        return numWaste;
+    }
+
     // SETTERS
     public void setSpritesDir(String spritesDir) {
         this.spritesDir = spritesDir;
@@ -243,5 +263,9 @@ public class Pet {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public void setNumWaste(int numWaste) {
+        this.numWaste = numWaste;
     }
 }

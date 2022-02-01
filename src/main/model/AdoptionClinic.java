@@ -35,7 +35,7 @@ public class AdoptionClinic {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public int findPetByName(String name) {
+    public int findByNameBreed(String name, String breed) {
         return 0;
     }
 
@@ -61,5 +61,10 @@ public class AdoptionClinic {
     // GETTERS
     public ArrayList<Pet> getPets() {
         return pets;
+    }
+
+    // SETTERS
+    public void setPets(ArrayList<Pet> pets) {
+        this.pets = pets;
     }
 }

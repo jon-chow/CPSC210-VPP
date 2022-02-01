@@ -11,6 +11,8 @@ public class Player {
 
     private ArrayList<Item> inventory;
 
+    private ArrayList<Integer> inventoryQuantity;
+
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
@@ -18,6 +20,7 @@ public class Player {
         this.money = 5000;
         this.playerName = "Player";
         this.inventory = new ArrayList<>();
+        this.inventoryQuantity = new ArrayList<>();
     }
 
     // MODIFIES:
@@ -30,14 +33,14 @@ public class Player {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void addToInventory(Item item) {
+    public void addToInventory(Item item, int quantity) {
 
     }
 
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void removeFromInventory(Item item) {
+    public void removeFromInventory(Item item, int quantity) {
 
     }
 
@@ -58,15 +61,8 @@ public class Player {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void interactWith(Pet pet) {
-
-    }
-
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
-    public void cleanUp() {
-
+    public boolean checkEnoughMoney(int cost) {
+        return false;
     }
 
     // GETTERS
@@ -74,8 +70,16 @@ public class Player {
         return money;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     public ArrayList<Item> getInventory() {
         return inventory;
+    }
+
+    public ArrayList<Integer> getInventoryQuantity() {
+        return inventoryQuantity;
     }
 
     // SETTERS
@@ -83,8 +87,16 @@ public class Player {
         this.money = money;
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public void setInventory(ArrayList<Item> inventory) {
         this.inventory = inventory;
+    }
+
+    public void setInventoryQuantity(ArrayList<Integer> inventoryQuantity) {
+        this.inventoryQuantity = inventoryQuantity;
     }
 
 }

@@ -37,13 +37,6 @@ public class Item {
     // MODIFIES:
     // REQUIRES:
     // EFFECTS:
-    public void consume() {
-
-    }
-
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
     private void fetchItemData() throws Exception {
         String content = FileUtils.readFileToString(itemsDataDir, "utf-8");
         JSONObject itemsJson = new JSONObject(content);
