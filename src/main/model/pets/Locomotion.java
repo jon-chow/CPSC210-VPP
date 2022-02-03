@@ -1,19 +1,19 @@
 package model.pets;
 
 public interface Locomotion {
-    public String moving();
+    String moving();
 
-    public String idling();
+    String idling();
 
-    public String eating();
+    String eating();
 
-    public String playing();
+    String playing();
 
-    public String jumping();
+    String jumping();
 
-    public String calling();
+    String calling();
 
-    public String excretingWaste();
+    String excretingWaste();
 
-    public String makeNoise();
+    String makeNoise();
 }
