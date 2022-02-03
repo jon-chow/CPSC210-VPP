@@ -1,9 +1,14 @@
 package model.pets;
 
 import java.io.File;
+import java.util.List;
+
+import model.configurables.RandomGenerator;
 
 public class ExampleAnimal extends Pet {
     private final String dataKey = "Example";
+
+    private List<String> allNoises;
 
     // EFFECTS: constructs an ExampleAnimal with name and breed
     public ExampleAnimal(String name, String breed) {
@@ -12,6 +17,8 @@ public class ExampleAnimal extends Pet {
         super.setBreed(breed);
         super.setBreedsDataDir(new File(fileLoc.getDataDir(dataKey)));
         super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
+
+        allNoises = List.of("Noise 1", "Noise 2", "Noise 3");
 
         try {
             super.fetchBreedData();
@@ -23,6 +30,8 @@ public class ExampleAnimal extends Pet {
 
     // EFFECTS: generates a random onomatopoeia that an ExampleAnimal would make
     public String makeNoise() {
-        return "";
+        int randomIndex = RandomGenerator.randomNumberUpTo(allNoises.size());
+
+        return allNoises.get(randomIndex);
     }
 }

@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.pets.*;
 import org.apache.commons.io.FileUtils;
@@ -10,35 +11,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class AdoptionClinic {
-    private ArrayList<Pet> pets;
+    private ArrayList<String> animalTypes;
 
     // EFFECTS: constructs an AdoptionClinic with an empty list of pets
-    public AdoptionClinic() {
-        this.pets = new ArrayList<>();
+    public AdoptionClinic() throws IOException {
+        animalTypes = new ArrayList<>(Arrays.asList("Example Animal"));
     }
 
-    // MODIFIES: this
-    // EFFECTS: adds a pet to the list of pets
-    public void addPet(Pet pet) {
-
-    }
-
-    // MODIFIES: this
-    // REQUIRES: pet exists in pets
-    // EFFECTS:  removes a pet from the list of pets
-    public void removePet(Pet pet) {
-
-    }
-
-    // REQUIRES: pet exists in pets
-    // EFFECTS:  returns the index of pet with name and breed in list of pets,
-    public int findByNameBreed(String name, String breed) {
-        return 0;
-    }
-
-    // EFFECTS: returns true if pet exists in list of pets
-    public boolean checkPetExists(Pet pet) {
-        return false;
+    // REQUIRES: breed is a valid breed of animalType
+    // EFFECTS: produces a Pet of the subclass animalType of a specified breed
+    public Pet generatePet(String animalType, String breed) {
+        switch (animalType) {
+            default: return new ExampleAnimal(breed, breed);
+        }
     }
 
     // EFFECTS: returns a list of breeds for the specified animalType
@@ -59,12 +44,7 @@ public class AdoptionClinic {
     }
 
     // GETTERS
-    public ArrayList<Pet> getPets() {
-        return pets;
-    }
-
-    // SETTERS
-    public void setPets(ArrayList<Pet> pets) {
-        this.pets = pets;
+    public ArrayList<String> getAnimalTypes() {
+        return animalTypes;
     }
 }

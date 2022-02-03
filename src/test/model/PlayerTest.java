@@ -1,7 +1,5 @@
 package model;
 
-import model.pets.Dog;
-
 import model.pets.ExampleAnimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

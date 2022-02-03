@@ -1,31 +1,47 @@
 package model;
 
-import model.pets.*;
-
 import java.io.IOException;
+
+import model.pets.*;
+import ui.menus.*;
 
 public class PixelPetGame {
     public static final int TICKS_PER_SECOND = 10;
 
-    private boolean endGame = false;
-    private AdoptionClinic adoptionClinic = new AdoptionClinic();
-    private Shop toyShop = new Shop("Toys 4 Pets");
-    private Player player = new Player();
-    private Pet adoptedPet;
+    private static final int TICKS_PER_TIME_FRAME = TICKS_PER_SECOND * 2;
+    private static final int HAPPINESS_LOSS_PER_TIME_FRAME = 1;
+    private static final int HUNGER_LOSS_PER_TIME_FRAME = 1;
+    private static final int THIRST_LOSS_PER_TIME_FRAME = 1;
+    private static final int HEALTH_LOSS_PER_TIME_FRAME = 1;
 
-    // EFFECTS: constructs a new pixel pet game
-    public PixelPetGame() {
-//        adoptedPet = new ExampleAnimal("Animal", "Aleph");
-//        Item item = new Item("Chicken","Food");
+    private int tickCount = 0;
+    private boolean endGame = false;
+    private Player player;
+    private Pet pet;
+
+    private Shop toyShop = new Shop("Toys 4 Pets");
+
+    // EFFECTS: constructs a new PixelPetGame
+    public PixelPetGame() throws IOException {
+        player = NewPlayerMenu.initNewPlayer();
+        pet = AdoptionMenu.initAdoption();
     }
 
-//    // EFFECTS: progresses the game
-//    public void tick() {
-//        if (adoptedPet != null && adoptedPet.checkIsDead()) {
-//            endGame = true;
-//            return;
-//        }
-//    }
+    // EFFECTS: progresses the game
+    public void tick() {
+        tickCount++;
+        if (tickCount % TICKS_PER_TIME_FRAME == 0) {
+            pet.decrementCareLevels(HAPPINESS_LOSS_PER_TIME_FRAME,
+                                    HUNGER_LOSS_PER_TIME_FRAME,
+                                    THIRST_LOSS_PER_TIME_FRAME,
+                                    HEALTH_LOSS_PER_TIME_FRAME);
+        }
+
+        if (pet.checkIsDead()) {
+            endGame = true;
+            return;
+        }
+    }
 
     // EFFECTS: returns true if game has ended
     public boolean isEnded() {
@@ -38,10 +54,6 @@ public class PixelPetGame {
     }
 
     // GETTERS
-    public AdoptionClinic getAdoptionClinic() {
-        return adoptionClinic;
-    }
-
     public Shop getToyShop() {
         return toyShop;
     }
@@ -50,7 +62,7 @@ public class PixelPetGame {
         return player;
     }
 
-    public Pet getAdoptedPet() {
-        return adoptedPet;
+    public Pet getPet() {
+        return pet;
     }
 }

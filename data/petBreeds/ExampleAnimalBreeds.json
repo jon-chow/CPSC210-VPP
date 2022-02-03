@@ -2,23 +2,23 @@
   "breeds": [
     {
       "breedName": "Aleph",
-      "personalities": ["Keen","Charming"],
-      "likes": ["","",""],
-      "dislikes": ["","",""],
+      "personalities": ["Personality1"],
+      "likes": ["Like1"],
+      "dislikes": ["Dislike1"],
       "spriteFilesDir": "aleph"
     },
     {
       "breedName": "Bet",
-      "personalities": ["Intelligent","Gentle"],
-      "likes": ["Salmon Chunks"],
-      "dislikes": ["",""],
+      "personalities": ["Personality1","Personality2"],
+      "likes": ["Like1","Like2"],
+      "dislikes": ["Dislike1","Dislike2"],
       "spriteFilesDir": "bet"
     },
     {
       "breedName": "Gimel",
-      "personalities": ["Affectionate","Charming"],
-      "likes": ["","",""],
-      "dislikes": ["","",""],
+      "personalities": ["Personality1","Personality2","Personality3"],
+      "likes": ["Like1","Like2","Like3"],
+      "dislikes": ["Dislike1","Dislike2","Dislike3"],
       "spriteFilesDir": "gimel"
     }
   ]

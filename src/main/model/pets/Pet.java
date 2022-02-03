@@ -101,26 +101,26 @@ public abstract class Pet {
     // REQUIRES: happiness, hunger, thirst, health >= 0
     // EFFECTS:  decreases pet's corresponding care levels
     public void decrementCareLevels(int happiness, int hunger, int thirst, int health) {
-//        this.happiness -= happiness;
-//        this.hunger -= hunger;
-//        this.thirst -= thirst;
-//        this.health -= health;
+        this.happiness -= happiness;
+        this.hunger -= hunger;
+        this.thirst -= thirst;
+        this.health -= health;
     }
 
     // MODIFIES: this
     // REQUIRES: happiness, hunger, thirst, health >= 0
     // EFFECTS:  increases pet's corresponding care levels
     public void incrementCareLevels(int happiness, int hunger, int thirst, int health) {
-//        this.happiness += happiness;
-//        this.hunger += hunger;
-//        this.thirst += thirst;
-//        this.health += health;
+        this.happiness += happiness;
+        this.hunger += hunger;
+        this.thirst += thirst;
+        this.health += health;
     }
 
     // MODIFIES: this
     // EFFECTS:  adds a personality to pet's personalities
     public void addPersonality(String personality) {
-        // this.personalities.add(personality);
+        this.personalities.add(personality);
     }
 
     // MODIFIES: this
