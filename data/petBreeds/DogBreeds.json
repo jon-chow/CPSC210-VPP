@@ -1,4 +1,5 @@
 {
+  "noises": ["Woof!", "Bark!", "Ruff!"],
   "breeds": [
     {
       "breedName": "Shiba Inu",

@@ -1,37 +1,78 @@
 package model.pets;
 
 import java.io.File;
-import java.util.List;
+import java.util.ArrayList;
 
 import model.configurables.RandomGenerator;
 
-public class ExampleAnimal extends Pet {
+public class ExampleAnimal extends Pet implements Locomotion {
     private final String dataKey = "Example";
-
-    private List<String> allNoises;
 
     // EFFECTS: constructs an ExampleAnimal with name and breed
     public ExampleAnimal(String name, String breed) {
         super(name);
         super.setAnimalType(dataKey);
         super.setBreed(breed);
-        super.setBreedsDataDir(new File(fileLoc.getDataDir(dataKey)));
+        super.setPetDataDir(new File(fileLoc.getDataDir(dataKey)));
         super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
 
-        allNoises = List.of("Noise 1", "Noise 2", "Noise 3");
-
         try {
-            super.fetchBreedData();
+            super.fetchPetData();
             super.parseBreedData();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    // EFFECTS: generates a random onomatopoeia that an ExampleAnimal would make
-    public String makeNoise() {
-        int randomIndex = RandomGenerator.randomNumberUpTo(allNoises.size());
+    // EFFECTS: returns the state of default movement
+    @Override
+    public String moving() {
+        return "walking";
+    }
 
-        return allNoises.get(randomIndex);
+    // EFFECTS: returns the state of idling
+    @Override
+    public String idling() {
+        return "idling";
+    }
+
+    // EFFECTS: returns the state of eating
+    @Override
+    public String eating() {
+        return "eating";
+    }
+
+    // EFFECTS: returns the state of playing
+    @Override
+    public String playing() {
+        return "playing";
+    }
+
+    // EFFECTS: returns the state of jumping
+    @Override
+    public String jumping() {
+        return "jumping";
+    }
+
+    // EFFECTS: returns the state of calling
+    @Override
+    public String calling() {
+        return "calling";
+    }
+
+    // EFFECTS: returns the state of excreting waste
+    @Override
+    public String excretingWaste() {
+        return "pooping";
+    }
+
+    // EFFECTS: returns a random onomatopoeia from the noise list of the animal
+    @Override
+    public String makeNoise() {
+        ArrayList<String> noises = super.getAllNoises();
+
+        int randomIndex = RandomGenerator.randomNumberUpTo(noises.size());
+
+        return noises.get(randomIndex);
     }
 }

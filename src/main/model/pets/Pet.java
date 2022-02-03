@@ -10,10 +10,10 @@ import java.util.ArrayList;
 import model.configurables.FileLocations;
 import model.Item;
 
-public abstract class Pet {
+public abstract class Pet implements Locomotion {
     public static final FileLocations fileLoc = new FileLocations();
 
-    private File breedsDataDir;
+    private File petDataDir;
     private JSONObject breedData;
     private String spritesDir;
 
@@ -22,6 +22,7 @@ public abstract class Pet {
     private String breed;
     private String state;
 
+    private ArrayList<String> allNoises;
     private ArrayList<String> personalities;
     private ArrayList<String> likes;
     private ArrayList<String> dislikes;
@@ -53,11 +54,9 @@ public abstract class Pet {
         this.numWaste = 0;
     }
 
-    // EFFECTS: generates a random onomatopoeia that the animalType would make
-    public abstract String makeNoise();
-
     // MODIFIES: this
-    // EFFECTS:  consumes item, affecting pet's care levels
+    // EFFECTS:  consumes item, affecting care levels
+    //           and changes the pet's state depending on the item
     public void consumeItem(Item item) {
 
     }
@@ -157,13 +156,19 @@ public abstract class Pet {
     }
 
     // MODIFIES: this
-    // REQUIRES: breedsDataDir exists
-    // EFFECTS:  gathers data from breedsDataDir and stores it
-    public void fetchBreedData() throws Exception {
-        String content = FileUtils.readFileToString(this.getBreedsDataDir(), "utf-8");
-        JSONObject breedsJson = new JSONObject(content);
-        JSONArray breedsArray = breedsJson.getJSONArray("breeds");
+    // REQUIRES: petDataDir exists
+    // EFFECTS:  gathers data from petDataDir and stores it
+    public void fetchPetData() throws Exception {
+        String content = FileUtils.readFileToString(this.getPetDataDir(), "utf-8");
+        JSONObject data = new JSONObject(content);
 
+        JSONArray noisesArray = data.getJSONArray("noises");
+        allNoises = new ArrayList<>();
+        for (int i = 0; i < noisesArray.length(); i++) {
+            allNoises.add(noisesArray.getString(i));
+        }
+
+        JSONArray breedsArray = data.getJSONArray("breeds");
         for (int i = 0; i < breedsArray.length(); i++) {
             JSONObject breedData = breedsArray.getJSONObject(i);
             String breedName = breedData.getString("breedName");
@@ -207,8 +212,8 @@ public abstract class Pet {
     }
 
     // GETTERS
-    public File getBreedsDataDir() {
-        return breedsDataDir;
+    public File getPetDataDir() {
+        return petDataDir;
     }
 
     public String getSpritesDir() {
@@ -229,6 +234,10 @@ public abstract class Pet {
 
     public String getState() {
         return this.state;
+    }
+
+    public ArrayList<String> getAllNoises() {
+        return allNoises;
     }
 
     public ArrayList<String> getPersonalities() {
@@ -268,8 +277,8 @@ public abstract class Pet {
     }
 
     // SETTERS
-    public void setBreedsDataDir(File breedsDataDir) {
-        this.breedsDataDir = breedsDataDir;
+    public void setPetDataDir(File petDataDir) {
+        this.petDataDir = petDataDir;
     }
 
     public void setSpritesDir(String spritesDir) {

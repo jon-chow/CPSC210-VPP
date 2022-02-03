@@ -13,6 +13,7 @@ public class PixelPetGame {
     private static final int HUNGER_LOSS_PER_TIME_FRAME = 1;
     private static final int THIRST_LOSS_PER_TIME_FRAME = 1;
     private static final int HEALTH_LOSS_PER_TIME_FRAME = 1;
+    private static final int MONEY_GAINED_PER_TIME_FRAME = 10;
 
     private int tickCount = 0;
     private boolean endGame = false;
@@ -25,6 +26,7 @@ public class PixelPetGame {
     public PixelPetGame() throws IOException {
         player = NewPlayerMenu.initNewPlayer();
         pet = AdoptionMenu.initAdoption();
+
     }
 
     // EFFECTS: progresses the game
@@ -37,10 +39,11 @@ public class PixelPetGame {
                                     HEALTH_LOSS_PER_TIME_FRAME);
         }
 
-        if (pet.checkIsDead()) {
-            endGame = true;
-            return;
+        if (tickCount % MONEY_GAINED_PER_TIME_FRAME == 0) {
+            player.setMoney(player.getMoney() + MONEY_GAINED_PER_TIME_FRAME);
         }
+
+        endGame = pet.checkIsDead();
     }
 
     // EFFECTS: returns true if game has ended

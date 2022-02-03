@@ -1,4 +1,5 @@
 {
+  "noises": ["Noise A", "Noise B", "Noise C"],
   "breeds": [
     {
       "breedName": "Aleph",
