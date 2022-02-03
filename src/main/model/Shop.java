@@ -9,9 +9,7 @@ public class Shop {
     private ArrayList<Integer> priceOfItems;
     private ArrayList<Integer> quantityInStock;
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: constructs a shop with a shopName
     public Shop(String shopName) {
         this.shopName = shopName;
         this.shopItems = new ArrayList<>();
@@ -19,44 +17,57 @@ public class Shop {
         this.quantityInStock = new ArrayList<>();
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: price >= 0, and
+    //           quantity > 0
+    // EFFECTS: adds item to shopItems,
+    //          adds price to priceOfItems, and
+    //          adds quantity to quantityInStock
     public void addShopItem(Item item, int price, int quantity) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: item exists in shopItems
+    // EFFECTS: removes item from shopItems,
+    //          removes its price from priceOfItems, and
+    //          removes its quantity from quantityInStock
     public void removeShopItem(Item item) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this, Player
+    // REQUIRES: item exists in shopItems, and
+    //           quantity > 0
+    // EFFECTS:  sells item to player,
+    //           decreasing its value in quantityInStock by quantity.
+    //           Also, removes item if its quantityInStock == 0
+    public void sellItemTo(Item item, int quantity, Player player) {
+
+    }
+
+    // MODIFIES: this
+    // REQUIRES: item exists
+    // EFFECTS:  changes the price of the item in priceOfItems
     public void changeItemPrice(Item item, int price) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: item exists
+    // EFFECTS:  adds value to the quantity of item in quantityInStock
     public void incrementItemQuantity(Item item, int value) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: item exists
+    // EFFECTS:  subtracts value from the quantity of item in quantityInStock
     public void decrementItemQuantity(Item item, int value) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: returns true if item exists in shopItems
     public boolean checkIsInShop(Item item) {
         return false;
     }

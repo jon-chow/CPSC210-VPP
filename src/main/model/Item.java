@@ -7,10 +7,14 @@ import org.json.JSONObject;
 import java.io.File;
 
 public class Item {
-    private final File itemsDataDir = new File("data/Items.json");
-    private JSONObject itemData;
+    private final String dataKey = "Item";
 
-    private String spritesDir = "data/sprites/items/";
+    private final FileLocations fileLoc = new FileLocations();
+    private final String itemsDir = fileLoc.getDataDir(dataKey);
+    private String spritesDir = fileLoc.getSpritesDir(dataKey);
+    private File itemsDataDir = new File(itemsDir);
+
+    private JSONObject itemData;
     private String name;
     private String type;
 
@@ -19,9 +23,7 @@ public class Item {
     private int thirstPoints = 0;
     private int healthPoints = 0;
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: constructs an item with name and type
     public Item(String name, String type) {
         this.name = name;
         this.type = type;
@@ -34,9 +36,9 @@ public class Item {
         }
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: itemsDataDir exists
+    // EFFECTS:  gathers data from itemsDataDir and stores it
     private void fetchItemData() throws Exception {
         String content = FileUtils.readFileToString(itemsDataDir, "utf-8");
         JSONObject itemsJson = new JSONObject(content);
@@ -54,9 +56,10 @@ public class Item {
         }
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: itemsData exists
+    // EFFECTS:  parses data from itemsData and assigns
+    //           corresponding variables the data contained
     private void parseItemData() {
         JSONObject data = this.itemData;
 
@@ -73,6 +76,10 @@ public class Item {
     }
 
     // GETTERS
+    public String getSpritesDir() {
+        return spritesDir;
+    }
+
     public String getName() {
         return name;
     }

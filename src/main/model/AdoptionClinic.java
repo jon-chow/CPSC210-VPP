@@ -1,61 +1,39 @@
 package model;
 
-import model.pets.*;
-import org.apache.commons.io.FileUtils;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.File;
 import java.util.ArrayList;
+
+import model.pets.*;
 
 public class AdoptionClinic {
     private ArrayList<Pet> pets;
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: constructs an AdoptionClinic with an empty list of pets
     public AdoptionClinic() {
         this.pets = new ArrayList<>();
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: adds a pet to the list of pets
     public void addPet(Pet pet) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: pet exists in pets
+    // EFFECTS:  removes a pet from the list of pets
     public void removePet(Pet pet) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // REQUIRES: pet exists in pets
+    // EFFECTS:  returns the index of pet with name and breed in list of pets,
     public int findByNameBreed(String name, String breed) {
         return 0;
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
-    public ArrayList<String> fetchDogBreeds() throws Exception {
-        File breedsDataDir = new File("data/petBreeds/DogBreeds.json");
-        String content = FileUtils.readFileToString(breedsDataDir, "utf-8");
-        JSONObject breedsJson = new JSONObject(content);
-        JSONArray breedsArray = breedsJson.getJSONArray("breeds");
-
-        ArrayList<String> listOfBreeds = new ArrayList<>();
-        for (int i = 0; i < breedsArray.length(); i++) {
-            JSONObject breedData = breedsArray.getJSONObject(i);
-            String breedName = breedData.getString("breedName");
-            listOfBreeds.add(breedName);
-        }
-
-        return listOfBreeds;
+    // EFFECTS:  returns true if pet exists in list of pets
+    public boolean checkPetExists(Pet pet) {
+        return false;
     }
 
     // GETTERS

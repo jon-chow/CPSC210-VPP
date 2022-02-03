@@ -1,6 +1,7 @@
 package model;
 
-import model.pets.Pet;
+import model.pets.Dog;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -80,35 +81,42 @@ class PlayerTest {
     @Test
     void giveItemToTest() {
         Item item1 = new Item("Chicken","Food");
-        Pet pet = new Pet("Pet");
-        pet.setHappiness(50);
-        pet.setHunger(50);
-        pet.setThirst(50);
-        pet.setHealth(50);
+        Dog dog = new Dog("Doggo", "Husky");
+        dog.setHappiness(50);
+        dog.setHunger(50);
+        dog.setThirst(50);
+        dog.setHealth(50);
 
-        plr1.giveItemTo(item1, pet);
-        assertEquals(65, pet.getHappiness());
-        assertEquals(70, pet.getHunger());
-        assertEquals(60, pet.getThirst());
-        assertEquals(55, pet.getHealth());
+        plr1.giveItemTo(item1, dog);
+        assertEquals(65, dog.getHappiness());
+        assertEquals(70, dog.getHunger());
+        assertEquals(60, dog.getThirst());
+        assertEquals(55, dog.getHealth());
     }
 
     @Test
     void buyItemFromTest() {
-        plr1.setMoney(200);
+        plr1.setMoney(300);
 
         Shop shop1 = new Shop("Petpix Toys");
         Item item1 = new Item("Chicken", "Food");
         shop1.addShopItem(item1, 100, 50);
 
-        plr1.buyItemFrom(item1, shop1);
+        plr1.buyItemFrom(item1, 1, shop1);
         ArrayList<Item> expectedVal1 = new ArrayList<>();
         expectedVal1.add(item1);
         assertEquals(expectedVal1, plr1.getInventory());
+        assertEquals(100, plr1.getMoney());
 
-        plr1.buyItemFrom(item1, shop1);
+        plr1.buyItemFrom(item1, 2, shop1);
         ArrayList<Item> expectedVal2 = new ArrayList<>(Arrays.asList(item1, item1));
         assertEquals(expectedVal2, plr1.getInventory());
+        assertEquals(0, plr1.getMoney());
+
+        plr1.buyItemFrom(item1, 1, shop1);
+        ArrayList<Item> expectedVal3 = new ArrayList<>(Arrays.asList(item1, item1));
+        assertEquals(expectedVal3, plr1.getInventory());
+        assertEquals(0, plr1.getMoney());
     }
 
     @Test

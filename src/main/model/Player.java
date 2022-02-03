@@ -1,8 +1,8 @@
 package model;
 
-import model.pets.Pet;
-
 import java.util.ArrayList;
+
+import model.pets.Pet;
 
 public class Player {
     private int money;
@@ -13,9 +13,7 @@ public class Player {
 
     private ArrayList<Integer> inventoryQuantity;
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: constructs a default player
     public Player() {
         this.money = 5000;
         this.playerName = "Player";
@@ -23,44 +21,46 @@ public class Player {
         this.inventoryQuantity = new ArrayList<>();
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // EFFECTS: renames the player to a specified name
     public void renamePlayer(String name) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: quantity > 0
+    // EFFECTS: adds a quantity number of item to the inventory
     public void addToInventory(Item item, int quantity) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this
+    // REQUIRES: item exists in inventory, and
+    //           0 < quantity <= count of item in inventory
+    // EFFECTS: removes a quantity number of item from the inventory
     public void removeFromInventory(Item item, int quantity) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // MODIFIES: this, Pet
+    // REQUIRES: item exists in inventory
+    // EFFECTS: removes one count of item from inventory and
+    //          gives item to pet, affecting its care levels
     public void giveItemTo(Item item, Pet pet) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
-    public void buyItemFrom(Item item, Shop shop) {
+    // MODIFIES: this, Shop
+    // REQUIRES: item exists in shop,
+    //           quantity >= 0, and
+    //           money >= price of item in shop
+    // EFFECTS:  buys item from shop, spending money and
+    //           places item in inventory
+    public void buyItemFrom(Item item, int quantity, Shop shop) {
 
     }
 
-    // MODIFIES:
-    // REQUIRES:
-    // EFFECTS:
+    // EFFECTS: returns true if money >= cost
     public boolean checkEnoughMoney(int cost) {
         return false;
     }

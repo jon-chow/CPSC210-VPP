@@ -55,6 +55,19 @@ class ShopTest {
     }
 
     @Test
+    void sellItemTo() {
+        Player plr = new Player();
+
+        shop1.sellItemTo(item1, 1, plr);
+        ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(19, 10));
+        assertEquals(expectedVal1, shop1.getQuantityInStock());
+
+        shop1.sellItemTo(item2, 3, plr);
+        ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(19, 7));
+        assertEquals(expectedVal2, shop1.getQuantityInStock());
+    }
+
+    @Test
     void changeItemPriceTest() {
         shop1.changeItemPrice(item1, 999);
         ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(999, 100));

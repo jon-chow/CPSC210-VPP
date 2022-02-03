@@ -53,4 +53,14 @@ class AdoptionClinicTest {
         assertEquals(0, adoptionClinic.findByNameBreed("Doggo", "Shiba Inu"));
         assertEquals(1, adoptionClinic.findByNameBreed("Bork", "Husky"));
     }
+
+    @Test
+    void checkPetExists() {
+        ArrayList<Pet> pets =  new ArrayList<>();
+        pets.add(pet1);
+        adoptionClinic.setPets(pets);
+
+        assertTrue(adoptionClinic.checkPetExists(pet1));
+        assertFalse(adoptionClinic.checkPetExists(pet2));
+    }
 }
