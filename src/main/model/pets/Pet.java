@@ -7,11 +7,11 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 
-import model.FileLocations;
+import model.configurables.FileLocations;
 import model.Item;
 
 public abstract class Pet {
-    public final FileLocations fileLoc = new FileLocations();
+    public static final FileLocations fileLoc = new FileLocations();
 
     private File breedsDataDir;
     private JSONObject breedData;

@@ -1,5 +1,6 @@
 package model;
 
+import model.configurables.FileLocations;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,9 +8,9 @@ import org.json.JSONObject;
 import java.io.File;
 
 public class Item {
-    private final String dataKey = "Item";
+    private static final FileLocations fileLoc = new FileLocations();
 
-    private final FileLocations fileLoc = new FileLocations();
+    private final String dataKey = "Item";
     private final String itemsDir = fileLoc.getDataDir(dataKey);
     private String spritesDir = fileLoc.getSpritesDir(dataKey);
     private File itemsDataDir = new File(itemsDir);

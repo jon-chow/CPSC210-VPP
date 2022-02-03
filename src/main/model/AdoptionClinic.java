@@ -1,8 +1,13 @@
 package model;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import model.pets.*;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class AdoptionClinic {
     private ArrayList<Pet> pets;
@@ -31,9 +36,26 @@ public class AdoptionClinic {
         return 0;
     }
 
-    // EFFECTS:  returns true if pet exists in list of pets
+    // EFFECTS: returns true if pet exists in list of pets
     public boolean checkPetExists(Pet pet) {
         return false;
+    }
+
+    // EFFECTS: returns a list of breeds for the specified animalType
+    public ArrayList<String> fetchBreeds(String animalType) throws IOException {
+        ArrayList<String> breeds = new ArrayList<>();
+
+        File breedsDataDir = new File(Pet.fileLoc.getDataDir(animalType));
+        String content = FileUtils.readFileToString(breedsDataDir, "utf-8");
+        JSONObject breedsJson = new JSONObject(content);
+        JSONArray breedsArray = breedsJson.getJSONArray("breeds");
+
+        for (int i = 0; i < breedsArray.length(); i++) {
+            JSONObject breedData = breedsArray.getJSONObject(i);
+            breeds.add(breedData.getString("breedName"));
+        }
+
+        return breeds;
     }
 
     // GETTERS

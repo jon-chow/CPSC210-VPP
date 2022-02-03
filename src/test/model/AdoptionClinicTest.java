@@ -4,6 +4,7 @@ import model.pets.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -17,8 +18,8 @@ class AdoptionClinicTest {
     @BeforeEach
     void runBefore() {
         adoptionClinic = new AdoptionClinic();
-        pet1 = new Dog("Doggo","Shiba Inu");
-        pet2 = new Dog("Bork","Husky");
+        pet1 = new ExampleAnimal("Pet1","Aleph");
+        pet2 = new ExampleAnimal("Pet2","Bet");
     }
 
     @Test
@@ -50,17 +51,23 @@ class AdoptionClinicTest {
     @Test
     void findPetByNameTest() {
         adoptionClinic.setPets(new ArrayList<>(Arrays.asList(pet1, pet2)));
-        assertEquals(0, adoptionClinic.findByNameBreed("Doggo", "Shiba Inu"));
-        assertEquals(1, adoptionClinic.findByNameBreed("Bork", "Husky"));
+        assertEquals(0, adoptionClinic.findByNameBreed("Pet1", "Aleph"));
+        assertEquals(1, adoptionClinic.findByNameBreed("Pet2", "Bet"));
     }
 
     @Test
-    void checkPetExists() {
+    void checkPetExistsTest() {
         ArrayList<Pet> pets =  new ArrayList<>();
         pets.add(pet1);
         adoptionClinic.setPets(pets);
 
         assertTrue(adoptionClinic.checkPetExists(pet1));
         assertFalse(adoptionClinic.checkPetExists(pet2));
+    }
+
+    @Test
+    void fetchBreedsTest() throws IOException {
+        ArrayList<String> listOfPets = new ArrayList<>(Arrays.asList("Aleph","Bet","Gimel"));
+        assertEquals(listOfPets, adoptionClinic.fetchBreeds("Example"));
     }
 }

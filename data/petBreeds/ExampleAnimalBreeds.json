@@ -1,0 +1,25 @@
+{
+  "breeds": [
+    {
+      "breedName": "Aleph",
+      "personalities": ["Keen","Charming"],
+      "likes": ["","",""],
+      "dislikes": ["","",""],
+      "spriteFilesDir": "aleph"
+    },
+    {
+      "breedName": "Bet",
+      "personalities": ["Intelligent","Gentle"],
+      "likes": ["Salmon Chunks"],
+      "dislikes": ["",""],
+      "spriteFilesDir": "bet"
+    },
+    {
+      "breedName": "Gimel",
+      "personalities": ["Affectionate","Charming"],
+      "likes": ["","",""],
+      "dislikes": ["","",""],
+      "spriteFilesDir": "gimel"
+    }
+  ]
+}

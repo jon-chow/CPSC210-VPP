@@ -2,6 +2,7 @@ package model;
 
 import model.pets.Dog;
 
+import model.pets.ExampleAnimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -81,17 +82,17 @@ class PlayerTest {
     @Test
     void giveItemToTest() {
         Item item1 = new Item("Chicken","Food");
-        Dog dog = new Dog("Doggo", "Husky");
-        dog.setHappiness(50);
-        dog.setHunger(50);
-        dog.setThirst(50);
-        dog.setHealth(50);
+        ExampleAnimal animal = new ExampleAnimal("Animal", "Aleph");
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
 
-        plr1.giveItemTo(item1, dog);
-        assertEquals(65, dog.getHappiness());
-        assertEquals(70, dog.getHunger());
-        assertEquals(60, dog.getThirst());
-        assertEquals(55, dog.getHealth());
+        plr1.giveItemTo(item1, animal);
+        assertEquals(65, animal.getHappiness());
+        assertEquals(70, animal.getHunger());
+        assertEquals(60, animal.getThirst());
+        assertEquals(55, animal.getHealth());
     }
 
     @Test

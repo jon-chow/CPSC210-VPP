@@ -1,7 +1,9 @@
 package ui;
 
 public class Main {
-    public static void main(String[] args) {
-        new TerminalApp();
+    public static void main(String[] args) throws Exception {
+        TerminalApp handler = new TerminalApp();
+
+        handler.start();
     }
 }
