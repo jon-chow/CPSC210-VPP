@@ -1,13 +1,16 @@
 package ui.menus;
 
+import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 
-public class ShopMenu {
-    private static final String SHOP_NAME = "";
+import java.io.IOException;
 
-    // EFFECTS: initiates a shop
-    public static Shop initShop() {
-        Shop shop = new Shop(SHOP_NAME);
+public class ShopMenu {
+    // EFFECTS: initiates a new shop called shopName
+    public static Shop initShop(String shopName) throws IOException {
+        Shop shop = new Shop(shopName);
+
+        shop.stockWithRandomItems(3, 20);
 
         return shop;
     }

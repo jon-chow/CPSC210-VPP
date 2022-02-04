@@ -20,6 +20,7 @@ import java.util.Scanner;
 
 public class TerminalApp {
     public static final Scanner scanner = new Scanner(System.in);
+    public static final String CONFIRMATION_KEY = "yes";
 
     private PixelPetGame game;
 //    private Screen screen;

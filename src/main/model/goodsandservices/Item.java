@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Item {
     private static final FileLocations fileLoc = new FileLocations();
@@ -19,6 +20,7 @@ public class Item {
     private String name;
     private String type;
 
+    private int price = 0;
     private int happinessPoints = 0;
     private int hungerPoints = 0;
     private int thirstPoints = 0;
@@ -40,7 +42,7 @@ public class Item {
     // MODIFIES: this
     // REQUIRES: itemsDataDir exists
     // EFFECTS:  gathers data from itemsDataDir and stores it
-    private void fetchItemData() throws Exception {
+    private void fetchItemData() throws IOException {
         String content = FileUtils.readFileToString(itemsDataDir, "utf-8");
         JSONObject itemsJson = new JSONObject(content);
         JSONArray itemsArray = itemsJson.getJSONArray("items");
@@ -65,10 +67,13 @@ public class Item {
         JSONObject data = this.itemData;
 
         if (data != JSONObject.NULL) {
-            this.spritesDir += this.name.toLowerCase() + "_" + this.type.toLowerCase() + "/";
+            String fileName = this.name.toLowerCase() + "_" + this.type.toLowerCase();
+            this.spritesDir += fileName.replaceAll("\\s+","") + "/";
 
+            int price = data.getInt("price");
             JSONArray carePoints = data.getJSONArray("carePoints");
 
+            this.price = price;
             this.happinessPoints = carePoints.getInt(0);
             this.hungerPoints  = carePoints.getInt(1);
             this.thirstPoints = carePoints.getInt(2);
@@ -87,6 +92,10 @@ public class Item {
 
     public String getType() {
         return type;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public int getHappinessPoints() {

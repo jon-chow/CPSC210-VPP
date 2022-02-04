@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 
+import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 import model.pets.*;
 import ui.menus.*;
@@ -26,7 +27,7 @@ public class PixelPetGame {
     public PixelPetGame() throws IOException {
         player = NewPlayerMenu.initNewPlayer();
         pet = AdoptionMenu.initAdoption();
-
+        shop = ShopMenu.initShop("Kira Kira Pets!");
     }
 
     // EFFECTS: progresses the game

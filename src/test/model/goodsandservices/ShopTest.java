@@ -4,6 +4,7 @@ import model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,14 +17,14 @@ class ShopTest {
     Item item3;
 
     @BeforeEach
-    void runBefore() {
+    void runBefore() throws IOException {
         shop1 = new Shop("Shop1");
         item1 = new Item("Chicken", "Food");
         item2 = new Item("Squeaky Mouse", "Toy");
         item3 = new Item("Bone", "Toy");
 
         ArrayList<Item> items = new ArrayList<>(Arrays.asList(item1, item2));
-        ArrayList<Integer> prices = new ArrayList<>(Arrays.asList(50, 100));
+        ArrayList<Integer> prices = new ArrayList<>(Arrays.asList(item1.getPrice(), item2.getPrice()));
         ArrayList<Integer> stocks = new ArrayList<>(Arrays.asList(20, 10));
         shop1.setShopItems(items);
         shop1.setPriceOfItems(prices);
@@ -32,10 +33,13 @@ class ShopTest {
 
     @Test
     void addShopItemTest() {
-        shop1.addShopItem(item3,300,30);
-        ArrayList<Item> expectedVal1A = new ArrayList<>(Arrays.asList(item1, item2, item3));
-        ArrayList<Integer> expectedVal1B = new ArrayList<>(Arrays.asList(50, 100, 300));
+        shop1.addShopItem(item3,30);
+        ArrayList<Item> expectedVal1A =
+                new ArrayList<>(Arrays.asList(item1, item2, item3));
+        ArrayList<Integer> expectedVal1B =
+                new ArrayList<>(Arrays.asList(item1.getPrice(), item2.getPrice(), item3.getPrice()));
         ArrayList<Integer> expectedVal1C = new ArrayList<>(Arrays.asList(20, 10, 30));
+
         assertEquals(expectedVal1A, shop1.getShopItems());
         assertEquals(expectedVal1B, shop1.getPriceOfItems());
         assertEquals(expectedVal1C, shop1.getQuantityInStock());
@@ -47,9 +51,10 @@ class ShopTest {
         ArrayList<Item> expectedVal1A = new ArrayList<>();
         expectedVal1A.add(item1);
         ArrayList<Integer> expectedVal1B = new ArrayList<>();
-        expectedVal1B.add(50);
+        expectedVal1B.add(item1.getPrice());
         ArrayList<Integer> expectedVal1C = new ArrayList<>();
         expectedVal1C.add(20);
+
         assertEquals(expectedVal1A, shop1.getShopItems());
         assertEquals(expectedVal1B, shop1.getPriceOfItems());
         assertEquals(expectedVal1C, shop1.getQuantityInStock());
@@ -69,14 +74,27 @@ class ShopTest {
     }
 
     @Test
+    void getItemQuantityTest() {
+        assertEquals(20, shop1.getItemQuantity(item1));
+        assertEquals(10, shop1.getItemQuantity(item2));
+    }
+
+    @Test
+    void setItemQuantityTest() {
+        shop1.setItemQuantity(item1, 999);
+        shop1.setItemQuantity(item2, 0);
+
+        ArrayList<Integer> expectedVal = new ArrayList<>(Arrays.asList(999, 0));
+        assertEquals(expectedVal, shop1.getQuantityInStock());
+    }
+
+    @Test
     void setItemPriceTest() {
         shop1.setItemPrice(item1, 999);
-        ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(999, 100));
-        assertEquals(expectedVal1, shop1.getPriceOfItems());
-
         shop1.setItemPrice(item2, 0);
-        ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(999, 0));
-        assertEquals(expectedVal2, shop1.getPriceOfItems());
+
+        ArrayList<Integer> expectedVal = new ArrayList<>(Arrays.asList(999, 0));
+        assertEquals(expectedVal, shop1.getPriceOfItems());
     }
 
     @Test
@@ -100,11 +118,11 @@ class ShopTest {
 
     @Test
     void restockAllTest() {
-        shop1.restockAll(10);
+        shop1.stockAllExisting(10);
         ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(30, 20));
         assertEquals(expectedVal1, shop1.getQuantityInStock());
 
-        shop1.restockAll(100);
+        shop1.stockAllExisting(100);
         ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(130, 120));
         assertEquals(expectedVal2, shop1.getQuantityInStock());
     }
@@ -114,5 +132,17 @@ class ShopTest {
         assertTrue(shop1.checkIsInShop(item1));
         assertTrue(shop1.checkIsInShop(item2));
         assertFalse(shop1.checkIsInShop(item3));
+    }
+
+    @Test
+    void stockWithRandomItemsTest() {
+        shop1.setShopItems(new ArrayList<>());
+        shop1.setPriceOfItems(new ArrayList<>());
+        shop1.setQuantityInStock(new ArrayList<>());
+
+        shop1.stockWithRandomItems(1, 10);
+        int expectedVal1A = shop1.getQuantityInStock().get(0);
+        assertEquals(1, shop1.getShopItems().size());
+        assertEquals(expectedVal1A, 10);
     }
 }

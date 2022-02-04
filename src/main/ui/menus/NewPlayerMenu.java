@@ -3,6 +3,7 @@ package ui.menus;
 import model.Player;
 
 import static ui.TerminalApp.scanner;
+import static ui.TerminalApp.CONFIRMATION_KEY;
 
 public class NewPlayerMenu {
     private static Player player;
@@ -27,11 +28,12 @@ public class NewPlayerMenu {
 
     // EFFECTS: returns true if user confirms player name
     private static boolean newPlayerConfirmName(String name) {
-        System.out.println("You have entered your name as " + name);
-        System.out.println("Enter 'y' to confirm your name "
-                + "or enter any other key to go back.");
+        System.out.println("You have entered your name as " + name + ".");
+        System.out.println("Confirm this name by entering '"
+                            + CONFIRMATION_KEY
+                            + "' or enter any other key to redo your choice.");
         String choice = scanner.nextLine();
 
-        return (choice.equals("y"));
+        return (choice.equals(CONFIRMATION_KEY));
     }
 }

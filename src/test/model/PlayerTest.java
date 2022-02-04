@@ -6,6 +6,7 @@ import model.pets.ExampleAnimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -93,53 +94,56 @@ class PlayerTest {
     }
 
     @Test
-    void buyItemFromTest() {
-        plr1.setMoney(1000);
+    void buyItemFromTest() throws IOException {
+        plr1.setMoney(10000000);
 
         Shop shop1 = new Shop("Petpix Toys");
         Item item1 = new Item("Chicken", "Food");
         Item item2 = new Item("Bone", "Toy");
-        shop1.addShopItem(item1, 100, 50);
-        shop1.addShopItem(item2, 500, 50);
+        shop1.addShopItem(item1, 50);
+        shop1.addShopItem(item2, 50);
 
-        plr1.buyItemFrom(item1, 1, shop1);
         ArrayList<Item> expectedVal1A = new ArrayList<>();
         ArrayList<Integer> expectedVal1B = new ArrayList<>();
         expectedVal1A.add(item1);
         expectedVal1B.add(1);
+        int expectedVal1C = plr1.getMoney() - item1.getPrice();
+        plr1.buyItemFrom(item1, 1, shop1);
         assertEquals(expectedVal1A, plr1.getInventory());
         assertEquals(expectedVal1B, plr1.getInventoryQuantity());
-        assertEquals(900, plr1.getMoney());
+        assertEquals(expectedVal1C, plr1.getMoney());
 
+        ArrayList<Item> expectedVal2A = new ArrayList<>();
+        ArrayList<Integer> expectedVal2B = new ArrayList<>();
+        expectedVal2A.add(item1);
+        expectedVal2A.add(item2);
+        expectedVal2B.add(1);
+        expectedVal2B.add(1);
+        int expectedVal2C = plr1.getMoney() - item2.getPrice();
         plr1.buyItemFrom(item2, 1, shop1);
-        ArrayList<Item> expectedVal3A = new ArrayList<>();
-        ArrayList<Integer> expectedVal3B = new ArrayList<>();
-        expectedVal3A.add(item1);
-        expectedVal3A.add(item2);
-        expectedVal3B.add(1);
-        expectedVal3B.add(1);
-        assertEquals(expectedVal3A, plr1.getInventory());
-        assertEquals(expectedVal3B, plr1.getInventoryQuantity());
-        assertEquals(400, plr1.getMoney());
+        assertEquals(expectedVal2A, plr1.getInventory());
+        assertEquals(expectedVal2B, plr1.getInventoryQuantity());
+        assertEquals(expectedVal2C, plr1.getMoney());
     }
 
     @Test
-    void buyItemFromMultipleTest() {
-        plr1.setMoney(1000);
+    void buyItemFromMultipleTest() throws IOException {
+        plr1.setMoney(10000000);
 
         Shop shop1 = new Shop("Petpix Toys");
         Item item1 = new Item("Chicken", "Food");
         Item item2 = new Item("Bone", "Toy");
-        shop1.addShopItem(item1, 100, 50);
-        shop1.addShopItem(item2, 500, 50);
+        shop1.addShopItem(item1, 50);
+        shop1.addShopItem(item2, 50);
 
-        plr1.buyItemFrom(item1, 9, shop1);
         ArrayList<Item> expectedVal2A = new ArrayList<>();
         ArrayList<Integer> expectedVal2B = new ArrayList<>();
         expectedVal2A.add(item1);
         expectedVal2B.add(9);
+        int expectedVal1C = plr1.getMoney() - item1.getPrice() * 9;
+        plr1.buyItemFrom(item1, 9, shop1);
         assertEquals(expectedVal2A, plr1.getInventory());
         assertEquals(expectedVal2B, plr1.getInventoryQuantity());
-        assertEquals(100, plr1.getMoney());
+        assertEquals(expectedVal1C, plr1.getMoney());
     }
 }

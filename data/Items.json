@@ -3,17 +3,20 @@
     {
       "itemName": "Chicken",
       "itemType": "Food",
-      "carePoints": [15, 20, 10, 5]
+      "carePoints": [15, 20, 10, 5],
+      "price": 230
     },
     {
       "itemName": "Squeaky Mouse",
       "itemType": "Toy",
-      "carePoints": [30, 0, 0, 0]
+      "carePoints": [30, 0, 0, 0],
+      "price": 300
     },
     {
       "itemName": "Bone",
       "itemType": "Toy",
-      "carePoints": [21, 0, 0, 0]
+      "carePoints": [21, 0, 0, 0],
+      "price": 150
     }
   ]
 }

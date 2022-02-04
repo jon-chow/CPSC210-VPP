@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static ui.TerminalApp.scanner;
+import static ui.TerminalApp.CONFIRMATION_KEY;
 
 public class AdoptionMenu {
     private static AdoptionClinic adoptionClinic;
@@ -56,7 +57,7 @@ public class AdoptionMenu {
         String breedListing = "";
         ArrayList<String> allBreeds = adoptionClinic.fetchBreeds(selectedAnimalType);
 
-        System.out.println("Please select the breed of your " + selectedAnimalType + ":");
+        System.out.println("Please select the breed of your " + selectedAnimalType + " from the list below:");
         int index = 0;
         for (String breed : allBreeds) {
             breedListing += (index != 0 ? "\n" : "") + (index++) + " = " + breed;
@@ -71,11 +72,12 @@ public class AdoptionMenu {
     // EFFECTS: returns true if user confirms adoption of pet
     private static boolean adoptionConfirmAdoption(String animalType, String breed) {
         System.out.println("You have selected a pet " + animalType + " of the breed " + breed + ".");
-        System.out.println("Enter 'y' to confirm the adoption "
-                + "or enter any other key to choose something else.");
+        System.out.println("Confirm the adoption by entering '"
+                            + CONFIRMATION_KEY
+                            + "' or enter any other key to make a different choice.");
         String choice = scanner.nextLine();
 
-        return (choice.equals("y"));
+        return (choice.equals(CONFIRMATION_KEY));
     }
 
     // MODIFIES: Pet
@@ -97,10 +99,11 @@ public class AdoptionMenu {
     // EFFECTS: returns true if user confirms naming of pet
     private static boolean adoptionConfirmPetName(String name) {
         System.out.println("You have selected a pet " + name);
-        System.out.println("Enter 'y' to confirm this name "
-                + "or enter any other key to choose a different name.");
+        System.out.println("Confirm this name by entering '"
+                            + CONFIRMATION_KEY
+                            + "' or enter any other key to choose a different name.");
         String choice = scanner.nextLine();
 
-        return (choice.equals("y"));
+        return (choice.equals(CONFIRMATION_KEY));
     }
 }
