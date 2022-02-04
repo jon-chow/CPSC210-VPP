@@ -1,5 +1,6 @@
-package model;
+package model.goodsandservices;
 
+import model.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,7 +56,7 @@ class ShopTest {
     }
 
     @Test
-    void sellItemTo() {
+    void sellItemToTest() {
         Player plr = new Player();
 
         shop1.sellItemTo(item1, 1, plr);
@@ -68,35 +69,43 @@ class ShopTest {
     }
 
     @Test
-    void changeItemPriceTest() {
-        shop1.changeItemPrice(item1, 999);
+    void setItemPriceTest() {
+        shop1.setItemPrice(item1, 999);
         ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(999, 100));
         assertEquals(expectedVal1, shop1.getPriceOfItems());
 
-        shop1.changeItemPrice(item2, 0);
+        shop1.setItemPrice(item2, 0);
         ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(999, 0));
         assertEquals(expectedVal2, shop1.getPriceOfItems());
     }
 
     @Test
-    void incrementItemQuantityTest() {
-        shop1.incrementItemQuantity(item1, 10);
-        ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(30, 10));
-        assertEquals(expectedVal1, shop1.getQuantityInStock());
+    void changeItemQuantityTest() {
+        shop1.changeItemQuantity(item1, 10);
+        ArrayList<Integer> expectedVal1A = new ArrayList<>(Arrays.asList(30, 10));
+        assertEquals(expectedVal1A, shop1.getQuantityInStock());
 
-        shop1.incrementItemQuantity(item2, 80);
-        ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(30, 90));
-        assertEquals(expectedVal2, shop1.getQuantityInStock());
+        shop1.changeItemQuantity(item2, 80);
+        ArrayList<Integer> expectedVal1B = new ArrayList<>(Arrays.asList(30, 90));
+        assertEquals(expectedVal1B, shop1.getQuantityInStock());
+
+        shop1.changeItemQuantity(item1, -15);
+        ArrayList<Integer> expectedVal2A = new ArrayList<>(Arrays.asList(15, 90));
+        assertEquals(expectedVal2A, shop1.getQuantityInStock());
+
+        shop1.changeItemQuantity(item2, -5);
+        ArrayList<Integer> expectedVal2B = new ArrayList<>(Arrays.asList(15, 85));
+        assertEquals(expectedVal2B, shop1.getQuantityInStock());
     }
 
     @Test
-    void decrementItemQuantityTest() {
-        shop1.decrementItemQuantity(item1, 10);
-        ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(10, 10));
+    void restockAllTest() {
+        shop1.restockAll(10);
+        ArrayList<Integer> expectedVal1 = new ArrayList<>(Arrays.asList(30, 20));
         assertEquals(expectedVal1, shop1.getQuantityInStock());
 
-        shop1.decrementItemQuantity(item2, 8);
-        ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(10, 2));
+        shop1.restockAll(100);
+        ArrayList<Integer> expectedVal2 = new ArrayList<>(Arrays.asList(130, 120));
         assertEquals(expectedVal2, shop1.getQuantityInStock());
     }
 

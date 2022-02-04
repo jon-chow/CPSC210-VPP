@@ -9,8 +9,8 @@
 ## Project Overview
 
 As the name of this project suggests, this is an *interactive* application game where   
-you are tasked to take care of a **virtual pet** of *your* choosing. It is a simple desktop     
-reincarnation of a popular toy in the late 1990's and early 2000's; the **Tamagotchi**.
+you are tasked to take care of a **virtual pet** of *your* choosing. It is a simplified desktop    
+version of the popular toy in the late 1990's and early 2000's; the **Tamagotchi**.
 
 The intended user audiences for this application are *children and teens*, however,   
 the game itself is suitable for people of all ages as it makes for a pleasant pastime.  

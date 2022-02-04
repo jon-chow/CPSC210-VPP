@@ -1,4 +1,4 @@
-package model;
+package model.goodsandservices;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +13,8 @@ import org.json.JSONObject;
 public class AdoptionClinic {
     private ArrayList<String> animalTypes;
 
-    // EFFECTS: constructs an AdoptionClinic with an empty list of pets
-    public AdoptionClinic() throws IOException {
+    // EFFECTS: constructs an AdoptionClinic with a list of animalType options
+    public AdoptionClinic() {
         animalTypes = new ArrayList<>(Arrays.asList("Example Animal"));
     }
 

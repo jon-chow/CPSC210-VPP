@@ -6,15 +6,18 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.configurables.FileLocations;
-import model.Item;
+import model.goodsandservices.Item;
 
 public abstract class Pet implements Locomotion {
     public static final FileLocations fileLoc = new FileLocations();
 
+    private final double likesMultiplier = 1.5;
+    private final double dislikesMultiplier = 0.5;
+
     private File petDataDir;
-    private JSONObject breedData;
     private String spritesDir;
 
     private String name;
@@ -34,9 +37,6 @@ public abstract class Pet implements Locomotion {
     private int health;
     private int numWaste;
 
-    private final double likesMultiplier = 1.5;
-    private final double dislikesMultiplier = 0.5;
-
     // EFFECTS: constructs a new pet with name
     public Pet(String name) {
         this.name = name;
@@ -55,45 +55,54 @@ public abstract class Pet implements Locomotion {
     }
 
     // MODIFIES: this
-    // EFFECTS:  consumes item, affecting care levels
-    //           and changes the pet's state depending on the item
+    // EFFECTS:  changes the pet's state depending on the item type
+    //           and consumes item, affecting care levels
     public void consumeItem(Item item) {
+        if (item.getType().equals("Toy")) {
+            setState(playing());
+        } else if (item.getType().equals("Food")) {
+            setState(eating());
+        }
 
+        incrementCareLevels(item.getHappinessPoints(),
+                            item.getHungerPoints(),
+                            item.getThirstPoints(),
+                            item.getHealthPoints());
     }
 
     // MODIFIES: this
     // REQUIRES: numWaste > 0
-    // EFFECTS:  adds to numWaste
+    // EFFECTS:  adds count to numWaste
     public void createWaste(int count) {
-
+        setNumWaste(getNumWaste() + count);
     }
 
     // MODIFIES: this
-    // REQUIRES: count <= numWaste
-    // EFFECTS:  subtracts from numWaste
+    // REQUIRES: numWaste >= count
+    // EFFECTS:  subtracts count from numWaste
     public void removeWaste(int count) {
-
+        setNumWaste(getNumWaste() - count);
     }
 
     // EFFECTS: returns true if item is liked by pet
     public boolean checkIfLikes(Item item) {
-        return false;
+        return likes.contains(item.getName());
     }
 
     // EFFECTS: returns true if item is disliked by pet
     public boolean checkIfDislikes(Item item) {
-        return false;
+        return dislikes.contains(item.getName());
     }
 
     // EFFECTS: returns true if pet is dead
     public boolean checkIsDead() {
-        return false;
+        return (happiness == 0 || hunger == 0 || thirst == 0 || health == 0);
     }
 
-    // EFFECTS: returns care levels in a list,
+    // EFFECTS: returns the current care levels in a list,
     //          in the order [happiness, hunger, thirst, health]
     public ArrayList<Integer> alertCareStats() {
-        return new ArrayList<>();
+        return new ArrayList<>(Arrays.asList(happiness, hunger, thirst, health));
     }
 
     // MODIFIES: this
@@ -119,46 +128,43 @@ public abstract class Pet implements Locomotion {
     // MODIFIES: this
     // EFFECTS:  adds a personality to pet's personalities
     public void addPersonality(String personality) {
-        this.personalities.add(personality);
+        personalities.add(personality);
     }
 
     // MODIFIES: this
-    // REQUIRES: personality is a personality of pet
     // EFFECTS:  removes a personality from pet's personalities
     public void removePersonality(String personality) {
-
+        personalities.remove(personality);
     }
 
     // MODIFIES: this
     // EFFECTS:  adds a like to pet's likes
     public void addLikes(String like) {
-
+        likes.add(like);
     }
 
     // MODIFIES: this
-    // REQUIRES: like is a like of pet
     // EFFECTS:  removes a like from pet's likes
     public void removeLikes(String like) {
-
+        likes.remove(like);
     }
 
     // MODIFIES: this
     // EFFECTS:  adds a dislike to pet's dislikes
     public void addDislikes(String dislike) {
-
+        dislikes.add(dislike);
     }
 
     // MODIFIES: this
-    // REQUIRES: dislike is a dislike of pet
     // EFFECTS:  removes a dislike from pet's dislikes
     public void removeDislikes(String dislike) {
-
+        dislikes.remove(dislike);
     }
 
     // MODIFIES: this
     // REQUIRES: petDataDir exists
-    // EFFECTS:  gathers data from petDataDir and stores it
-    public void fetchPetData() throws Exception {
+    // EFFECTS:  gathers data from petDataDir, parses it, and then stores it
+    public void gatherPetData() throws Exception {
         String content = FileUtils.readFileToString(this.getPetDataDir(), "utf-8");
         JSONObject data = new JSONObject(content);
 
@@ -174,19 +180,16 @@ public abstract class Pet implements Locomotion {
             String breedName = breedData.getString("breedName");
 
             if (breedName.equals(this.getBreed())) {
-                this.breedData = breedData;
+                parseBreedData(breedData);
                 break;
             }
         }
     }
 
     // MODIFIES: this
-    // REQUIRES: breedData exists
-    // EFFECTS:  parses data from breedData and assigns
-    //           corresponding variables the data contained
-    public void parseBreedData() {
-        JSONObject data = this.breedData;
-
+    // REQUIRES: data contains breed data
+    // EFFECTS:  parses the data and assigns corresponding variables the data contained
+    public void parseBreedData(JSONObject data) {
         if (data != JSONObject.NULL) {
             JSONArray personalities = data.getJSONArray("personalities");
             JSONArray likes = data.getJSONArray("likes");

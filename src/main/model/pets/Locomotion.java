@@ -15,5 +15,7 @@ public interface Locomotion {
 
     String excretingWaste();
 
+    String dead();
+
     String makeNoise();
 }

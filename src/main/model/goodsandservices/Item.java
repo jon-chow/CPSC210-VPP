@@ -1,4 +1,4 @@
-package model;
+package model.goodsandservices;
 
 import model.configurables.FileLocations;
 import org.apache.commons.io.FileUtils;
@@ -103,30 +103,5 @@ public class Item {
 
     public int getHealthPoints() {
         return healthPoints;
-    }
-
-    // SETTERS
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setHappinessPoints(int happinessPoints) {
-        this.happinessPoints = happinessPoints;
-    }
-
-    public void setThirstPoints(int thirstPoints) {
-        this.thirstPoints = thirstPoints;
-    }
-
-    public void setHungerPoints(int hungerPoints) {
-        this.hungerPoints = hungerPoints;
-    }
-
-    public void setHealthPoints(int healthPoints) {
-        this.healthPoints = healthPoints;
     }
 }

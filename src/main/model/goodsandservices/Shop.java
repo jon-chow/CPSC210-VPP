@@ -1,4 +1,6 @@
-package model;
+package model.goodsandservices;
+
+import model.Player;
 
 import java.util.ArrayList;
 
@@ -24,52 +26,91 @@ public class Shop {
     //          adds price to priceOfItems, and
     //          adds quantity to quantityInStock
     public void addShopItem(Item item, int price, int quantity) {
+        if (!checkIsInShop(item)) {
+            ArrayList<Item> newShopItems = getShopItems();
+            ArrayList<Integer> newPriceOfItems = getPriceOfItems();
+            ArrayList<Integer> newQuantityInStock = getQuantityInStock();
 
+            newShopItems.add(item);
+            newPriceOfItems.add(price);
+            newQuantityInStock.add(quantity);
+
+            setShopItems(newShopItems);
+            setPriceOfItems(newPriceOfItems);
+            setQuantityInStock(newQuantityInStock);
+        }
     }
 
     // MODIFIES: this
-    // REQUIRES: item exists in shopItems
     // EFFECTS: removes item from shopItems,
     //          removes its price from priceOfItems, and
     //          removes its quantity from quantityInStock
     public void removeShopItem(Item item) {
+        if (checkIsInShop(item)) {
+            ArrayList<Item> newShopItems = getShopItems();
+            ArrayList<Integer> newPriceOfItems = getPriceOfItems();
+            ArrayList<Integer> newQuantityInStock = getQuantityInStock();
+            int index = shopItems.indexOf(item);
 
+            newShopItems.remove(index);
+            newPriceOfItems.remove(index);
+            newQuantityInStock.remove(index);
+
+            setShopItems(newShopItems);
+            setPriceOfItems(newPriceOfItems);
+            setQuantityInStock(newQuantityInStock);
+        }
     }
 
     // MODIFIES: this, Player
-    // REQUIRES: item exists in shopItems, and
-    //           quantity > 0
+    // REQUIRES: quantity > 0
     // EFFECTS:  sells item to player,
     //           decreasing its value in quantityInStock by quantity.
     //           Also, removes item if its quantityInStock == 0
     public void sellItemTo(Item item, int quantity, Player player) {
-
+        if (checkIsInShop(item) && player.buyItemFrom(item, quantity, this)) {
+            changeItemQuantity(item, -quantity);
+        }
     }
 
     // MODIFIES: this
-    // REQUIRES: item exists
     // EFFECTS:  changes the price of the item in priceOfItems
-    public void changeItemPrice(Item item, int price) {
+    public void setItemPrice(Item item, int price) {
+        if (checkIsInShop(item)) {
+            ArrayList<Integer> newPrices = getPriceOfItems();
+            int index = shopItems.indexOf(item);
 
+            newPrices.set(index, price);
+            setPriceOfItems(newPrices);
+        }
     }
 
     // MODIFIES: this
-    // REQUIRES: item exists
     // EFFECTS:  adds value to the quantity of item in quantityInStock
-    public void incrementItemQuantity(Item item, int value) {
+    public void changeItemQuantity(Item item, int value) {
+        if (checkIsInShop(item)) {
+            ArrayList<Integer> newStocks = getQuantityInStock();
+            int index = shopItems.indexOf(item);
+            int currentlyStocked = newStocks.get(index);
+            int newStocked = currentlyStocked + value;
 
+            newStocks.set(index, newStocked);
+            setQuantityInStock(newStocks);
+        }
     }
 
     // MODIFIES: this
-    // REQUIRES: item exists
-    // EFFECTS:  subtracts value from the quantity of item in quantityInStock
-    public void decrementItemQuantity(Item item, int value) {
-
+    // REQUIRES: quantity > 0
+    // EFFECTS:  restocks all items by quantity
+    public void restockAll(int quantity) {
+        for (Item item : shopItems) {
+            changeItemQuantity(item, quantity);
+        }
     }
 
     // EFFECTS: returns true if item exists in shopItems
     public boolean checkIsInShop(Item item) {
-        return false;
+        return shopItems.contains(item);
     }
 
     // GETTERS
@@ -90,10 +131,6 @@ public class Shop {
     }
 
     // SETTERS
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
-    }
-
     public void setShopItems(ArrayList<Item> shopItems) {
         this.shopItems = shopItems;
     }

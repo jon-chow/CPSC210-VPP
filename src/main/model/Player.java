@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.goodsandservices.Item;
+import model.goodsandservices.Shop;
 import model.pets.Pet;
 
 public class Player {
@@ -19,12 +21,6 @@ public class Player {
         this.playerName = "Player";
         this.inventory = new ArrayList<>();
         this.inventoryQuantity = new ArrayList<>();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: renames the player to a specified name
-    public void renamePlayer(String name) {
-
     }
 
     // MODIFIES: this
@@ -53,11 +49,11 @@ public class Player {
     // MODIFIES: this, Shop
     // REQUIRES: item exists in shop,
     //           quantity >= 0, and
-    //           money >= price of item in shop
     // EFFECTS:  buys item from shop, spending money and
     //           places item in inventory
-    public void buyItemFrom(Item item, int quantity, Shop shop) {
-
+    //           returns true if item was bought successfully
+    public boolean buyItemFrom(Item item, int quantity, Shop shop) {
+        return true;
     }
 
     // EFFECTS: returns true if money >= cost

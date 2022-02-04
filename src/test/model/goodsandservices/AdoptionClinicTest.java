@@ -1,4 +1,4 @@
-package model;
+package model.goodsandservices;
 
 import model.pets.*;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ class AdoptionClinicTest {
     Pet pet2;
 
     @BeforeEach
-    void runBefore() throws IOException {
+    void runBefore() {
         adoptionClinic = new AdoptionClinic();
         pet1 = new ExampleAnimal("Pet1","Aleph");
         pet2 = new ExampleAnimal("Pet2","Bet");

@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 
+import model.goodsandservices.Shop;
 import model.pets.*;
 import ui.menus.*;
 
@@ -19,8 +20,7 @@ public class PixelPetGame {
     private boolean endGame = false;
     private Player player;
     private Pet pet;
-
-    private Shop toyShop = new Shop("Toys 4 Pets");
+    private Shop shop;
 
     // EFFECTS: constructs a new PixelPetGame
     public PixelPetGame() throws IOException {
@@ -46,19 +46,13 @@ public class PixelPetGame {
         endGame = pet.checkIsDead();
     }
 
-    // EFFECTS: returns true if game has ended
+    // GETTERS
     public boolean isEnded() {
         return endGame;
     }
 
-    // SETTERS
-    public void setEndGame(boolean endGame) {
-        this.endGame = endGame;
-    }
-
-    // GETTERS
-    public Shop getToyShop() {
-        return toyShop;
+    public Shop getShop() {
+        return shop;
     }
 
     public Player getPlayer() {

@@ -17,8 +17,7 @@ public class ExampleAnimal extends Pet implements Locomotion {
         super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
 
         try {
-            super.fetchPetData();
-            super.parseBreedData();
+            super.gatherPetData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,13 +65,17 @@ public class ExampleAnimal extends Pet implements Locomotion {
         return "pooping";
     }
 
+    // EFFECTS: returns the state of death
+    @Override
+    public String dead() {
+        return "dead";
+    }
+
     // EFFECTS: returns a random onomatopoeia from the noise list of the animal
     @Override
     public String makeNoise() {
         ArrayList<String> noises = super.getAllNoises();
-
         int randomIndex = RandomGenerator.randomNumberUpTo(noises.size());
-
         return noises.get(randomIndex);
     }
 }

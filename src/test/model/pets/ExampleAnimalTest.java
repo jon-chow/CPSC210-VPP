@@ -1,6 +1,6 @@
 package model.pets;
 
-import model.Item;
+import model.goodsandservices.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,10 +26,10 @@ class ExampleAnimalTest {
         animal.setHealth(50);
 
         animal.consumeItem(item1);
-        assertEquals(65, animal.getHappiness());
-        assertEquals(70, animal.getHunger());
-        assertEquals(60, animal.getThirst());
-        assertEquals(55, animal.getHealth());
+        assertEquals(50 + item1.getHappinessPoints(), animal.getHappiness());
+        assertEquals(50 + item1.getHungerPoints(), animal.getHunger());
+        assertEquals(50 + item1.getThirstPoints(), animal.getThirst());
+        assertEquals(50 + item1.getHealthPoints(), animal.getHealth());
     }
 
     @Test
@@ -149,14 +149,19 @@ class ExampleAnimalTest {
 
     @Test
     void addPersonalityTest() {
-        animal.addPersonality("Outgoing");
         ArrayList<String> personalities = new ArrayList<>();
-        personalities.add("Outgoing");
-        assertEquals(personalities, animal.getPersonalities());
+        animal.setPersonalities(personalities);
 
-        animal.addPersonality("Shy");
-        personalities.add("Shy");
-        assertEquals(personalities, animal.getPersonalities());
+        animal.addPersonality("Outgoing");
+        ArrayList<String> expectedVal1 = new ArrayList<>();
+        expectedVal1.add("Outgoing");
+        assertEquals(expectedVal1, animal.getPersonalities());
+
+        animal.addPersonality("Funny");
+        ArrayList<String> expectedVal2 = new ArrayList<>();
+        expectedVal2.add("Outgoing");
+        expectedVal2.add("Funny");
+        assertEquals(expectedVal2, animal.getPersonalities());
     }
 
     @Test
@@ -176,14 +181,19 @@ class ExampleAnimalTest {
 
     @Test
     void addLikesTest() {
-        animal.addLikes("Chicken");
         ArrayList<String> likes = new ArrayList<>();
-        likes.add("Chicken");
-        assertEquals(likes, animal.getLikes());
+        animal.setLikes(likes);
+
+        animal.addLikes("Chicken");
+        ArrayList<String> expectedVal1 = new ArrayList<>();
+        expectedVal1.add("Chicken");
+        assertEquals(expectedVal1, animal.getLikes());
 
         animal.addLikes("Avocado");
-        likes.add("Avocado");
-        assertEquals(likes, animal.getLikes());
+        ArrayList<String> expectedVal2 = new ArrayList<>();
+        expectedVal2.add("Chicken");
+        expectedVal2.add("Avocado");
+        assertEquals(expectedVal2, animal.getLikes());
     }
 
     @Test
@@ -203,14 +213,19 @@ class ExampleAnimalTest {
 
     @Test
     void addDislikesTest() {
-        animal.addDislikes("Chicken");
         ArrayList<String> dislikes = new ArrayList<>();
-        dislikes.add("Chicken");
-        assertEquals(dislikes, animal.getDislikes());
+        animal.setDislikes(dislikes);
+
+        animal.addDislikes("Chicken");
+        ArrayList<String> expectedVal1 = new ArrayList<>();
+        expectedVal1.add("Chicken");
+        assertEquals(expectedVal1, animal.getDislikes());
 
         animal.addDislikes("Avocado");
-        dislikes.add("Avocado");
-        assertEquals(dislikes, animal.getDislikes());
+        ArrayList<String> expectedVal2 = new ArrayList<>();
+        expectedVal2.add("Chicken");
+        expectedVal2.add("Avocado");
+        assertEquals(expectedVal2, animal.getDislikes());
     }
 
     @Test

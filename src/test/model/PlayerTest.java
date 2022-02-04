@@ -1,5 +1,7 @@
 package model;
 
+import model.goodsandservices.Item;
+import model.goodsandservices.Shop;
 import model.pets.ExampleAnimal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,15 +17,6 @@ class PlayerTest {
     @BeforeEach
     void runBefore() {
         plr1 = new Player();
-    }
-
-    @Test
-    void renamePlayerTest() {
-        plr1.renamePlayer("New name");
-        assertEquals("New name", plr1.getPlayerName());
-
-        plr1.renamePlayer("Another new name");
-        assertEquals("Another new name", plr1.getPlayerName());
     }
 
     @Test
