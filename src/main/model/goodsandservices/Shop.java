@@ -163,10 +163,8 @@ public class Shop {
                 int randomIndex = RandomGenerator.randomNumberUpTo(itemsNotInShop.size());
                 Item item = itemsNotInShop.get(randomIndex);
 
-                if (!checkIsInShop(item)) {
-                    addShopItem(item, quantity);
-                    itemsNotInShop.remove(item);
-                }
+                addShopItem(item, quantity);
+                itemsNotInShop.remove(item);
             } else {
                 break;
             }
