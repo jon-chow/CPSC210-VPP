@@ -151,17 +151,24 @@ public class Shop {
     }
 
     // MODIFIES: this
-    // REQUIRES: 0 < numItems <= allPossibleItems.size(), and quantity > 0
-    // EFFECTS:  adds a number of random items from
-    //           allPossibleItems to shopItems if the randomly
-    //           chosen item does not exist already, with a given quantity
+    // REQUIRES: 0 < numItems, and quantity > 0
+    // EFFECTS:  adds a number of random items from the disjunction of
+    //           allPossibleItems and shopItems to shopItems with a given quantity
     public void stockWithRandomItems(int numItems, int quantity) {
-        for (int i = 0; i < numItems; i++) {
-            int randomIndex = RandomGenerator.randomNumberUpTo(allPossibleItems.size());
-            Item item = allPossibleItems.get(randomIndex);
+        ArrayList<Item> itemsNotInShop = new ArrayList<>(allPossibleItems);
+        itemsNotInShop.removeAll(shopItems);
 
-            if (!checkIsInShop(item)) {
-                addShopItem(item, quantity);
+        for (int i = 0; i < numItems; i++) {
+            if (itemsNotInShop.size() > 0) {
+                int randomIndex = RandomGenerator.randomNumberUpTo(itemsNotInShop.size());
+                Item item = itemsNotInShop.get(randomIndex);
+
+                if (!checkIsInShop(item)) {
+                    addShopItem(item, quantity);
+                    itemsNotInShop.remove(item);
+                }
+            } else {
+                break;
             }
         }
     }

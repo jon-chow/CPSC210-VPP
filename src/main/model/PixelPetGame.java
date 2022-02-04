@@ -25,9 +25,10 @@ public class PixelPetGame {
 
     // EFFECTS: constructs a new PixelPetGame
     public PixelPetGame() throws IOException {
+        shop = ShopMenu.initShop("Kira Kira Pets!");
+
         player = NewPlayerMenu.initNewPlayer();
         pet = AdoptionMenu.initAdoption();
-        shop = ShopMenu.initShop("Kira Kira Pets!");
     }
 
     // EFFECTS: progresses the game
