@@ -27,38 +27,56 @@ public class Player {
     // REQUIRES: quantity > 0
     // EFFECTS: adds a quantity number of item to the inventory
     public void addToInventory(Item item, int quantity) {
-
+        if (!(inventory.contains(item))) {
+            inventory.add(item);
+            inventoryQuantity.add(quantity);
+        } else {
+            int itemIndex = inventory.indexOf(item);
+            inventoryQuantity.set(itemIndex, inventoryQuantity.get(itemIndex) + quantity);
+        }
     }
 
     // MODIFIES: this
     // REQUIRES: item exists in inventory, and
     //           0 < quantity <= count of item in inventory
     // EFFECTS: removes a quantity number of item from the inventory
+    //          removes item completely if inventory's quantity reaches 0
     public void removeFromInventory(Item item, int quantity) {
+        int itemIndex = inventory.indexOf(item);
+        int newQuantity = inventoryQuantity.get(itemIndex) - quantity;
 
+        if (newQuantity != 0) {
+            inventoryQuantity.set(itemIndex, newQuantity);
+        } else {
+            inventoryQuantity.remove(itemIndex);
+            inventory.remove(itemIndex);
+        }
     }
 
     // MODIFIES: this, Pet
     // REQUIRES: item exists in inventory
     // EFFECTS: removes one count of item from inventory and
-    //          gives item to pet, affecting its care levels
+    //          gives item for pet to consume
     public void giveItemTo(Item item, Pet pet) {
-
+        removeFromInventory(item, 1);
+        pet.consumeItem(item);
     }
 
     // MODIFIES: this, Shop
-    // REQUIRES: item exists in shop,
-    //           quantity >= 0, and
+    // REQUIRES: item exists in shop, and quantity >= 0
     // EFFECTS:  buys item from shop, spending money and
     //           places item in inventory
     //           returns true if item was bought successfully
     public boolean buyItemFrom(Item item, int quantity, Shop shop) {
-        return true;
-    }
+        int price = shop.getItemPrice(item) * quantity;
 
-    // EFFECTS: returns true if money >= cost
-    public boolean checkEnoughMoney(int cost) {
-        return false;
+        if (money >= price) {
+            money -= price;
+            addToInventory(item, quantity);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // GETTERS

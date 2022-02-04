@@ -33,6 +33,44 @@ class ExampleAnimalTest {
     }
 
     @Test
+    void consumeItemLikesTest() {
+        Item item1 = new Item("Chicken","Food");
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
+
+        ArrayList<String> likes = new ArrayList();
+        likes.add("Chicken");
+        animal.setLikes(likes);
+
+        animal.consumeItem(item1);
+        assertEquals((int) (50 + item1.getHappinessPoints() * animal.likesMultiplier), animal.getHappiness());
+        assertEquals((int) (50 + item1.getHungerPoints() * animal.likesMultiplier), animal.getHunger());
+        assertEquals((int) (50 + item1.getThirstPoints() * animal.likesMultiplier), animal.getThirst());
+        assertEquals((int) (50 + item1.getHealthPoints() * animal.likesMultiplier), animal.getHealth());
+    }
+
+    @Test
+    void consumeItemDislikesTest() {
+        Item item1 = new Item("Chicken","Food");
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
+
+        ArrayList<String> dislikes = new ArrayList();
+        dislikes.add("Chicken");
+        animal.setDislikes(dislikes);
+
+        animal.consumeItem(item1);
+        assertEquals((int) (50 + item1.getHappinessPoints() * animal.dislikesMultiplier), animal.getHappiness());
+        assertEquals((int) (50 + item1.getHungerPoints() * animal.dislikesMultiplier), animal.getHunger());
+        assertEquals((int) (50 + item1.getThirstPoints() * animal.dislikesMultiplier), animal.getThirst());
+        assertEquals((int) (50 + item1.getHealthPoints() * animal.dislikesMultiplier), animal.getHealth());
+    }
+
+    @Test
     void makeNoiseTest() {
         assertNotEquals(0, animal.makeNoise().length());
     }

@@ -74,48 +74,72 @@ class PlayerTest {
     void giveItemToTest() {
         Item item1 = new Item("Chicken","Food");
         ExampleAnimal animal = new ExampleAnimal("Animal", "Aleph");
-        animal.setHappiness(50);
-        animal.setHunger(50);
-        animal.setThirst(50);
-        animal.setHealth(50);
+
+        ArrayList<Item> inventory = new ArrayList<>();
+        ArrayList<Integer> inventoryQuantity = new ArrayList<>();
+        inventory.add(item1);
+        inventoryQuantity.add(2);
+        plr1.setInventory(inventory);
+        plr1.setInventoryQuantity(inventoryQuantity);
 
         plr1.giveItemTo(item1, animal);
-        assertEquals(65, animal.getHappiness());
-        assertEquals(70, animal.getHunger());
-        assertEquals(60, animal.getThirst());
-        assertEquals(55, animal.getHealth());
+        ArrayList<Integer> expectedVal1 = new ArrayList<>();
+        expectedVal1.add(1);
+        assertEquals(expectedVal1, plr1.getInventoryQuantity());
+
+        plr1.giveItemTo(item1, animal);
+        ArrayList<Integer> expectedVal2 = new ArrayList<>();
+        assertEquals(expectedVal2, plr1.getInventoryQuantity());
     }
 
     @Test
     void buyItemFromTest() {
-        plr1.setMoney(300);
+        plr1.setMoney(1000);
 
         Shop shop1 = new Shop("Petpix Toys");
         Item item1 = new Item("Chicken", "Food");
+        Item item2 = new Item("Bone", "Toy");
         shop1.addShopItem(item1, 100, 50);
+        shop1.addShopItem(item2, 500, 50);
 
         plr1.buyItemFrom(item1, 1, shop1);
-        ArrayList<Item> expectedVal1 = new ArrayList<>();
-        expectedVal1.add(item1);
-        assertEquals(expectedVal1, plr1.getInventory());
-        assertEquals(100, plr1.getMoney());
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        expectedVal1A.add(item1);
+        expectedVal1B.add(1);
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
+        assertEquals(900, plr1.getMoney());
 
-        plr1.buyItemFrom(item1, 2, shop1);
-        ArrayList<Item> expectedVal2 = new ArrayList<>(Arrays.asList(item1, item1));
-        assertEquals(expectedVal2, plr1.getInventory());
-        assertEquals(0, plr1.getMoney());
-
-        plr1.buyItemFrom(item1, 1, shop1);
-        ArrayList<Item> expectedVal3 = new ArrayList<>(Arrays.asList(item1, item1));
-        assertEquals(expectedVal3, plr1.getInventory());
-        assertEquals(0, plr1.getMoney());
+        plr1.buyItemFrom(item2, 1, shop1);
+        ArrayList<Item> expectedVal3A = new ArrayList<>();
+        ArrayList<Integer> expectedVal3B = new ArrayList<>();
+        expectedVal3A.add(item1);
+        expectedVal3A.add(item2);
+        expectedVal3B.add(1);
+        expectedVal3B.add(1);
+        assertEquals(expectedVal3A, plr1.getInventory());
+        assertEquals(expectedVal3B, plr1.getInventoryQuantity());
+        assertEquals(400, plr1.getMoney());
     }
 
     @Test
-    void checkEnoughMoneyTest() {
-        plr1.setMoney(200);
-        assertTrue(plr1.checkEnoughMoney(199));
-        assertTrue(plr1.checkEnoughMoney(200));
-        assertFalse(plr1.checkEnoughMoney(201));
+    void buyItemFromMultipleTest() {
+        plr1.setMoney(1000);
+
+        Shop shop1 = new Shop("Petpix Toys");
+        Item item1 = new Item("Chicken", "Food");
+        Item item2 = new Item("Bone", "Toy");
+        shop1.addShopItem(item1, 100, 50);
+        shop1.addShopItem(item2, 500, 50);
+
+        plr1.buyItemFrom(item1, 9, shop1);
+        ArrayList<Item> expectedVal2A = new ArrayList<>();
+        ArrayList<Integer> expectedVal2B = new ArrayList<>();
+        expectedVal2A.add(item1);
+        expectedVal2B.add(9);
+        assertEquals(expectedVal2A, plr1.getInventory());
+        assertEquals(expectedVal2B, plr1.getInventoryQuantity());
+        assertEquals(100, plr1.getMoney());
     }
 }

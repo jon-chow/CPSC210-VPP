@@ -14,8 +14,8 @@ import model.goodsandservices.Item;
 public abstract class Pet implements Locomotion {
     public static final FileLocations fileLoc = new FileLocations();
 
-    private final double likesMultiplier = 1.5;
-    private final double dislikesMultiplier = 0.5;
+    public final double likesMultiplier = 1.1;
+    public final double dislikesMultiplier = 0.5;
 
     private File petDataDir;
     private String spritesDir;
@@ -64,10 +64,24 @@ public abstract class Pet implements Locomotion {
             setState(eating());
         }
 
-        incrementCareLevels(item.getHappinessPoints(),
-                            item.getHungerPoints(),
-                            item.getThirstPoints(),
-                            item.getHealthPoints());
+        int happinessGain = item.getHappinessPoints();
+        int hungerGain = item.getHungerPoints();
+        int thirstGain = item.getThirstPoints();
+        int healthGain = item.getHealthPoints();
+
+        if (checkIfLikes(item)) {
+            happinessGain *= likesMultiplier;
+            hungerGain *= likesMultiplier;
+            thirstGain *= likesMultiplier;
+            healthGain *= likesMultiplier;
+        } else if (checkIfDislikes(item)) {
+            happinessGain *= dislikesMultiplier;
+            hungerGain *= dislikesMultiplier;
+            thirstGain *= dislikesMultiplier;
+            healthGain *= dislikesMultiplier;
+        }
+
+        incrementCareLevels(happinessGain, hungerGain, thirstGain, healthGain);
     }
 
     // MODIFIES: this

@@ -74,6 +74,14 @@ public class Shop {
     }
 
     // MODIFIES: this
+    // REQUIRES: item is in shopItems
+    // EFFECTS:  returns the price of a specific item
+    public int getItemPrice(Item item) {
+        int index = shopItems.indexOf(item);
+        return priceOfItems.get(index);
+    }
+
+    // MODIFIES: this
     // EFFECTS:  changes the price of the item in priceOfItems
     public void setItemPrice(Item item, int price) {
         if (checkIsInShop(item)) {
