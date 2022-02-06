@@ -35,38 +35,36 @@ public class AdoptionMenu {
 
     // EFFECTS: prompts a selection for the type of animal of the pet
     private static String adoptionDeclareAnimalType() {
-        String selectedAnimalType;
         String animalTypeListing = "";
         ArrayList<String> allAnimalTypes = adoptionClinic.getAnimalTypes();
 
         System.out.println("Please select the type of pet you would like to adopt from the list below:");
+
         int index = 0;
+        int maxIndex = allAnimalTypes.size() - 1;
         for (String animalType : allAnimalTypes) {
             animalTypeListing += (index != 0 ? "\n" : "") + (index++) + " = " + animalType;
         }
-
         System.out.println(animalTypeListing);
-        selectedAnimalType = allAnimalTypes.get(Integer.parseInt(scanner.nextLine()));
 
-        return selectedAnimalType;
+        return allAnimalTypes.get(getValidIndexSelection(maxIndex));
     }
 
     // EFFECTS: prompts a selection for the breed of the pet
     private static String adoptionDeclareBreed(String selectedAnimalType) throws IOException {
-        String selectedBreed;
         String breedListing = "";
         ArrayList<String> allBreeds = adoptionClinic.fetchBreeds(selectedAnimalType);
 
         System.out.println("\nPlease select the breed of your " + selectedAnimalType + " from the list below:");
+
         int index = 0;
+        int maxIndex = allBreeds.size() - 1;
         for (String breed : allBreeds) {
             breedListing += (index != 0 ? "\n" : "") + (index++) + " = " + breed;
         }
-
         System.out.println(breedListing);
-        selectedBreed = allBreeds.get(Integer.parseInt(scanner.nextLine()));
 
-        return selectedBreed;
+        return allBreeds.get(getValidIndexSelection(maxIndex));
     }
 
     // EFFECTS: returns true if user confirms adoption of pet
@@ -105,5 +103,22 @@ public class AdoptionMenu {
         String choice = scanner.nextLine();
 
         return (choice.equals(CONFIRMATION_KEY));
+    }
+
+    // REQUIRES: maxIndex >= 0
+    // EFFECTS: validates user input selection and returns the selected value
+    private static int getValidIndexSelection(int maxSelection) {
+        boolean validChoice = false;
+        int indexOfSelected = 0;
+        while (!validChoice) {
+            try {
+                indexOfSelected = Integer.parseInt(scanner.nextLine());
+                validChoice = (0 <= indexOfSelected && indexOfSelected <= maxSelection);
+            } catch (NumberFormatException e) {
+                validChoice = false;
+            }
+        }
+
+        return indexOfSelected;
     }
 }
