@@ -127,6 +127,17 @@ public class Shop {
         }
     }
 
+    // EFFECTS: returns a list of all item names in shopItems
+    public ArrayList<String> getShopItemNames() {
+        ArrayList<String> itemNames = new ArrayList<>();
+
+        for (Item item : shopItems) {
+            itemNames.add(item.getName());
+        }
+
+        return itemNames;
+    }
+
     // MODIFIES: this
     // EFFECTS:  adds value to the quantity of item in quantityInStock
     public void changeItemQuantity(Item item, int value) {

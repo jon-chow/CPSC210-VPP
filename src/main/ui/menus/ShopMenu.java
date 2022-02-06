@@ -1,6 +1,5 @@
 package ui.menus;
 
-import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 
 import java.io.IOException;
@@ -10,7 +9,8 @@ public class ShopMenu {
     public static Shop initShop(String shopName) throws IOException {
         Shop shop = new Shop(shopName);
 
-        shop.stockWithRandomItems(3, 20);
+        shop.stockWithRandomItems(2, 15);
+        shop.stockWithRandomItems(3, 10);
 
         return shop;
     }

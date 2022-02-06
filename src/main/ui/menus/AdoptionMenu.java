@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static ui.TerminalApp.scanner;
-import static ui.TerminalApp.CONFIRMATION_KEY;
+import static ui.menus.Commands.*;
 
 public class AdoptionMenu {
     private static AdoptionClinic adoptionClinic;
@@ -57,7 +57,7 @@ public class AdoptionMenu {
         String breedListing = "";
         ArrayList<String> allBreeds = adoptionClinic.fetchBreeds(selectedAnimalType);
 
-        System.out.println("Please select the breed of your " + selectedAnimalType + " from the list below:");
+        System.out.println("\nPlease select the breed of your " + selectedAnimalType + " from the list below:");
         int index = 0;
         for (String breed : allBreeds) {
             breedListing += (index != 0 ? "\n" : "") + (index++) + " = " + breed;
@@ -71,7 +71,7 @@ public class AdoptionMenu {
 
     // EFFECTS: returns true if user confirms adoption of pet
     private static boolean adoptionConfirmAdoption(String animalType, String breed) {
-        System.out.println("You have selected a pet " + animalType + " of the breed " + breed + ".");
+        System.out.println("\nYou have selected a pet " + animalType + " of the breed " + breed + ".");
         System.out.println("Confirm the adoption by entering '"
                             + CONFIRMATION_KEY
                             + "' or enter any other key to make a different choice.");
@@ -87,18 +87,18 @@ public class AdoptionMenu {
 
         boolean confirmedName = false;
         while (!confirmedName) {
-            System.out.println("Please enter a name for your " + pet + ":");
+            System.out.println("\nPlease enter a name for your " + pet + ":");
             nameGiven = scanner.nextLine();
             confirmedName = adoptionConfirmPetName(nameGiven);
         }
         adoptedPet.setName(nameGiven);
 
-        System.out.println("Congratulations! You have successfully adopted " + adoptedPet.getName() + "!");
+        System.out.println("\nCongratulations! You have successfully adopted " + adoptedPet.getName() + "!");
     }
 
     // EFFECTS: returns true if user confirms naming of pet
     private static boolean adoptionConfirmPetName(String name) {
-        System.out.println("You have selected a pet " + name);
+        System.out.println("\nYou have selected your pet's name to be " + name);
         System.out.println("Confirm this name by entering '"
                             + CONFIRMATION_KEY
                             + "' or enter any other key to choose a different name.");

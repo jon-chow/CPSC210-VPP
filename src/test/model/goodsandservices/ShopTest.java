@@ -140,9 +140,11 @@ class ShopTest {
         shop1.setPriceOfItems(new ArrayList<>());
         shop1.setQuantityInStock(new ArrayList<>());
 
-        shop1.stockWithRandomItems(1, 10);
+        shop1.stockWithRandomItems(2, 10);
         int expectedVal1A = shop1.getQuantityInStock().get(0);
-        assertEquals(1, shop1.getShopItems().size());
+        int expectedVal1B= shop1.getQuantityInStock().get(1);
+        assertEquals(2, shop1.getShopItems().size());
         assertEquals(expectedVal1A, 10);
+        assertEquals(expectedVal1B, 10);
     }
 }

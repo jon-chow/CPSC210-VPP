@@ -1,9 +1,10 @@
 package ui;
 
-import model.*;
-
 import java.io.IOException;
 import java.util.Scanner;
+
+import model.*;
+import static ui.menus.Commands.*;
 
 //import com.googlecode.lanterna.TerminalPosition;
 //import com.googlecode.lanterna.TerminalSize;
@@ -20,14 +21,11 @@ import java.util.Scanner;
 
 public class TerminalApp {
     public static final Scanner scanner = new Scanner(System.in);
-    public static final String CONFIRMATION_KEY = "yes";
 
     private PixelPetGame game;
-//    private Screen screen;
 
     public void start() throws IOException, InterruptedException {
-//        screen = new DefaultTerminalFactory().createScreen();
-//        screen.startScreen();
+
         game = new PixelPetGame();
         beginTicks();
     }
@@ -42,21 +40,30 @@ public class TerminalApp {
     }
 
     private void tick() {
+        handleUserInput();
         game.tick();
     }
 
-//    private void handleUserInput() throws IOException {
-//        KeyStroke stroke = screen.pollInput();
-//
-//        if (stroke == null) {
-//            return;
-//        }
-//
-//        if (stroke.getCharacter() != null) {
-//            return;
-//        }
-//    }
-//
+    private void handleUserInput() {
+        String command = scanner.nextLine();
+
+        if (command != null) {
+            switch (command) {
+                case CHECK_PET_KEY:
+                    System.out.println("Checking current status of pet");
+                    break;
+                case OPEN_SHOP_KEY:
+                    System.out.println("Opening shop menu");
+                    break;
+                case OPEN_INVENTORY_KEY:
+                    System.out.println("Opening inventory");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
 //    private void render() {
 //        if (game.isEnded()) {
 //            return;

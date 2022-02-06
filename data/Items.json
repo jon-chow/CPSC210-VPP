@@ -3,19 +3,31 @@
     {
       "itemName": "Chicken",
       "itemType": "Food",
-      "carePoints": [15, 20, 10, 5],
+      "carePoints": [15, 20, 10, 8],
       "price": 230
+    },
+    {
+      "itemName": "Salmon Chunks",
+      "itemType": "Food",
+      "carePoints": [5, 5, 1, 5],
+      "price": 80
+    },
+    {
+      "itemName": "Tug O' Rope",
+      "itemType": "Toy",
+      "carePoints": [24, 0, 0, 8],
+      "price": 80
     },
     {
       "itemName": "Squeaky Mouse",
       "itemType": "Toy",
-      "carePoints": [30, 0, 0, 0],
-      "price": 300
+      "carePoints": [30, 0, 0, 5],
+      "price": 200
     },
     {
       "itemName": "Bone",
       "itemType": "Toy",
-      "carePoints": [21, 0, 0, 0],
+      "carePoints": [21, 0, 0, 5],
       "price": 150
     }
   ]
