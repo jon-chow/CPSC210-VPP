@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static ui.TerminalApp.scanner;
-import static ui.menus.Commands.*;
+import static ui.configurables.Commands.*;
 
 public class AdoptionMenu {
     private static AdoptionClinic adoptionClinic;
@@ -96,7 +96,7 @@ public class AdoptionMenu {
 
     // EFFECTS: returns true if user confirms naming of pet
     private static boolean adoptionConfirmPetName(String name) {
-        System.out.println("\nYou have selected your pet's name to be " + name);
+        System.out.println("\nYou have selected your pet's name to be \"" + name + "\".");
         System.out.println("Confirm this name by entering '"
                             + CONFIRMATION_KEY
                             + "' or enter any other key to choose a different name.");
