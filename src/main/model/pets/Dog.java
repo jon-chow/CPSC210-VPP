@@ -1,15 +1,15 @@
 package model.pets;
 
+import model.configurables.RandomGenerator;
+
 import java.io.File;
 import java.util.ArrayList;
 
-import model.configurables.RandomGenerator;
+public class Dog extends Pet implements Locomotion {
+    private final String dataKey = "Dog";
 
-public class ExampleAnimal extends Pet implements Locomotion {
-    private final String dataKey = "ExampleAnimal";
-
-    // EFFECTS: constructs an ExampleAnimal with name and breed
-    public ExampleAnimal(String name, String breed) {
+    // EFFECTS: constructs a Dog with name and breed
+    public Dog(String name, String breed) {
         super(name);
         super.setAnimalType(dataKey);
         super.setBreed(breed);
