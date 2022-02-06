@@ -25,6 +25,7 @@ vastness of **OOP** in both a **structural** and **creative** manner.
     <li>"...choose the type of animal and the breed of my pet"</li>
     <li>"...buy items at a shop and store them in my inventory"</li>
     <li>"...give treats/toys/food to my pet from my inventory"</li>
-    <li>"...learn about my pet's health and personalities"</li>
-    <li>"...access different menus such as the store or inventory"</li>
+    <li>"...learn about my pet's health, personalities, likes and dislikes"</li>
+    <li>"...access different menus such as the store or my inventory"</li>
+    <li>"...earn in-game money"</li>
 </ul>
