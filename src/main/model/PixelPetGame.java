@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import model.goodsandservices.Shop;
 import model.pets.*;
@@ -21,15 +22,18 @@ public class PixelPetGame {
     private boolean endGame = false;
     private Player player;
     private Pet pet;
-    private Shop shop;
+
+    private ArrayList<Shop> shops;
 
     // EFFECTS: constructs a new PixelPetGame
     public PixelPetGame() throws IOException {
-        shop = ShopMenu.initShop("Kira Kira Pets!");
+        Shop shop = ShopMenu.initShop("Kira Kira Pets");
+        shops = new ArrayList<>();
+        shops.add(shop);
 
         player = NewPlayerMenu.initNewPlayer();
         pet = AdoptionMenu.initAdoption();
-        TutorialMenu.showControls();
+        ViewCommandsMenu.showControls();
     }
 
     // EFFECTS: progresses the game
@@ -37,8 +41,6 @@ public class PixelPetGame {
         ticksPassed++;
         if (ticksPassed % TICKS_PER_SECOND == 0) {
             secondsPassed++;
-
-            System.out.println(secondsPassed);
 
             pet.decrementCareLevels(HAPPINESS_LOSS_PER_SECOND,
                     HUNGER_LOSS_PER_SECOND,
@@ -56,11 +58,21 @@ public class PixelPetGame {
         return endGame;
     }
 
-    // GETTERS
-    public Shop getShop() {
-        return shop;
+    // EFFECTS: returns the Shop of the given shopName
+    public Shop getShopByName(String shopName) {
+        Shop theShop = null;
+
+        for (Shop shop : shops) {
+            if (shop.getShopName() == shopName) {
+                theShop = shop;
+                break;
+            }
+        }
+
+        return theShop;
     }
 
+    // GETTERS
     public Player getPlayer() {
         return player;
     }

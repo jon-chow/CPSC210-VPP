@@ -4,7 +4,12 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import model.*;
-import static ui.menus.Commands.*;
+import ui.menus.InventoryMenu;
+import ui.menus.PetDiedMenu;
+import ui.menus.ShopMenu;
+import ui.menus.ViewCommandsMenu;
+
+import static ui.configurables.Commands.*;
 
 //import com.googlecode.lanterna.TerminalPosition;
 //import com.googlecode.lanterna.TerminalSize;
@@ -25,7 +30,6 @@ public class TerminalApp {
     private PixelPetGame game;
 
     public void start() throws IOException, InterruptedException {
-
         game = new PixelPetGame();
         beginTicks();
     }
@@ -36,6 +40,7 @@ public class TerminalApp {
             Thread.sleep(1000L / PixelPetGame.TICKS_PER_SECOND);
         }
 
+        PetDiedMenu.showGameOverMenu();
         System.exit(0);
     }
 
@@ -49,14 +54,16 @@ public class TerminalApp {
 
         if (command != null) {
             switch (command) {
-                case CHECK_PET_KEY:
-                    System.out.println("Checking current status of pet");
+                case COMMANDS_KEY: ViewCommandsMenu.showControls();
                     break;
-                case OPEN_SHOP_KEY:
-                    System.out.println("Opening shop menu");
+                case CHECK_PET_KEY: System.out.println("Checking current status of pet");
                     break;
-                case OPEN_INVENTORY_KEY:
-                    System.out.println("Opening inventory");
+                case OPEN_SHOP_KEY: ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"),
+                        game.getPlayer());
+                    break;
+                case OPEN_INVENTORY_KEY: System.out.println("Opening inventory");
+                    break;
+                case VIEW_MONEY_KEY: InventoryMenu.checkMoney(game.getPlayer());
                     break;
                 default:
                     break;
