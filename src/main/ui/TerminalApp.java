@@ -29,11 +29,13 @@ public class TerminalApp {
 
     private PixelPetGame game;
 
+    // EFFECTS: creates a new instance of PixelPetGame
     public void start() throws IOException, InterruptedException {
         game = new PixelPetGame();
         beginTicks();
     }
 
+    // EFFECTS: begins the ticking process; game is running
     private void beginTicks() throws InterruptedException {
         while (!game.isEnded()) {
             tick();
@@ -44,11 +46,13 @@ public class TerminalApp {
         System.exit(0);
     }
 
+    // EFFECTS: adds one tick to the game; proceeds the game
     private void tick() {
         game.tick();
         handleUserInput();
     }
 
+    // EFFECTS: handles user commands and inputs
     private void handleUserInput() {
         String command = scanner.nextLine();
 
@@ -71,6 +75,7 @@ public class TerminalApp {
         }
     }
 
+//    // EFFECTS: renders the ui graphics for the game
 //    private void render() {
 //        if (game.isEnded()) {
 //            return;

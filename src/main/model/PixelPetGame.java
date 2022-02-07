@@ -2,12 +2,16 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import model.goodsandservices.Shop;
 import model.pets.*;
 import ui.menus.*;
 
 public class PixelPetGame {
+    public static final ArrayList<String> ANIMALS_IN_ADOPTION_CLINIC =
+            new ArrayList<>(Arrays.asList("Example Animal", "Dog"));
+
     public static final int TICKS_PER_SECOND = 1;
 
     public static final int MAX_HAPPINESS = 100;

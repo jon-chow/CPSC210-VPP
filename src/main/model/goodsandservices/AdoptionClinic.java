@@ -10,18 +10,21 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import static model.PixelPetGame.ANIMALS_IN_ADOPTION_CLINIC;
+
 public class AdoptionClinic {
     private ArrayList<String> animalTypes;
 
     // EFFECTS: constructs an AdoptionClinic with a list of animalType options
     public AdoptionClinic() {
-        animalTypes = new ArrayList<>(Arrays.asList("Example Animal"));
+        animalTypes = ANIMALS_IN_ADOPTION_CLINIC;
     }
 
     // REQUIRES: breed is a valid breed of animalType
     // EFFECTS: produces a Pet of the subclass animalType of a specified breed
     public Pet generatePet(String animalType, String breed) throws IOException {
         switch (animalType) {
+            case "Dog": return new Dog(breed, breed);
             default: return new ExampleAnimal(breed, breed);
         }
     }
