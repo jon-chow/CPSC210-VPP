@@ -5,6 +5,8 @@ import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import static ui.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
@@ -23,39 +25,99 @@ public class ShopMenu {
     // EFFECTS: opens the Shop menu of shop for player
     public static void openShopMenu(Shop shop, Player player) {
         System.out.println("\nWelcome to " + shop.getShopName() + ", " + player.getPlayerName() + "!");
-        showBuyables(shop);
+        showBuyables(shop, player);
     }
 
     // EFFECTS: displays all buyable items from the shop
     //          with their name, type, price, and quantity in stock
-    private static void showBuyables(Shop shop) {
-        boolean hasExited = false;
-
-        System.out.println("Here's a list of items you can buy at " + shop.getShopName() + ":");
-        System.out.println("[ ITEM NAME || ITEM TYPE || PRICE || QUANTITY IN-STOCK ]");
+    private static void showBuyables(Shop shop, Player player) {
         printItems(shop);
 
-        System.out.println("\nTo buy something, enter in the item name, item type,"
-                            + " and the quantity you want to purchase.\nEx. 'chicken food 2'");
+        System.out.println("\nTo leave the shop, enter in 'exit'.");
+        System.out.println("To buy something, enter in the item name, item type,"
+                            + "\nand the quantity you would like to purchase using '::' as a separator."
+                            + "\nYour command should follow the format 'item name::item type::quantity'."
+                            + "\nEx. 'Ball of Yarn::Toy::1', 'chicken::food::99'");
 
-        System.out.println("To leave the shop, enter in 'exit'.");
+        awaitCommands(shop, player);
+    }
+
+    // EFFECTS: awaits and handles user input for commands
+    private static void awaitCommands(Shop shop, Player player) {
+        boolean hasExited = false;
 
         while (!hasExited) {
             String command = scanner.nextLine();
 
             if (command != null) {
-                switch (command) {
-                    case EXIT_MENU_KEY: System.out.println("You have left " + shop.getShopName() + ".");
-                        hasExited = true;
-                        break;
-                    default:
-                        break;
+                String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + "::"
+                        + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + "::"
+                        + "[1-9]\\d{0,}$";
+                Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                boolean hasFoundMatch = pattern.matcher(command).find();
+
+                if (hasFoundMatch) {
+                    buyItems(command, shop, player);
+                } else if (command.equals(EXIT_MENU_KEY)) {
+                    System.out.println("You have left " + shop.getShopName() + ".");
+                    hasExited = true;
                 }
             }
         }
     }
 
+    // REQUIRES: command has three clauses, separated by '::',
+    //           and of the format 'String::String::Integer'
+    // EFFECTS: checks to see if buying the item is valid,
+    //          then handles the player transaction if valid
+    private static void buyItems(String command, Shop shop, Player player) {
+        String[] extractedCommand = command.split("::");
+        String itemName = extractedCommand[0];
+        String itemType = extractedCommand[1];
+        int quantity = Integer.parseInt(extractedCommand[2]);
+        Item itemToCheck = validItem(itemName, itemType, shop);
+
+        if (itemToCheck != null) {
+            if (player.buyItemFrom(itemToCheck, quantity, shop)) {
+                System.out.println("You have successfully purchased "
+                                    + itemToCheck.getName()
+                                    + " (x" + quantity + ")!");
+                System.out.println("Your remaining money is $" + player.getMoney() + "\n");
+            } else {
+                System.out.println("Transaction failed. You either don't have enough money,"
+                                    + " or there is not enough of that item in stock.");
+                System.out.println("Your currently have $" + player.getMoney() + "\n");
+                printItems(shop);
+            }
+        } else {
+            System.out.println("Error! Cannot find item \"" + itemName + "\" of the type \"" + itemType + "\"!");
+            System.out.println("Be sure to enter the item name and type correctly!\n");
+        }
+    }
+
+    // EFFECTS: returns the item if there exists an item of the name itemName and type itemType
+    private static Item validItem(String itemName, String itemType, Shop shop) {
+        ArrayList<Item> shopItems = shop.getShopItems();
+        for (int i = 0; i < shopItems.size(); i++) {
+            Item item = shopItems.get(i);
+
+            String comparingName = item.getName().toLowerCase();
+            String comparingType = item.getType().toLowerCase();
+            boolean foundItemName = (comparingName.equals(itemName.toLowerCase()));
+            boolean foundItemType = (comparingType.equals(itemType.toLowerCase()));
+
+            if (foundItemName && foundItemType) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    // EFFECTS: displays all items that can be purchased in shop
     private static void printItems(Shop shop) {
+        System.out.println("Here's a list of items you can buy at " + shop.getShopName() + ":");
+        System.out.println("[ ITEM NAME || ITEM TYPE || PRICE || QUANTITY IN-STOCK ]");
+
         for (int i = 0; i < shop.getShopItems().size(); i++) {
             Item item = shop.getShopItems().get(i);
             String itemName = item.getName();

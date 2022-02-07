@@ -58,7 +58,8 @@ public class PixelPetGame {
         return endGame;
     }
 
-    // EFFECTS: returns the Shop of the given shopName
+    // REQUIRES: Shop with given shopName exists
+    // EFFECTS: returns the Shop with the given shopName
     public Shop getShopByName(String shopName) {
         Shop theShop = null;
 
