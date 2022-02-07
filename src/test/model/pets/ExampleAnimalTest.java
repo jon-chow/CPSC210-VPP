@@ -1,12 +1,14 @@
 package model.pets;
 
-import model.goodsandservices.Item;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import model.goodsandservices.Item;
+
+import static model.PixelPetGame.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ExampleAnimalTest {
@@ -164,7 +166,7 @@ class ExampleAnimalTest {
         animal.setThirst(100);
         animal.setHealth(100);
 
-        animal.decrementCareLevels(10,20,30,40);
+        animal.decrementCareLevels(10, 20, 30, 40);
         assertEquals(90, animal.getHappiness());
         assertEquals(80, animal.getHunger());
         assertEquals(70, animal.getThirst());
@@ -172,17 +174,45 @@ class ExampleAnimalTest {
     }
 
     @Test
-    void incrementCareLevels() {
+    void decrementCareLevelsMinTest() {
+        animal.setHappiness(0);
+        animal.setHunger(0);
+        animal.setThirst(0);
+        animal.setHealth(0);
+
+        animal.decrementCareLevels(1,1,1,1);
+        assertEquals(0, animal.getHappiness());
+        assertEquals(0, animal.getHunger());
+        assertEquals(0, animal.getThirst());
+        assertEquals(0, animal.getHealth());
+    }
+
+    @Test
+    void incrementCareLevelsTest() {
         animal.setHappiness(50);
         animal.setHunger(50);
         animal.setThirst(50);
         animal.setHealth(50);
 
-        animal.incrementCareLevels(10,20,30,40);
+        animal.incrementCareLevels(10, 20, 30, 40);
         assertEquals(60, animal.getHappiness());
         assertEquals(70, animal.getHunger());
         assertEquals(80, animal.getThirst());
         assertEquals(90, animal.getHealth());
+    }
+
+    @Test
+    void incrementCareLevelsMaxTest() {
+        animal.setHappiness(MAX_HAPPINESS);
+        animal.setHunger(MAX_HAPPINESS);
+        animal.setThirst(MAX_HAPPINESS);
+        animal.setHealth(MAX_HAPPINESS);
+
+        animal.incrementCareLevels(1,1,1,1);
+        assertEquals(MAX_HAPPINESS, animal.getHappiness());
+        assertEquals(MAX_HAPPINESS, animal.getHunger());
+        assertEquals(MAX_HAPPINESS, animal.getThirst());
+        assertEquals(MAX_HAPPINESS, animal.getHealth());
     }
 
     @Test

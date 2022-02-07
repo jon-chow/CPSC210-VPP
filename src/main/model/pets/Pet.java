@@ -11,6 +11,8 @@ import java.util.Arrays;
 import model.configurables.FileLocations;
 import model.goodsandservices.Item;
 
+import static model.PixelPetGame.*;
+
 public abstract class Pet implements Locomotion {
     public static final FileLocations fileLoc = new FileLocations();
 
@@ -124,9 +126,24 @@ public abstract class Pet implements Locomotion {
     // EFFECTS:  decreases pet's corresponding care levels
     public void decrementCareLevels(int happiness, int hunger, int thirst, int health) {
         this.happiness -= happiness;
+        if (this.happiness < 0) {
+            this.happiness = 0;
+        }
+
         this.hunger -= hunger;
-        this.thirst -= thirst;
+        if (this.hunger < 0) {
+            this.hunger = 0;
+        }
+
         this.health -= health;
+        if (this.health < 0) {
+            this.health = 0;
+        }
+
+        this.thirst -= thirst;
+        if (this.thirst < 0) {
+            this.thirst = 0;
+        }
     }
 
     // MODIFIES: this
@@ -134,9 +151,24 @@ public abstract class Pet implements Locomotion {
     // EFFECTS:  increases pet's corresponding care levels
     public void incrementCareLevels(int happiness, int hunger, int thirst, int health) {
         this.happiness += happiness;
+        if (this.happiness > MAX_HAPPINESS) {
+            this.happiness = MAX_HAPPINESS;
+        }
+
         this.hunger += hunger;
-        this.thirst += thirst;
+        if (this.hunger > MAX_HUNGER) {
+            this.hunger = MAX_HUNGER;
+        }
+
         this.health += health;
+        if (this.health > MAX_HEALTH) {
+            this.health = MAX_HEALTH;
+        }
+
+        this.thirst += thirst;
+        if (this.thirst > MAX_THIRST) {
+            this.thirst = MAX_THIRST;
+        }
     }
 
     // MODIFIES: this
