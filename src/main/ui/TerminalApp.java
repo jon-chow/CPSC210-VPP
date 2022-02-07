@@ -45,8 +45,8 @@ public class TerminalApp {
     }
 
     private void tick() {
-        handleUserInput();
         game.tick();
+        handleUserInput();
     }
 
     private void handleUserInput() {
@@ -56,12 +56,12 @@ public class TerminalApp {
             switch (command) {
                 case COMMANDS_KEY: ViewCommandsMenu.showControls();
                     break;
-                case CHECK_PET_KEY: System.out.println("Checking current status of pet");
+                case CHECK_PET_KEY: System.out.println("Checking current status of pet"); // TODO
                     break;
-                case OPEN_SHOP_KEY: ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"),
-                        game.getPlayer());
+                case OPEN_SHOP_KEY:
+                    ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"), game.getPlayer());
                     break;
-                case OPEN_INVENTORY_KEY: System.out.println("Opening inventory");
+                case OPEN_INVENTORY_KEY: InventoryMenu.viewInventory(game.getPlayer());
                     break;
                 case VIEW_MONEY_KEY: InventoryMenu.checkMoney(game.getPlayer());
                     break;

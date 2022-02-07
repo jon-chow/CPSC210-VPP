@@ -32,7 +32,9 @@ public class ShopMenu {
     // EFFECTS: displays all buyable items from the shop
     //          with their name, type, price, and quantity in stock
     private static void showBuyables(Shop shop, Player player) {
-        System.out.println("- To view what's in-store, enter in '" + VIEW_ITEMS_KEY + "'.");
+        printItems(shop);
+
+        System.out.println("\n- To view what's in-store, enter in '" + VIEW_ITEMS_KEY + "'.");
         System.out.println("- To leave the shop, enter in '" + EXIT_MENU_KEY + "'.");
         System.out.println("- To buy something, enter in the item name, item type,"
                             + "\nand the quantity you would like to purchase using '"
@@ -92,7 +94,6 @@ public class ShopMenu {
                 System.out.println("Transaction failed. You either don't have enough money,"
                                     + " or there is not enough of that item in stock.");
                 System.out.println("Your currently have $" + player.getMoney() + "\n");
-                printItems(shop);
             }
         } else {
             System.out.println("Error! Cannot find item \"" + itemName + "\" of the type \"" + itemType + "\"!");

@@ -76,17 +76,6 @@ public class Shop {
         }
     }
 
-    // MODIFIES: this, Player
-    // REQUIRES: quantity > 0
-    // EFFECTS:  sells item to player,
-    //           decreasing its value in quantityInStock by quantity.
-    //           Also, removes item if its quantityInStock == 0
-    public void sellItemTo(Item item, int quantity, Player player) {
-        if (checkIsInShop(item) && player.buyItemFrom(item, quantity, this)) {
-            changeItemQuantity(item, -quantity);
-        }
-    }
-
     // MODIFIES: this
     // REQUIRES: item is in shopItems
     // EFFECTS:  returns the quantity of a specific item
@@ -140,6 +129,7 @@ public class Shop {
 
     // MODIFIES: this
     // EFFECTS:  adds value to the quantity of item in quantityInStock
+    //           removes item if quantity becomes 0
     public void changeItemQuantity(Item item, int value) {
         if (checkIsInShop(item)) {
             ArrayList<Integer> newStocks = getQuantityInStock();
@@ -147,8 +137,12 @@ public class Shop {
             int currentlyStocked = newStocks.get(index);
             int newStocked = currentlyStocked + value;
 
-            newStocks.set(index, newStocked);
-            setQuantityInStock(newStocks);
+            if (newStocked == 0) {
+                removeShopItem(item);
+            } else {
+                newStocks.set(index, newStocked);
+                setQuantityInStock(newStocks);
+            }
         }
     }
 

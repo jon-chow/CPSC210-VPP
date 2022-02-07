@@ -65,7 +65,7 @@ public class Player {
     // MODIFIES: this, Shop
     // REQUIRES: item exists in shop, and quantity >= 0
     // EFFECTS:  buys item from shop, spending money and
-    //           places item in inventory
+    //           places item in inventory, while decreasing shop's stock
     //           returns true if item was bought successfully
     public boolean buyItemFrom(Item item, int quantity, Shop shop) {
         int price = shop.getItemPrice(item) * quantity;
@@ -73,6 +73,7 @@ public class Player {
         if (money >= price) {
             money -= price;
             addToInventory(item, quantity);
+            shop.changeItemQuantity(item, -quantity);
             return true;
         } else {
             return false;
