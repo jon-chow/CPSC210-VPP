@@ -45,8 +45,8 @@ public class ShopMenu {
         System.out.println("- To buy something, enter in the item name, item type,"
                             + "\nand the quantity you would like to purchase using '"
                             + SEPARATOR_KEY + "' as a separator."
-                            + "\nYour command should follow the format 'item name" + SEPARATOR_KEY
-                            + "item type" + SEPARATOR_KEY + "quantity'."
+                            + "\nYour command should follow the format 'item name'" + SEPARATOR_KEY
+                            + "'item type'" + SEPARATOR_KEY + "'quantity'."
                             + "\nEx. 'Ball of Yarn" + SEPARATOR_KEY + "Toy" + SEPARATOR_KEY
                             + "1', 'chicken" + SEPARATOR_KEY + "food" + SEPARATOR_KEY + "99'");
 
