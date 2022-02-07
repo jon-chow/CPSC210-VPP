@@ -12,8 +12,8 @@ import static ui.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class InventoryMenu {
-    private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
-            + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+    private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + INVENTORY_SEPARATOR_KEY
+            + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + INVENTORY_SEPARATOR_KEY
             + "[1-9]\\d{0,}$";
     private static final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
@@ -30,6 +30,7 @@ public class InventoryMenu {
         if (inventorySize != 0) {
             System.out.println("Here's a list of items in your inventory:");
             System.out.println("[ ITEM NAME || ITEM TYPE || QUANTITY ]");
+
             for (int i = 0; i < inventorySize; i++) {
                 Item item = inventory.get(i);
                 String itemName = item.getName();
@@ -39,15 +40,26 @@ public class InventoryMenu {
                 System.out.println("- " + itemName + " || "
                         + itemType + " || x"
                         + quantity);
-
-                System.out.println("\nTo give your pet an item, enter in '" + GIVE_TO_KEY + "'.");
-                System.out.println("Otherwise, enter in any other key to leave the inventory menu.");
-
-                awaitCommands(player, pet);
             }
+
+            displayCommands();
+            awaitCommands(player, pet);
         } else {
             System.out.println("[ Your inventory is currently empty... ]\n");
         }
+    }
+
+    // EFFECTS: displays all possible commands in the current menu
+    private static void displayCommands() {
+        System.out.println("\nTo give your pet an item, enter in '" + GIVE_TO_KEY + "' followed by the item name,"
+                + "\nitem type, and the quantity you would like to give to your pet using '"
+                + INVENTORY_SEPARATOR_KEY + "' as a separator."
+                + "\nYour command should follow the format 'give item name" + INVENTORY_SEPARATOR_KEY
+                + "item type" + INVENTORY_SEPARATOR_KEY + "quantity'."
+                + "\nEx. '" + GIVE_TO_KEY + " Ball of Yarn" + INVENTORY_SEPARATOR_KEY + "Toy" + INVENTORY_SEPARATOR_KEY
+                + "1', '" + GIVE_TO_KEY + " chicken" + INVENTORY_SEPARATOR_KEY + "food"
+                + INVENTORY_SEPARATOR_KEY + "99'");
+        System.out.println("Otherwise, enter in '" + EXIT_MENU_KEY + "' to leave the inventory menu.");
     }
 
     // EFFECTS: awaits and handles user input for commands
@@ -57,21 +69,15 @@ public class InventoryMenu {
         while (!hasExited) {
             String command = scanner.nextLine();
 
-            if (command.equals(GIVE_TO_KEY)) {
-                System.out.println("Enter in the item name, item type,"
-                        + "\nand the quantity you would like to give to your pet using '"
-                        + SEPARATOR_KEY + "' as a separator."
-                        + "\nYour command should follow the format 'item name" + SEPARATOR_KEY
-                        + "item type" + SEPARATOR_KEY + "quantity'."
-                        + "\nEx. 'Ball of Yarn" + SEPARATOR_KEY + "Toy" + SEPARATOR_KEY
-                        + "1', 'chicken" + SEPARATOR_KEY + "food" + SEPARATOR_KEY + "99'");
+            if (command.startsWith(GIVE_TO_KEY + " ")) {
+                command = command.replaceAll(GIVE_TO_KEY + " ", "");
 
-                command = scanner.nextLine();
                 if (command != null && pattern.matcher(command).find()) {
                     giveItemsTo(command, pet, player);
                 }
-            } else {
+            } else if (command.equals(EXIT_MENU_KEY)) {
                 hasExited = true;
+                System.out.println("You have left the inventory menu.");
             }
         }
     }
@@ -81,7 +87,7 @@ public class InventoryMenu {
     // EFFECTS: checks to see if buying the item is valid,
     //          then handles the player transaction if valid
     private static void giveItemsTo(String command, Pet pet, Player player) {
-        String[] extractedCommand = command.split(SEPARATOR_KEY);
+        String[] extractedCommand = command.split(INVENTORY_SEPARATOR_KEY);
         String itemName = extractedCommand[0];
         String itemType = extractedCommand[1];
         int quantity = Integer.parseInt(extractedCommand[2]);

@@ -12,8 +12,8 @@ import static ui.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class ShopMenu {
-    private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
-            + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+    private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SHOP_SEPARATOR_KEY
+            + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SHOP_SEPARATOR_KEY
             + "[1-9]\\d{0,}$";
     private static final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
@@ -38,19 +38,22 @@ public class ShopMenu {
     //          with their name, type, price, and quantity in stock
     private static void showBuyables(Shop shop, Player player) {
         printItems(shop);
+        displayCommands();
+        awaitCommands(shop, player);
+    }
 
+    // EFFECTS: displays all possible commands in the current menu
+    private static void displayCommands() {
         System.out.println("\n- To view what's in-store, enter in '" + VIEW_ITEMS_KEY + "'.");
         System.out.println("- To check how much money you have, enter in '" + VIEW_MONEY_KEY + "'.");
         System.out.println("- To leave the shop, enter in '" + EXIT_MENU_KEY + "'.");
-        System.out.println("- To buy something, enter in the item name, item type,"
-                            + "\nand the quantity you would like to purchase using '"
-                            + SEPARATOR_KEY + "' as a separator."
-                            + "\nYour command should follow the format 'item name" + SEPARATOR_KEY
-                            + "item type" + SEPARATOR_KEY + "quantity'."
-                            + "\nEx. 'Ball of Yarn" + SEPARATOR_KEY + "Toy" + SEPARATOR_KEY
-                            + "1', 'chicken" + SEPARATOR_KEY + "food" + SEPARATOR_KEY + "99'");
-
-        awaitCommands(shop, player);
+        System.out.println("- To buy something, enter in '" + BUY_ITEM_KEY + "' followed by the item name,"
+                + "\nitem type, and the quantity you would like to purchase using '"
+                + SHOP_SEPARATOR_KEY + "' as a separator."
+                + "\nYour command should follow the format 'buy item name" + SHOP_SEPARATOR_KEY
+                + "item type" + SHOP_SEPARATOR_KEY + "quantity'."
+                + "\nEx. '" + BUY_ITEM_KEY + " Ball of Yarn" + SHOP_SEPARATOR_KEY + "Toy" + SHOP_SEPARATOR_KEY
+                + "1', '" + BUY_ITEM_KEY + " chicken" + SHOP_SEPARATOR_KEY + "food" + SHOP_SEPARATOR_KEY + "99'");
     }
 
     // EFFECTS: awaits and handles user input for commands
@@ -60,21 +63,23 @@ public class ShopMenu {
         while (!hasExited) {
             String command = scanner.nextLine();
 
-            if (command != null) {
-                if (pattern.matcher(command).find()) {
+            if (command.startsWith(BUY_ITEM_KEY + " ")) {
+                command = command.replaceAll(BUY_ITEM_KEY + " ", "");
+
+                if (command != null && pattern.matcher(command).find()) {
                     buyItems(command, shop, player);
-                } else {
-                    switch (command) {
-                        case VIEW_ITEMS_KEY: printItems(shop);
-                            break;
-                        case VIEW_MONEY_KEY: InventoryMenu.checkMoney(player);
-                            break;
-                        case EXIT_MENU_KEY:
-                            System.out.println("You have left " + shop.getShopName() + ".");
-                            hasExited = true;
-                            break;
-                        default: break;
-                    }
+                }
+            } else {
+                switch (command) {
+                    case VIEW_ITEMS_KEY: printItems(shop);
+                        break;
+                    case VIEW_MONEY_KEY: InventoryMenu.checkMoney(player);
+                        break;
+                    case EXIT_MENU_KEY: System.out.println("You have left " + shop.getShopName() + ".");
+                        hasExited = true;
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -85,7 +90,7 @@ public class ShopMenu {
     // EFFECTS: checks to see if buying the item is valid,
     //          then handles the player transaction if valid
     private static void buyItems(String command, Shop shop, Player player) {
-        String[] extractedCommand = command.split(SEPARATOR_KEY);
+        String[] extractedCommand = command.split(SHOP_SEPARATOR_KEY);
         String itemName = extractedCommand[0];
         String itemType = extractedCommand[1];
         int quantity = Integer.parseInt(extractedCommand[2]);
