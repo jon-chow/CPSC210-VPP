@@ -24,20 +24,23 @@ public class ShopMenu {
 
     // EFFECTS: opens the Shop menu of shop for player
     public static void openShopMenu(Shop shop, Player player) {
-        System.out.println("\nWelcome to " + shop.getShopName() + ", " + player.getPlayerName() + "!");
+        System.out.println("\nWelcome to " + shop.getShopName() + ", " + player.getPlayerName() + "!"
+                            + " You currently have $" + player.getMoney() + "!");
         showBuyables(shop, player);
     }
 
     // EFFECTS: displays all buyable items from the shop
     //          with their name, type, price, and quantity in stock
     private static void showBuyables(Shop shop, Player player) {
-        printItems(shop);
-
-        System.out.println("\nTo leave the shop, enter in 'exit'.");
-        System.out.println("To buy something, enter in the item name, item type,"
-                            + "\nand the quantity you would like to purchase using '::' as a separator."
-                            + "\nYour command should follow the format 'item name::item type::quantity'."
-                            + "\nEx. 'Ball of Yarn::Toy::1', 'chicken::food::99'");
+        System.out.println("- To view what's in-store, enter in '" + VIEW_ITEMS_KEY + "'.");
+        System.out.println("- To leave the shop, enter in '" + EXIT_MENU_KEY + "'.");
+        System.out.println("- To buy something, enter in the item name, item type,"
+                            + "\nand the quantity you would like to purchase using '"
+                            + SEPARATOR_KEY + "' as a separator."
+                            + "\nYour command should follow the format 'item name" + SEPARATOR_KEY
+                            + "item type" + SEPARATOR_KEY + "quantity'."
+                            + "\nEx. 'Ball of Yarn" + SEPARATOR_KEY + "Toy" + SEPARATOR_KEY
+                            + "1', 'chicken" + SEPARATOR_KEY + "food" + SEPARATOR_KEY + "99'");
 
         awaitCommands(shop, player);
     }
@@ -50,14 +53,16 @@ public class ShopMenu {
             String command = scanner.nextLine();
 
             if (command != null) {
-                String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + "::"
-                        + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + "::"
+                String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+                        + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
                         + "[1-9]\\d{0,}$";
                 Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
                 boolean hasFoundMatch = pattern.matcher(command).find();
 
                 if (hasFoundMatch) {
                     buyItems(command, shop, player);
+                } else if (command.equals(VIEW_ITEMS_KEY)) {
+                    printItems(shop);
                 } else if (command.equals(EXIT_MENU_KEY)) {
                     System.out.println("You have left " + shop.getShopName() + ".");
                     hasExited = true;
@@ -66,12 +71,12 @@ public class ShopMenu {
         }
     }
 
-    // REQUIRES: command has three clauses, separated by '::',
-    //           and of the format 'String::String::Integer'
+    // REQUIRES: command has three clauses, separated by SEPARATOR_KEY,
+    //           and of the format 'String''SEPARATOR_KEY''String''SEPARATOR_KEY''Integer'
     // EFFECTS: checks to see if buying the item is valid,
     //          then handles the player transaction if valid
     private static void buyItems(String command, Shop shop, Player player) {
-        String[] extractedCommand = command.split("::");
+        String[] extractedCommand = command.split(SEPARATOR_KEY);
         String itemName = extractedCommand[0];
         String itemType = extractedCommand[1];
         int quantity = Integer.parseInt(extractedCommand[2]);
@@ -115,7 +120,7 @@ public class ShopMenu {
 
     // EFFECTS: displays all items that can be purchased in shop
     private static void printItems(Shop shop) {
-        System.out.println("Here's a list of items you can buy at " + shop.getShopName() + ":");
+        System.out.println("\nHere's a list of items you can purchase at " + shop.getShopName() + ":");
         System.out.println("[ ITEM NAME || ITEM TYPE || PRICE || QUANTITY IN-STOCK ]");
 
         for (int i = 0; i < shop.getShopItems().size(); i++) {
@@ -125,10 +130,10 @@ public class ShopMenu {
             int price = shop.getPriceOfItems().get(i);
             int quantityInStock = shop.getQuantityInStock().get(i);
 
-            System.out.println("[ " + itemName + " || "
-                                    + itemType + " || "
-                                    + price + " || "
-                                    + quantityInStock + " ]");
+            System.out.println("- " + itemName + " || "
+                                    + itemType + " || $"
+                                    + price + " || x"
+                                    + quantityInStock);
         }
     }
 }
