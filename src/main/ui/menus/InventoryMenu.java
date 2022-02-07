@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class InventoryMenu {
     // EFFECTS: displays the amount of money the player has
     public static void checkMoney(Player player) {
-        System.out.println("You have $" + player.getMoney() + ".");
+        System.out.println("You currently have $" + player.getMoney() + ".");
     }
 
     // EFFECTS: displays a list of items in the player's inventory

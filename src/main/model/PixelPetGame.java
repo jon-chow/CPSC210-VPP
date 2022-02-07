@@ -14,6 +14,8 @@ public class PixelPetGame {
     private static final int HUNGER_LOSS_PER_SECOND = 10;
     private static final int THIRST_LOSS_PER_SECOND = 10;
     private static final int HEALTH_LOSS_PER_SECOND = 10;
+
+    private static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
 
     private int ticksPassed = 0;
@@ -31,7 +33,7 @@ public class PixelPetGame {
         shops = new ArrayList<>();
         shops.add(shop);
 
-        player = NewPlayerMenu.initNewPlayer();
+        player = NewPlayerMenu.initNewPlayer(STARTING_MONEY);
         pet = AdoptionMenu.initAdoption();
         ViewCommandsMenu.showControls();
     }

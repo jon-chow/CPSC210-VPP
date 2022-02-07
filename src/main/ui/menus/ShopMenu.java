@@ -12,6 +12,11 @@ import static ui.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class ShopMenu {
+    private static String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+            + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+            + "[1-9]\\d{0,}$";
+    private static Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+
     // EFFECTS: initiates a new shop called shopName
     public static Shop initShop(String shopName) throws IOException {
         Shop shop = new Shop(shopName);
@@ -35,6 +40,7 @@ public class ShopMenu {
         printItems(shop);
 
         System.out.println("\n- To view what's in-store, enter in '" + VIEW_ITEMS_KEY + "'.");
+        System.out.println("- To check how much money you have, enter in '" + VIEW_MONEY_KEY + "'.");
         System.out.println("- To leave the shop, enter in '" + EXIT_MENU_KEY + "'.");
         System.out.println("- To buy something, enter in the item name, item type,"
                             + "\nand the quantity you would like to purchase using '"
@@ -55,19 +61,20 @@ public class ShopMenu {
             String command = scanner.nextLine();
 
             if (command != null) {
-                String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
-                        + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
-                        + "[1-9]\\d{0,}$";
-                Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-                boolean hasFoundMatch = pattern.matcher(command).find();
-
-                if (hasFoundMatch) {
+                if (pattern.matcher(command).find()) {
                     buyItems(command, shop, player);
-                } else if (command.equals(VIEW_ITEMS_KEY)) {
-                    printItems(shop);
-                } else if (command.equals(EXIT_MENU_KEY)) {
-                    System.out.println("You have left " + shop.getShopName() + ".");
-                    hasExited = true;
+                } else {
+                    switch (command) {
+                        case VIEW_ITEMS_KEY: printItems(shop);
+                            break;
+                        case VIEW_MONEY_KEY: InventoryMenu.checkMoney(player);
+                            break;
+                        case EXIT_MENU_KEY:
+                            System.out.println("You have left " + shop.getShopName() + ".");
+                            hasExited = true;
+                            break;
+                        default: break;
+                    }
                 }
             }
         }

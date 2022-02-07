@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 import model.*;
 import ui.menus.InventoryMenu;
-import ui.menus.PetDiedMenu;
+import ui.menus.PetStatsMenu;
 import ui.menus.ShopMenu;
 import ui.menus.ViewCommandsMenu;
 
@@ -40,7 +40,7 @@ public class TerminalApp {
             Thread.sleep(1000L / PixelPetGame.TICKS_PER_SECOND);
         }
 
-        PetDiedMenu.showGameOverMenu();
+        PetStatsMenu.showPetDiedMenu(game.getPet());
         System.exit(0);
     }
 
@@ -52,7 +52,7 @@ public class TerminalApp {
     private void handleUserInput() {
         String command = scanner.nextLine();
 
-        if (command != null) {
+        if (command != null && command != "") {
             switch (command) {
                 case COMMANDS_KEY: ViewCommandsMenu.showControls();
                     break;

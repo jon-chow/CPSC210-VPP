@@ -9,8 +9,9 @@ public class NewPlayerMenu {
     private static Player player;
 
     // EFFECTS: initiates the new player process
-    public static Player initNewPlayer() {
+    public static Player initNewPlayer(int startingMoney) {
         player = new Player();
+        player.setMoney(startingMoney);
         String name = "";
 
         boolean confirmedName = false;
