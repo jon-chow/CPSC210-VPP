@@ -213,7 +213,7 @@ public abstract class Pet {
     // MODIFIES: this
     // REQUIRES: petDataDir exists
     // EFFECTS:  gathers data from petDataDir, parses it, and then stores it
-    public void gatherPetData() throws IOException {
+    protected void gatherPetData() throws IOException {
         String content = FileUtils.readFileToString(this.getPetDataDir(), "utf-8");
         JSONObject data = new JSONObject(content);
 
@@ -238,7 +238,7 @@ public abstract class Pet {
     // MODIFIES: this
     // REQUIRES: data contains breed data
     // EFFECTS:  parses the data and assigns corresponding variables the data contained
-    public void parseBreedData(JSONObject data) {
+    protected void parseBreedData(JSONObject data) {
         if (data != JSONObject.NULL) {
             JSONArray personalities = data.getJSONArray("personalities");
             JSONArray likes = data.getJSONArray("likes");
@@ -329,11 +329,11 @@ public abstract class Pet {
     }
 
     // SETTERS
-    public void setPetDataDir(File petDataDir) {
+    protected void setPetDataDir(File petDataDir) {
         this.petDataDir = petDataDir;
     }
 
-    public void setSpritesDir(String spritesDir) {
+    protected void setSpritesDir(String spritesDir) {
         this.spritesDir = spritesDir;
     }
 

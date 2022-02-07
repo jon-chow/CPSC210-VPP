@@ -12,10 +12,10 @@ import static ui.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class ShopMenu {
-    private static String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
+    private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
             + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SEPARATOR_KEY
             + "[1-9]\\d{0,}$";
-    private static Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+    private static final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
 
     // EFFECTS: initiates a new shop called shopName
     public static Shop initShop(String shopName) throws IOException {
@@ -103,7 +103,8 @@ public class ShopMenu {
                 System.out.println("Your currently have $" + player.getMoney() + "\n");
             }
         } else {
-            System.out.println("Error! Cannot find item \"" + itemName + "\" of the type \"" + itemType + "\"!");
+            System.out.println("Error! Cannot find item \"" + itemName + "\" of the type \""
+                                + itemType + "\" in the shop!");
             System.out.println("Be sure to enter the item name and type correctly!\n");
         }
     }
@@ -111,6 +112,7 @@ public class ShopMenu {
     // EFFECTS: returns the item if there exists an item of the name itemName and type itemType
     private static Item validItem(String itemName, String itemType, Shop shop) {
         ArrayList<Item> shopItems = shop.getShopItems();
+
         for (int i = 0; i < shopItems.size(); i++) {
             Item item = shopItems.get(i);
 

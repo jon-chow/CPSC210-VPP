@@ -65,7 +65,7 @@ public class TerminalApp {
                 case OPEN_SHOP_KEY:
                     ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"), game.getPlayer());
                     break;
-                case OPEN_INVENTORY_KEY: InventoryMenu.viewInventory(game.getPlayer());
+                case OPEN_INVENTORY_KEY: InventoryMenu.viewInventory(game.getPlayer(), game.getPet());
                     break;
                 case VIEW_MONEY_KEY: InventoryMenu.checkMoney(game.getPlayer());
                     break;

@@ -100,18 +100,21 @@ class PlayerTest {
         ArrayList<Item> inventory = new ArrayList<>();
         ArrayList<Integer> inventoryQuantity = new ArrayList<>();
         inventory.add(item1);
-        inventoryQuantity.add(2);
+        inventoryQuantity.add(3);
         plr1.setInventory(inventory);
         plr1.setInventoryQuantity(inventoryQuantity);
 
-        plr1.giveItemTo(item1, animal);
+        assertTrue(plr1.giveItemTo(item1, animal,1));
         ArrayList<Integer> expectedVal1 = new ArrayList<>();
-        expectedVal1.add(1);
+        expectedVal1.add(2);
         assertEquals(expectedVal1, plr1.getInventoryQuantity());
 
-        plr1.giveItemTo(item1, animal);
+        assertTrue(plr1.giveItemTo(item1, animal,1));
         ArrayList<Integer> expectedVal2 = new ArrayList<>();
+        expectedVal2.add(1);
         assertEquals(expectedVal2, plr1.getInventoryQuantity());
+
+        assertFalse(plr1.giveItemTo(item1, animal,100000));
     }
 
     @Test

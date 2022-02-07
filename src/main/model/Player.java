@@ -55,11 +55,23 @@ public class Player {
 
     // MODIFIES: this, Pet
     // REQUIRES: item exists in inventory
-    // EFFECTS: removes one count of item from inventory and
-    //          gives item for pet to consume
-    public void giveItemTo(Item item, Pet pet) {
-        removeFromInventory(item, 1);
-        pet.consumeItem(item);
+    // EFFECTS: removes a quantity of item from inventory and
+    //          gives that quantity of item for pet to consume
+    //          returns true if given successfully
+    public boolean giveItemTo(Item item, Pet pet, int quantity) {
+        int itemQuantityInInventory = inventoryQuantity.get(inventory.indexOf(item));
+
+        if (itemQuantityInInventory >= quantity) {
+            removeFromInventory(item, quantity);
+
+            for (int i = 0; i < quantity; i++) {
+                pet.consumeItem(item);
+            }
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     // MODIFIES: this, Shop

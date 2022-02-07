@@ -16,6 +16,7 @@ public class Commands {
 
     // INVENTORY MENU COMMANDS
     public static final String OPEN_INVENTORY_KEY = "inventory";
+    public static final String GIVE_TO_KEY = "give";
 
     // PLAYER INFORMATION COMMANDS
     public static final String VIEW_MONEY_KEY = "money";
