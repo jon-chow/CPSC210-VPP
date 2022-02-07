@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -13,7 +14,7 @@ import model.goodsandservices.Item;
 
 import static model.PixelPetGame.*;
 
-public abstract class Pet implements Locomotion {
+public abstract class Pet {
     public static final FileLocations fileLoc = new FileLocations();
 
     public final double likesMultiplier = 1.1;
@@ -25,7 +26,7 @@ public abstract class Pet implements Locomotion {
     private String name;
     private String animalType;
     private String breed;
-    private String state;
+    private State state;
 
     private ArrayList<String> allNoises;
     private ArrayList<String> personalities;
@@ -42,7 +43,7 @@ public abstract class Pet implements Locomotion {
     // EFFECTS: constructs a new pet with name
     public Pet(String name) {
         this.name = name;
-        this.state = "Neutral";
+        this.state = State.IDLING;
 
         this.personalities = new ArrayList<>();
         this.likes = new ArrayList<>();
@@ -56,14 +57,16 @@ public abstract class Pet implements Locomotion {
         this.numWaste = 0;
     }
 
+    public abstract String makeNoise();
+
     // MODIFIES: this
     // EFFECTS:  changes the pet's state depending on the item type
     //           and consumes item, affecting care levels
     public void consumeItem(Item item) {
         if (item.getType().equals("Toy")) {
-            setState(playing());
+            setState(State.PLAYING);
         } else if (item.getType().equals("Food")) {
-            setState(eating());
+            setState(State.EATING);
         }
 
         int happinessGain = item.getHappinessPoints();
@@ -210,7 +213,7 @@ public abstract class Pet implements Locomotion {
     // MODIFIES: this
     // REQUIRES: petDataDir exists
     // EFFECTS:  gathers data from petDataDir, parses it, and then stores it
-    public void gatherPetData() throws Exception {
+    public void gatherPetData() throws IOException {
         String content = FileUtils.readFileToString(this.getPetDataDir(), "utf-8");
         JSONObject data = new JSONObject(content);
 
@@ -281,7 +284,7 @@ public abstract class Pet implements Locomotion {
         return this.breed;
     }
 
-    public String getState() {
+    public State getState() {
         return this.state;
     }
 
@@ -346,7 +349,7 @@ public abstract class Pet implements Locomotion {
         this.breed = breed;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 

@@ -15,13 +15,15 @@ public class PixelPetGame {
     public static final int MAX_THIRST = 100;
     public static final int MAX_HEALTH = 100;
 
-    private static final int HAPPINESS_LOSS_PER_SECOND = 10;
-    private static final int HUNGER_LOSS_PER_SECOND = 10;
-    private static final int THIRST_LOSS_PER_SECOND = 10;
-    private static final int HEALTH_LOSS_PER_SECOND = 10;
+    private static final int HAPPINESS_LOSS_PER_SECOND = 1;
+    private static final int HUNGER_LOSS_PER_SECOND = 1;
+    private static final int THIRST_LOSS_PER_SECOND = 1;
+    private static final int HEALTH_LOSS_PER_SECOND = 1;
 
     private static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
+
+    private static final int SECONDS_PER_AGING = 10;
 
     private int ticksPassed = 0;
     private int secondsPassed = 0;
@@ -49,7 +51,10 @@ public class PixelPetGame {
         if (ticksPassed % TICKS_PER_SECOND == 0) {
             secondsPassed++;
 
-            pet.setAge(pet.getAge() + 1);
+            if ((secondsPassed & SECONDS_PER_AGING) == 0) {
+                pet.setAge(pet.getAge() + 1);
+            }
+
             pet.decrementCareLevels(HAPPINESS_LOSS_PER_SECOND,
                     HUNGER_LOSS_PER_SECOND,
                     THIRST_LOSS_PER_SECOND,
@@ -58,7 +63,10 @@ public class PixelPetGame {
             player.setMoney(player.getMoney() + MONEY_GAINED_PER_SECOND);
         }
 
-        endGame = pet.checkIsDead();
+        if (pet.checkIsDead()) {
+            pet.setState(State.DEAD);
+            endGame = true;
+        }
     }
 
     // EFFECTS: returns true if game has ended

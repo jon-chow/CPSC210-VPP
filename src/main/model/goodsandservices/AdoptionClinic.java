@@ -20,7 +20,7 @@ public class AdoptionClinic {
 
     // REQUIRES: breed is a valid breed of animalType
     // EFFECTS: produces a Pet of the subclass animalType of a specified breed
-    public Pet generatePet(String animalType, String breed) {
+    public Pet generatePet(String animalType, String breed) throws IOException {
         switch (animalType) {
             default: return new ExampleAnimal(breed, breed);
         }

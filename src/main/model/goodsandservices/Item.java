@@ -9,11 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Item {
-    private static final FileLocations fileLoc = new FileLocations();
-
     private final String dataKey = "Item";
-    private final String itemsDir = fileLoc.getDataDir(dataKey);
-    private String spritesDir = fileLoc.getSpritesDir(dataKey);
+    private final String itemsDir = FileLocations.getDataDir(dataKey);
+    private String spritesDir = FileLocations.getSpritesDir(dataKey);
     private File itemsDataDir = new File(itemsDir);
 
     private JSONObject itemData;
@@ -27,16 +25,11 @@ public class Item {
     private int healthPoints = 0;
 
     // EFFECTS: constructs an item with name and type
-    public Item(String name, String type) {
+    public Item(String name, String type) throws IOException {
         this.name = name;
         this.type = type;
-
-        try {
-            this.fetchItemData();
-            this.parseItemData();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.fetchItemData();
+        this.parseItemData();
     }
 
     // MODIFIES: this

@@ -22,8 +22,15 @@ class PlayerTest {
 
     @Test
     void addToInventoryTest() {
-        Item item1 = new Item("Chicken","Food");
-        Item item2 = new Item("Squeaky Mouse","Toy");
+        Item item1 = null;
+        Item item2 = null;
+
+        try {
+            item1 = new Item("Chicken","Food");
+            item2 = new Item("Squeaky Mouse","Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         plr1.addToInventory(item1, 1);
         ArrayList<Item> expectedVal1A = new ArrayList<>();
@@ -48,8 +55,15 @@ class PlayerTest {
 
     @Test
     void removeFromInventoryTest() {
-        Item item1 = new Item("Chicken","Food");
-        Item item2 = new Item("Squeaky Mouse","Toy");
+        Item item1 = null;
+        Item item2 = null;
+
+        try {
+            item1 = new Item("Chicken","Food");
+            item2 = new Item("Squeaky Mouse","Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ArrayList<Item> inventory = new ArrayList<>(Arrays.asList(item1, item2));
         ArrayList<Integer> inventoryQuantity = new ArrayList<>(Arrays.asList(2, 2));
@@ -73,8 +87,15 @@ class PlayerTest {
 
     @Test
     void giveItemToTest() {
-        Item item1 = new Item("Chicken","Food");
-        ExampleAnimal animal = new ExampleAnimal("Animal", "Aleph");
+        Item item1 = null;
+        ExampleAnimal animal = null;
+
+        try {
+            item1 = new Item("Chicken","Food");
+            animal = new ExampleAnimal("Animal", "Aleph");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ArrayList<Item> inventory = new ArrayList<>();
         ArrayList<Integer> inventoryQuantity = new ArrayList<>();
@@ -108,7 +129,8 @@ class PlayerTest {
         expectedVal1A.add(item1);
         expectedVal1B.add(1);
         int expectedVal1C = plr1.getMoney() - item1.getPrice();
-        plr1.buyItemFrom(item1, 1, shop1);
+
+        assertTrue(plr1.buyItemFrom(item1, 1, shop1));
         assertEquals(expectedVal1A, plr1.getInventory());
         assertEquals(expectedVal1B, plr1.getInventoryQuantity());
         assertEquals(expectedVal1C, plr1.getMoney());
@@ -120,7 +142,8 @@ class PlayerTest {
         expectedVal2B.add(1);
         expectedVal2B.add(1);
         int expectedVal2C = plr1.getMoney() - item2.getPrice();
-        plr1.buyItemFrom(item2, 1, shop1);
+
+        assertTrue(plr1.buyItemFrom(item2, 1, shop1));
         assertEquals(expectedVal2A, plr1.getInventory());
         assertEquals(expectedVal2B, plr1.getInventoryQuantity());
         assertEquals(expectedVal2C, plr1.getMoney());
@@ -136,14 +159,44 @@ class PlayerTest {
         shop1.addShopItem(item1, 50);
         shop1.addShopItem(item2, 50);
 
-        ArrayList<Item> expectedVal2A = new ArrayList<>();
-        ArrayList<Integer> expectedVal2B = new ArrayList<>();
-        expectedVal2A.add(item1);
-        expectedVal2B.add(9);
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        expectedVal1A.add(item1);
+        expectedVal1B.add(9);
         int expectedVal1C = plr1.getMoney() - item1.getPrice() * 9;
-        plr1.buyItemFrom(item1, 9, shop1);
-        assertEquals(expectedVal2A, plr1.getInventory());
-        assertEquals(expectedVal2B, plr1.getInventoryQuantity());
+
+        assertTrue(plr1.buyItemFrom(item1, 9, shop1));
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
         assertEquals(expectedVal1C, plr1.getMoney());
+    }
+
+    @Test
+    void buyItemFromNotEnoughMoneyTest() throws IOException {
+        plr1.setMoney(0);
+
+        Shop shop1 = new Shop("Petpix Toys");
+        Item item1 = new Item("Chicken", "Food");
+        Item item2 = new Item("Bone", "Toy");
+        shop1.addShopItem(item1, 50);
+        shop1.addShopItem(item2, 50);
+
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        int expectedVal1C = 0;
+
+        assertFalse(plr1.buyItemFrom(item1, 9, shop1));
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
+        assertEquals(expectedVal1C, plr1.getMoney());
+    }
+
+    @Test
+    void playerNameTest() {
+        plr1.setPlayerName("New Name");
+        assertEquals("New Name", plr1.getPlayerName());
+
+        plr1.setPlayerName("Newer Name");
+        assertEquals("Newer Name", plr1.getPlayerName());
     }
 }

@@ -6,6 +6,7 @@ import model.goodsandservices.Item;
 import java.util.ArrayList;
 
 public class InventoryMenu {
+    // TODO: give option to give pet items from inventory
     // EFFECTS: displays the amount of money the player has
     public static void checkMoney(Player player) {
         System.out.println("You currently have $" + player.getMoney() + ".");

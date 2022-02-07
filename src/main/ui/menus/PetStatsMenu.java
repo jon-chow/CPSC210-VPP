@@ -4,7 +4,6 @@ import model.Player;
 import model.pets.Pet;
 
 public class PetStatsMenu {
-    // TODO: give option to give pet items from inventory
     // EFFECTS:
     public static void checkPetStats(Pet pet, Player player) {
         System.out.println("Hey " + player.getPlayerName() + ", here's some information about your pet:");

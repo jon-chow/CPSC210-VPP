@@ -18,8 +18,13 @@ class AdoptionClinicTest {
     @BeforeEach
     void runBefore() {
         adoptionClinic = new AdoptionClinic();
-        pet1 = new ExampleAnimal("Pet1","Aleph");
-        pet2 = new ExampleAnimal("Pet2","Bet");
+
+        try {
+            pet1 = new ExampleAnimal("Pet1","Aleph");
+            pet2 = new ExampleAnimal("Pet2","Bet");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

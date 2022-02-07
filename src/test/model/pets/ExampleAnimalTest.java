@@ -3,6 +3,7 @@ package model.pets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -16,12 +17,22 @@ class ExampleAnimalTest {
 
     @BeforeEach
     void runBefore() {
-        animal = new ExampleAnimal("Pet1", "Aleph");
+        try {
+            animal = new ExampleAnimal("Pet1", "Aleph");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void consumeItemTest() {
-        Item item1 = new Item("Chicken","Food");
+        Item item1 = null;
+        try {
+            item1 = new Item("Bone","Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         animal.setHappiness(50);
         animal.setHunger(50);
         animal.setThirst(50);
@@ -32,11 +43,18 @@ class ExampleAnimalTest {
         assertEquals(50 + item1.getHungerPoints(), animal.getHunger());
         assertEquals(50 + item1.getThirstPoints(), animal.getThirst());
         assertEquals(50 + item1.getHealthPoints(), animal.getHealth());
+        assertEquals(State.PLAYING, animal.getState());
     }
 
     @Test
     void consumeItemLikesTest() {
-        Item item1 = new Item("Chicken","Food");
+        Item item1 = null;
+        try {
+            item1 = new Item("Chicken","Food");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         animal.setHappiness(50);
         animal.setHunger(50);
         animal.setThirst(50);
@@ -51,11 +69,18 @@ class ExampleAnimalTest {
         assertEquals((int) (50 + item1.getHungerPoints() * animal.likesMultiplier), animal.getHunger());
         assertEquals((int) (50 + item1.getThirstPoints() * animal.likesMultiplier), animal.getThirst());
         assertEquals((int) (50 + item1.getHealthPoints() * animal.likesMultiplier), animal.getHealth());
+        assertEquals(State.EATING, animal.getState());
     }
 
     @Test
     void consumeItemDislikesTest() {
-        Item item1 = new Item("Chicken","Food");
+        Item item1 = null;
+        try {
+            item1 = new Item("Chicken","Food");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         animal.setHappiness(50);
         animal.setHunger(50);
         animal.setThirst(50);
@@ -70,6 +95,7 @@ class ExampleAnimalTest {
         assertEquals((int) (50 + item1.getHungerPoints() * animal.dislikesMultiplier), animal.getHunger());
         assertEquals((int) (50 + item1.getThirstPoints() * animal.dislikesMultiplier), animal.getThirst());
         assertEquals((int) (50 + item1.getHealthPoints() * animal.dislikesMultiplier), animal.getHealth());
+        assertEquals(State.EATING, animal.getState());
     }
 
     @Test
@@ -99,8 +125,15 @@ class ExampleAnimalTest {
 
     @Test
     void checkIfLikesTest() {
-        Item chicken = new Item("Chicken", "Food");
-        Item bone = new Item("Bone", "Toy");
+        Item chicken = null;
+        Item bone = null;
+        try {
+            chicken = new Item("Chicken", "Food");
+            bone = new Item("Bone", "Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<String> likes = new ArrayList<>(Arrays.asList("Chicken", "Avocado"));
         animal.setLikes(likes);
 
@@ -110,8 +143,15 @@ class ExampleAnimalTest {
 
     @Test
     void checkIfDislikesTest() {
-        Item chicken = new Item("Chicken", "Food");
-        Item bone = new Item("Bone", "Toy");
+        Item chicken = null;
+        Item bone = null;
+        try {
+            chicken = new Item("Chicken", "Food");
+            bone = new Item("Bone", "Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         ArrayList<String> dislikes = new ArrayList<>();
         dislikes.add("Bone");
         animal.setDislikes(dislikes);
@@ -309,5 +349,41 @@ class ExampleAnimalTest {
         ArrayList<String> expectedVal2 = new ArrayList<>();
         animal.removeDislikes("Chicken");
         assertEquals(expectedVal2, animal.getDislikes());
+    }
+
+    @Test
+    void stateTest() {
+        animal.setState(State.MOVING);
+        assertEquals(State.MOVING, animal.getState());
+
+        animal.setState(State.IDLING);
+        assertEquals(State.IDLING, animal.getState());
+    }
+
+    @Test
+    void animalTypeTest() {
+        animal.setAnimalType("Dog");
+        assertEquals("Dog", animal.getAnimalType());
+
+        animal.setAnimalType("Cat");
+        assertEquals("Cat", animal.getAnimalType());
+    }
+
+    @Test
+    void nameTest() {
+        animal.setName("Bloop");
+        assertEquals("Bloop", animal.getName());
+
+        animal.setName("Whoop");
+        assertEquals("Whoop", animal.getName());
+    }
+
+    @Test
+    void ageTest() {
+        animal.setAge(1);
+        assertEquals(1, animal.getAge());
+
+        animal.setAge(5);
+        assertEquals(5, animal.getAge());
     }
 }

@@ -12,16 +12,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ShopTest {
     Shop shop1;
+    Shop shop2;
+
     Item item1;
     Item item2;
     Item item3;
 
     @BeforeEach
-    void runBefore() throws IOException {
-        shop1 = new Shop("Shop1");
-        item1 = new Item("Chicken", "Food");
-        item2 = new Item("Squeaky Mouse", "Toy");
-        item3 = new Item("Bone", "Toy");
+    void runBefore() {
+        try {
+            shop1 = new Shop("Shop1");
+            shop2 = new Shop("Shop2");
+
+            item1 = new Item("Chicken", "Food");
+            item2 = new Item("Squeaky Mouse", "Toy");
+            item3 = new Item("Bone", "Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         ArrayList<Item> items = new ArrayList<>(Arrays.asList(item1, item2));
         ArrayList<Integer> prices = new ArrayList<>(Arrays.asList(item1.getPrice(), item2.getPrice()));
@@ -145,5 +153,11 @@ class ShopTest {
         assertEquals(2, shop1.getShopItems().size());
         assertEquals(expectedVal1A, 10);
         assertEquals(expectedVal1B, 10);
+    }
+
+    @Test
+    void getShopNameTest() {
+        assertEquals("Shop1",shop1.getShopName());
+        assertEquals("Shop2",shop2.getShopName());
     }
 }
