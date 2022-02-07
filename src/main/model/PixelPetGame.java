@@ -44,6 +44,7 @@ public class PixelPetGame {
         if (ticksPassed % TICKS_PER_SECOND == 0) {
             secondsPassed++;
 
+            pet.setAge(pet.getAge() + 1);
             pet.decrementCareLevels(HAPPINESS_LOSS_PER_SECOND,
                     HUNGER_LOSS_PER_SECOND,
                     THIRST_LOSS_PER_SECOND,

@@ -56,7 +56,7 @@ public class TerminalApp {
             switch (command) {
                 case COMMANDS_KEY: ViewCommandsMenu.showControls();
                     break;
-                case CHECK_PET_KEY: System.out.println("Checking current status of pet"); // TODO
+                case CHECK_PET_KEY: PetStatsMenu.checkPetStats(game.getPet(), game.getPlayer());
                     break;
                 case OPEN_SHOP_KEY:
                     ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"), game.getPlayer());
