@@ -13,6 +13,12 @@
       "price": 230
     },
     {
+      "itemName": "Chicken",
+      "itemType": "Toy",
+      "carePoints": [34, 0, 0, 16],
+      "price": 380
+    },
+    {
       "itemName": "Salmon Chunks",
       "itemType": "Food",
       "carePoints": [5, 5, 1, 5],

@@ -25,7 +25,7 @@ class PetTest {
     }
 
     @Test
-    void consumeItemTest() {
+    void consumeItemToyTest() {
         Item item1 = null;
         try {
             item1 = new Item("Bone","Toy");
@@ -44,6 +44,28 @@ class PetTest {
         assertEquals(50 + item1.getThirstPoints(), animal.getThirst());
         assertEquals(50 + item1.getHealthPoints(), animal.getHealth());
         assertEquals(State.PLAYING, animal.getState());
+    }
+
+    @Test
+    void consumeItemFoodTest() {
+        Item item1 = null;
+        try {
+            item1 = new Item("Chicken","Food");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
+
+        animal.consumeItem(item1);
+        assertEquals(50 + item1.getHappinessPoints(), animal.getHappiness());
+        assertEquals(50 + item1.getHungerPoints(), animal.getHunger());
+        assertEquals(50 + item1.getThirstPoints(), animal.getThirst());
+        assertEquals(50 + item1.getHealthPoints(), animal.getHealth());
+        assertEquals(State.EATING, animal.getState());
     }
 
     @Test
@@ -162,19 +184,31 @@ class PetTest {
 
     @Test
     void checkIsDeadTest() {
+        animal.setHappiness(0);
+        animal.setHunger(100);
+        animal.setThirst(100);
+        animal.setHealth(100);
+        assertTrue(animal.checkIsDead());
+
+        animal.setHappiness(100);
         animal.setHunger(0);
         animal.setThirst(100);
         animal.setHealth(100);
         assertTrue(animal.checkIsDead());
 
+        animal.setHappiness(100);
         animal.setHunger(100);
         animal.setThirst(0);
+        animal.setHealth(100);
         assertTrue(animal.checkIsDead());
 
+        animal.setHappiness(100);
+        animal.setHunger(100);
         animal.setThirst(100);
         animal.setHealth(0);
         assertTrue(animal.checkIsDead());
 
+        animal.setHealth(1);
         animal.setHunger(1);
         animal.setThirst(1);
         animal.setHealth(1);

@@ -13,7 +13,8 @@ import org.json.JSONObject;
 import static ui.app.PixelPetGame.ANIMALS_IN_ADOPTION_CLINIC;
 
 public class AdoptionClinic {
-    private ArrayList<String> animalTypes;
+    private final FileLocations fileLoc = new FileLocations();
+    private final ArrayList<String> animalTypes;
 
     // EFFECTS: constructs an AdoptionClinic with a list of animalType options
     public AdoptionClinic() {
@@ -33,7 +34,7 @@ public class AdoptionClinic {
     public ArrayList<String> fetchBreeds(String animalType) throws IOException {
         ArrayList<String> breeds = new ArrayList<>();
 
-        File breedsDataDir = new File(FileLocations.getDataDir(animalType));
+        File breedsDataDir = new File(fileLoc.getDataDir(animalType));
         String content = FileUtils.readFileToString(breedsDataDir, "utf-8");
         JSONObject breedsJson = new JSONObject(content);
         JSONArray breedsArray = breedsJson.getJSONArray("breeds");

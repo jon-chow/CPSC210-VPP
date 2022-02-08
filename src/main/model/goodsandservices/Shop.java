@@ -1,6 +1,5 @@
 package model.goodsandservices;
 
-import model.Player;
 import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
 import org.apache.commons.io.FileUtils;
@@ -12,6 +11,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Shop {
+    private final FileLocations fileLoc = new FileLocations();
+    private final RandomGenerator rng = new RandomGenerator();
+
     private String shopName;
 
     private ArrayList<Item> shopItems;
@@ -19,9 +21,10 @@ public class Shop {
     private ArrayList<Integer> quantityInStock;
 
     private final String dataKey = "Item";
-    private final String itemsDir = FileLocations.getDataDir(dataKey);
+    private final String itemsDir = fileLoc.getDataDir(dataKey);
     private File itemsDataDir = new File(itemsDir);
-    private ArrayList<Item> allPossibleItems = new ArrayList<>();
+
+    protected ArrayList<Item> allPossibleItems = new ArrayList<>();
 
     // EFFECTS: constructs a shop with a shopName
     public Shop(String shopName) throws IOException {
@@ -153,7 +156,7 @@ public class Shop {
 
         for (int i = 0; i < numItems; i++) {
             if (itemsNotInShop.size() > 0) {
-                int randomIndex = RandomGenerator.randomNumberUpTo(itemsNotInShop.size());
+                int randomIndex = rng.randomNumberUpTo(itemsNotInShop.size());
                 Item item = itemsNotInShop.get(randomIndex);
 
                 addShopItem(item, quantity);

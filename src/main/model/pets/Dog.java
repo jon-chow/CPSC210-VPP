@@ -1,8 +1,5 @@
 package model.pets;
 
-import model.configurables.FileLocations;
-import model.configurables.RandomGenerator;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +12,8 @@ public class Dog extends Pet {
         super(name);
         super.setAnimalType(dataKey);
         super.setBreed(breed);
-        super.setPetDataDir(new File(FileLocations.getDataDir(dataKey)));
-        super.setSpritesDir(FileLocations.getSpritesDir(dataKey));
+        super.setPetDataDir(new File(fileLoc.getDataDir(dataKey)));
+        super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
         super.gatherPetData();
     }
 
@@ -24,7 +21,7 @@ public class Dog extends Pet {
     @Override
     public String makeNoise() {
         ArrayList<String> noises = super.getAllNoises();
-        int randomIndex = RandomGenerator.randomNumberUpTo(noises.size());
+        int randomIndex = rng.randomNumberUpTo(noises.size());
         return noises.get(randomIndex);
     }
 }

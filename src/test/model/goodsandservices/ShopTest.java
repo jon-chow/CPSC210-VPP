@@ -51,6 +51,11 @@ class ShopTest {
         assertEquals(expectedVal1A, shop1.getShopItems());
         assertEquals(expectedVal1B, shop1.getPriceOfItems());
         assertEquals(expectedVal1C, shop1.getQuantityInStock());
+
+        shop1.addShopItem(item3,30);
+        assertEquals(expectedVal1A, shop1.getShopItems());
+        assertEquals(expectedVal1B, shop1.getPriceOfItems());
+        assertEquals(expectedVal1C, shop1.getQuantityInStock());
     }
 
     @Test
@@ -66,6 +71,11 @@ class ShopTest {
         assertEquals(expectedVal1A, shop1.getShopItems());
         assertEquals(expectedVal1B, shop1.getPriceOfItems());
         assertEquals(expectedVal1C, shop1.getQuantityInStock());
+
+        shop1.removeShopItem(item2);
+        assertEquals(expectedVal1A, shop1.getShopItems());
+        assertEquals(expectedVal1B, shop1.getPriceOfItems());
+        assertEquals(expectedVal1C, shop1.getQuantityInStock());
     }
 
     @Test
@@ -78,6 +88,7 @@ class ShopTest {
     void setItemQuantityTest() {
         shop1.setItemQuantity(item1, 999);
         shop1.setItemQuantity(item2, 0);
+        shop1.setItemQuantity(item3, 5);
 
         ArrayList<Integer> expectedVal = new ArrayList<>(Arrays.asList(999, 0));
         assertEquals(expectedVal, shop1.getQuantityInStock());
@@ -87,6 +98,7 @@ class ShopTest {
     void setItemPriceTest() {
         shop1.setItemPrice(item1, 999);
         shop1.setItemPrice(item2, 0);
+        shop1.setItemPrice(item3, 20);
 
         ArrayList<Integer> expectedVal = new ArrayList<>(Arrays.asList(999, 0));
         assertEquals(expectedVal, shop1.getPriceOfItems());
@@ -99,6 +111,7 @@ class ShopTest {
         assertEquals(expectedVal1A, shop1.getQuantityInStock());
 
         shop1.changeItemQuantity(item2, 80);
+        shop1.changeItemQuantity(item3, 10);
         ArrayList<Integer> expectedVal1B = new ArrayList<>(Arrays.asList(30, 90));
         assertEquals(expectedVal1B, shop1.getQuantityInStock());
 
@@ -107,6 +120,7 @@ class ShopTest {
         assertEquals(expectedVal2A, shop1.getQuantityInStock());
 
         shop1.changeItemQuantity(item2, -5);
+        shop1.changeItemQuantity(item3, -5);
         ArrayList<Integer> expectedVal2B = new ArrayList<>(Arrays.asList(15, 85));
         assertEquals(expectedVal2B, shop1.getQuantityInStock());
     }
@@ -153,6 +167,18 @@ class ShopTest {
         assertEquals(2, shop1.getShopItems().size());
         assertEquals(expectedVal1A, 10);
         assertEquals(expectedVal1B, 10);
+    }
+
+    @Test
+    void stockWithRandomItemsFullTest() {
+        shop1.setShopItems(new ArrayList<>());
+        shop1.setPriceOfItems(new ArrayList<>());
+        shop1.setQuantityInStock(new ArrayList<>());
+
+        shop1.stockWithRandomItems(shop1.allPossibleItems.size(), 10);
+        assertEquals(shop1.allPossibleItems.size(), shop1.getShopItems().size());
+        shop1.stockWithRandomItems(1, 10);
+        assertEquals(shop1.allPossibleItems.size(), shop1.getShopItems().size());
     }
 
     @Test

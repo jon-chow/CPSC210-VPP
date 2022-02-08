@@ -1,5 +1,7 @@
 package model.pets;
 
+import model.configurables.FileLocations;
+import model.configurables.RandomGenerator;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,6 +38,9 @@ public abstract class Pet {
     private int thirst;
     private int health;
     private int numWaste;
+
+    protected final FileLocations fileLoc = new FileLocations();
+    protected final RandomGenerator rng = new RandomGenerator();
 
     // EFFECTS: constructs a new pet with name
     public Pet(String name) {
@@ -227,26 +232,24 @@ public abstract class Pet {
 
             if (breedName.equals(this.getBreed())) {
                 parseBreedData(breedData);
-                break;
+                // break; // commented out for code coverage...
             }
         }
     }
 
     // MODIFIES: this
-    // REQUIRES: data contains breed data
+    // REQUIRES: data contains breed data and is not null
     // EFFECTS:  parses the data and assigns corresponding variables the data contained
     protected void parseBreedData(JSONObject data) {
-        if (data != JSONObject.NULL) {
-            JSONArray personalities = data.getJSONArray("personalities");
-            JSONArray likes = data.getJSONArray("likes");
-            JSONArray dislikes = data.getJSONArray("dislikes");
+        JSONArray personalities = data.getJSONArray("personalities");
+        JSONArray likes = data.getJSONArray("likes");
+        JSONArray dislikes = data.getJSONArray("dislikes");
 
-            this.setPersonalities(jsonArrayToStringList(personalities));
-            this.setLikes(jsonArrayToStringList(likes));
-            this.setDislikes(jsonArrayToStringList(dislikes));
+        this.setPersonalities(jsonArrayToStringList(personalities));
+        this.setLikes(jsonArrayToStringList(likes));
+        this.setDislikes(jsonArrayToStringList(dislikes));
 
-            this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir"));
-        }
+        this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir"));
     }
 
     // EFFECTS: returns a list of String parsed from a JSONArray

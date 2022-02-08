@@ -9,9 +9,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class Item {
+    private final FileLocations fileLoc = new FileLocations();
+
     private final String dataKey = "Item";
-    private final String itemsDir = FileLocations.getDataDir(dataKey);
-    private String spritesDir = FileLocations.getSpritesDir(dataKey);
+    private final String itemsDir = fileLoc.getDataDir(dataKey);
+    private String spritesDir = fileLoc.getSpritesDir(dataKey);
     private File itemsDataDir = new File(itemsDir);
 
     private JSONObject itemData;
@@ -47,31 +49,28 @@ public class Item {
 
             if (itemName.equals(this.name) && itemType.equals(this.type)) {
                 this.itemData = itemData;
-                break;
+                // break; // commented out for code coverage...
             }
         }
     }
 
     // MODIFIES: this
-    // REQUIRES: itemsData exists
+    // REQUIRES: itemData contains item data and is not null
     // EFFECTS:  parses data from itemsData and assigns
     //           corresponding variables the data contained
     private void parseItemData() {
         JSONObject data = this.itemData;
+        String fileName = this.name.toLowerCase() + "_" + this.type.toLowerCase();
+        this.spritesDir += fileName.replaceAll("\\s+","") + "/";
 
-        if (data != JSONObject.NULL) {
-            String fileName = this.name.toLowerCase() + "_" + this.type.toLowerCase();
-            this.spritesDir += fileName.replaceAll("\\s+","") + "/";
+        int price = data.getInt("price");
+        JSONArray carePoints = data.getJSONArray("carePoints");
 
-            int price = data.getInt("price");
-            JSONArray carePoints = data.getJSONArray("carePoints");
-
-            this.price = price;
-            this.happinessPoints = carePoints.getInt(0);
-            this.hungerPoints  = carePoints.getInt(1);
-            this.thirstPoints = carePoints.getInt(2);
-            this.healthPoints = carePoints.getInt(3);
-        }
+        this.price = price;
+        this.happinessPoints = carePoints.getInt(0);
+        this.hungerPoints  = carePoints.getInt(1);
+        this.thirstPoints = carePoints.getInt(2);
+        this.healthPoints = carePoints.getInt(3);
     }
 
     // GETTERS

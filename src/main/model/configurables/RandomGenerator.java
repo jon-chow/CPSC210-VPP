@@ -26,7 +26,7 @@ public class RandomGenerator {
 //    }
 
     // EFFECTS: returns a random number between 0 to high
-    public static int randomNumberUpTo(int high) {
+    public int randomNumberUpTo(int high) {
         Random r = new Random();
 
         return r.nextInt(high);
