@@ -71,14 +71,16 @@ public class ShopMenu {
                 }
             } else {
                 switch (command) {
-                    case VIEW_ITEMS_KEY -> printItems(shop);
-                    case VIEW_MONEY_KEY -> InventoryMenu.checkMoney(player);
-                    case EXIT_MENU_KEY -> {
+                    case VIEW_ITEMS_KEY: printItems(shop);
+                        break;
+                    case VIEW_MONEY_KEY: InventoryMenu.checkMoney(player);
+                        break;
+                    case EXIT_MENU_KEY:
                         System.out.println("You have left " + shop.getShopName() + ".");
                         hasExited = true;
-                    }
-                    default -> {
-                    }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
