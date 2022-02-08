@@ -1,9 +1,8 @@
-package ui;
+package ui.app;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-import model.*;
 import ui.menus.InventoryMenu;
 import ui.menus.PetStatsMenu;
 import ui.menus.ShopMenu;
