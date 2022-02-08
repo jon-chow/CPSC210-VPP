@@ -13,17 +13,17 @@ public class PixelPetGame {
     public static final ArrayList<String> ANIMALS_IN_ADOPTION_CLINIC =
             new ArrayList<>(Arrays.asList("Example Animal", "Dog"));
 
-    public static final int TICKS_PER_SECOND = 100;
+    public static final int TICKS_PER_SECOND = 10;
 
     public static final int MAX_HAPPINESS = 100;
     public static final int MAX_HUNGER = 100;
     public static final int MAX_THIRST = 100;
     public static final int MAX_HEALTH = 100;
 
-    private static final int HAPPINESS_LOSS_PER_SECOND = 1;
-    private static final int HUNGER_LOSS_PER_SECOND = 1;
-    private static final int THIRST_LOSS_PER_SECOND = 1;
-    private static final int HEALTH_LOSS_PER_SECOND = 1;
+    private static final int HAPPINESS_LOSS_PER_SECOND = 5;
+    private static final int HUNGER_LOSS_PER_SECOND = 5;
+    private static final int THIRST_LOSS_PER_SECOND = 5;
+    private static final int HEALTH_LOSS_PER_SECOND = 5;
 
     private static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
