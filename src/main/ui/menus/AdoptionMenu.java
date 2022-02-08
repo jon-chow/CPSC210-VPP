@@ -6,7 +6,7 @@ import model.pets.Pet;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ui.TerminalApp.scanner;
+import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class AdoptionMenu {
@@ -35,7 +35,7 @@ public class AdoptionMenu {
 
     // EFFECTS: prompts a selection for the type of animal of the pet
     private static String adoptionDeclareAnimalType() {
-        String animalTypeListing = "";
+        StringBuilder animalTypeListing = new StringBuilder();
         ArrayList<String> allAnimalTypes = adoptionClinic.getAnimalTypes();
 
         System.out.println("Please select the type of pet you would like to adopt from the list below:");
@@ -43,7 +43,7 @@ public class AdoptionMenu {
         int index = 0;
         int maxIndex = allAnimalTypes.size() - 1;
         for (String animalType : allAnimalTypes) {
-            animalTypeListing += (index != 0 ? "\n" : "") + (index++) + " = " + animalType;
+            animalTypeListing.append(index != 0 ? "\n" : "").append(index++).append(" = ").append(animalType);
         }
         System.out.println(animalTypeListing);
 
@@ -52,7 +52,7 @@ public class AdoptionMenu {
 
     // EFFECTS: prompts a selection for the breed of the pet
     private static String adoptionDeclareBreed(String selectedAnimalType) throws IOException {
-        String breedListing = "";
+        StringBuilder breedListing = new StringBuilder();
         ArrayList<String> allBreeds = adoptionClinic.fetchBreeds(selectedAnimalType);
 
         System.out.println("\nPlease select the breed of your " + selectedAnimalType + " from the list below:");
@@ -60,7 +60,7 @@ public class AdoptionMenu {
         int index = 0;
         int maxIndex = allBreeds.size() - 1;
         for (String breed : allBreeds) {
-            breedListing += (index != 0 ? "\n" : "") + (index++) + " = " + breed;
+            breedListing.append(index != 0 ? "\n" : "").append(index++).append(" = ").append(breed);
         }
         System.out.println(breedListing);
 

@@ -1,6 +1,6 @@
 package model.goodsandservices;
 
-import model.PixelPetGame;
+import ui.app.PixelPetGame;
 import model.pets.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,11 +41,13 @@ class AdoptionClinicTest {
 
         String expectedVal1A = "ExampleAnimal";
         String expectedVal1B = "Aleph";
+        assert exampleAnimal != null;
         assertEquals(expectedVal1A, exampleAnimal.getAnimalType());
         assertEquals(expectedVal1B, exampleAnimal.getBreed());
 
         String expectedVal2A = "Dog";
         String expectedVal2B = "Shiba Inu";
+        assert dog != null;
         assertEquals(expectedVal2A, dog.getAnimalType());
         assertEquals(expectedVal2B, dog.getBreed());
     }

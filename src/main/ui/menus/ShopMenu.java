@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static ui.TerminalApp.scanner;
+import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class ShopMenu {
@@ -66,20 +66,19 @@ public class ShopMenu {
             if (command.startsWith(BUY_ITEM_KEY + " ")) {
                 command = command.replaceAll(BUY_ITEM_KEY + " ", "");
 
-                if (command != null && pattern.matcher(command).find()) {
+                if (pattern.matcher(command).find()) {
                     buyItems(command, shop, player);
                 }
             } else {
                 switch (command) {
-                    case VIEW_ITEMS_KEY: printItems(shop);
-                        break;
-                    case VIEW_MONEY_KEY: InventoryMenu.checkMoney(player);
-                        break;
-                    case EXIT_MENU_KEY: System.out.println("You have left " + shop.getShopName() + ".");
+                    case VIEW_ITEMS_KEY -> printItems(shop);
+                    case VIEW_MONEY_KEY -> InventoryMenu.checkMoney(player);
+                    case EXIT_MENU_KEY -> {
+                        System.out.println("You have left " + shop.getShopName() + ".");
                         hasExited = true;
-                        break;
-                    default:
-                        break;
+                    }
+                    default -> {
+                    }
                 }
             }
         }
@@ -118,9 +117,7 @@ public class ShopMenu {
     private static Item validItem(String itemName, String itemType, Shop shop) {
         ArrayList<Item> shopItems = shop.getShopItems();
 
-        for (int i = 0; i < shopItems.size(); i++) {
-            Item item = shopItems.get(i);
-
+        for (Item item : shopItems) {
             String comparingName = item.getName().toLowerCase();
             String comparingType = item.getType().toLowerCase();
             boolean foundItemName = (comparingName.equals(itemName.toLowerCase()));

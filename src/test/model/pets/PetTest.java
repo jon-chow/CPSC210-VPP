@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 import model.goodsandservices.Item;
 
-import static model.PixelPetGame.*;
+import static ui.app.PixelPetGame.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PetTest {

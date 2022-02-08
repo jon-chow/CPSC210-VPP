@@ -9,14 +9,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import model.configurables.FileLocations;
 import model.goodsandservices.Item;
 
-import static model.PixelPetGame.*;
+import static ui.app.PixelPetGame.*;
 
 public abstract class Pet {
-    public static final FileLocations fileLoc = new FileLocations();
-
     public final double likesMultiplier = 1.1;
     public final double dislikesMultiplier = 0.5;
 

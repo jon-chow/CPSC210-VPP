@@ -2,15 +2,13 @@ package ui.menus;
 
 import model.Player;
 
-import static ui.TerminalApp.scanner;
+import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class NewPlayerMenu {
-    private static Player player;
-
     // EFFECTS: initiates the new player process
     public static Player initNewPlayer(int startingMoney) {
-        player = new Player();
+        Player player = new Player();
         player.setMoney(startingMoney);
         String name = "";
 

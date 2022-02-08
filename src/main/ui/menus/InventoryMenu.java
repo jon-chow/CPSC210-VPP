@@ -3,12 +3,11 @@ package ui.menus;
 import model.Player;
 import model.pets.Pet;
 import model.goodsandservices.Item;
-import model.goodsandservices.Shop;
 
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static ui.TerminalApp.scanner;
+import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
 public class InventoryMenu {
@@ -72,7 +71,7 @@ public class InventoryMenu {
             if (command.startsWith(GIVE_TO_KEY + " ")) {
                 command = command.replaceAll(GIVE_TO_KEY + " ", "");
 
-                if (command != null && pattern.matcher(command).find()) {
+                if (pattern.matcher(command).find()) {
                     giveItemsTo(command, pet, player);
                 }
             } else if (command.equals(EXIT_MENU_KEY)) {
@@ -112,9 +111,7 @@ public class InventoryMenu {
     private static Item validItem(String itemName, String itemType, Player player) {
         ArrayList<Item> inventory = player.getInventory();
 
-        for (int i = 0; i < inventory.size(); i++) {
-            Item item = inventory.get(i);
-
+        for (Item item : inventory) {
             String comparingName = item.getName().toLowerCase();
             String comparingType = item.getType().toLowerCase();
             boolean foundItemName = (comparingName.equals(itemName.toLowerCase()));
