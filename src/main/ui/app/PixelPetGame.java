@@ -1,9 +1,10 @@
-package model;
+package ui.app;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import model.Player;
 import model.goodsandservices.Shop;
 import model.pets.*;
 import ui.menus.*;
