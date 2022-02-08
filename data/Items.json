@@ -41,6 +41,12 @@
       "itemType": "Toy",
       "carePoints": [20, 0, 0, 3],
       "price": 80
+    },
+    {
+      "itemName": "Blob",
+      "itemType": "Unknown",
+      "carePoints": [40, 0, 0, -5],
+      "price": 100
     }
   ]
 }

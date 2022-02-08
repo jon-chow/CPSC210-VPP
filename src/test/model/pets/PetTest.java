@@ -69,6 +69,28 @@ class PetTest {
     }
 
     @Test
+    void consumeItemRandomTypeTest() {
+        Item item1 = null;
+        try {
+            item1 = new Item("Blob","Unknown");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
+
+        animal.consumeItem(item1);
+        assertEquals(50 + item1.getHappinessPoints(), animal.getHappiness());
+        assertEquals(50 + item1.getHungerPoints(), animal.getHunger());
+        assertEquals(50 + item1.getThirstPoints(), animal.getThirst());
+        assertEquals(50 + item1.getHealthPoints(), animal.getHealth());
+        assertEquals(State.IDLING, animal.getState());
+    }
+
+    @Test
     void consumeItemLikesTest() {
         Item item1 = null;
         try {
