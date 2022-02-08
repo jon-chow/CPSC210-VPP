@@ -1,6 +1,7 @@
 package model.goodsandservices;
 
 import model.Player;
+import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
@@ -10,8 +11,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static model.pets.Pet.fileLoc;
-
 public class Shop {
     private String shopName;
 
@@ -20,7 +19,7 @@ public class Shop {
     private ArrayList<Integer> quantityInStock;
 
     private final String dataKey = "Item";
-    private final String itemsDir = fileLoc.getDataDir(dataKey);
+    private final String itemsDir = FileLocations.getDataDir(dataKey);
     private File itemsDataDir = new File(itemsDir);
     private ArrayList<Item> allPossibleItems = new ArrayList<>();
 

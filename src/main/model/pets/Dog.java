@@ -1,5 +1,6 @@
 package model.pets;
 
+import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
 
 import java.io.File;
@@ -14,8 +15,8 @@ public class Dog extends Pet {
         super(name);
         super.setAnimalType(dataKey);
         super.setBreed(breed);
-        super.setPetDataDir(new File(fileLoc.getDataDir(dataKey)));
-        super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
+        super.setPetDataDir(new File(FileLocations.getDataDir(dataKey)));
+        super.setSpritesDir(FileLocations.getSpritesDir(dataKey));
         super.gatherPetData();
     }
 

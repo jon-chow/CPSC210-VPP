@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
 
 public class ExampleAnimal extends Pet {
@@ -14,8 +15,8 @@ public class ExampleAnimal extends Pet {
         super(name);
         super.setAnimalType(dataKey);
         super.setBreed(breed);
-        super.setPetDataDir(new File(fileLoc.getDataDir(dataKey)));
-        super.setSpritesDir(fileLoc.getSpritesDir(dataKey));
+        super.setPetDataDir(new File(FileLocations.getDataDir(dataKey)));
+        super.setSpritesDir(FileLocations.getSpritesDir(dataKey));
         super.gatherPetData();
     }
 
