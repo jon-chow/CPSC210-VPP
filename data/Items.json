@@ -19,6 +19,18 @@
       "price": 380
     },
     {
+      "itemName": "Chocolate",
+      "itemType": "Food",
+      "carePoints": [20, 12, 0, 3],
+      "price": 180
+    },
+    {
+      "itemName": "Grapes",
+      "itemType": "Food",
+      "carePoints": [2, 2, 2, 1],
+      "price": 30
+    },
+    {
       "itemName": "Salmon Chunks",
       "itemType": "Food",
       "carePoints": [5, 5, 1, 5],
