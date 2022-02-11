@@ -31,6 +31,7 @@ public abstract class Pet {
     private ArrayList<String> personalities;
     private ArrayList<String> likes;
     private ArrayList<String> dislikes;
+    private ArrayList<String> cannotHaves;
 
     private int age;
     private int happiness;
@@ -71,6 +72,18 @@ public abstract class Pet {
             setState(State.EATING);
         }
 
+        if (checkIfCannotHave(item)) {
+            setHealth(-999);
+        } else {
+            ArrayList<Integer> newGains = factorGainMultipliers(item);
+            incrementCareLevels(newGains.get(0), newGains.get(1), newGains.get(2), newGains.get(3));
+        }
+    }
+
+    // EFFECTS:  returns the modified gain values of an item as a list after
+    //           taking into account the pet's likes/dislikes/cannotHaves
+    //           formatted as [happiness, hunger, thirst, health] gains
+    private ArrayList<Integer> factorGainMultipliers(Item item) {
         int happinessGain = item.getHappinessPoints();
         int hungerGain = item.getHungerPoints();
         int thirstGain = item.getThirstPoints();
@@ -88,8 +101,9 @@ public abstract class Pet {
             healthGain *= dislikesMultiplier;
         }
 
-        incrementCareLevels(happinessGain, hungerGain, thirstGain, healthGain);
+        return new ArrayList<>(Arrays.asList(happinessGain, hungerGain, thirstGain, healthGain));
     }
+
 
     // MODIFIES: this
     // REQUIRES: numWaste > 0
@@ -115,9 +129,14 @@ public abstract class Pet {
         return dislikes.contains(item.getName());
     }
 
+    // EFFECTS: returns true if item cannot be given to the pet
+    public boolean checkIfCannotHave(Item item) {
+        return cannotHaves.contains(item.getName());
+    }
+
     // EFFECTS: returns true if pet is dead
     public boolean checkIsDead() {
-        return (happiness == 0 || hunger == 0 || thirst == 0 || health == 0);
+        return (happiness <= 0 || hunger <= 0 || thirst <= 0 || health <= 0);
     }
 
     // EFFECTS: returns the current care levels in a list,
@@ -213,6 +232,18 @@ public abstract class Pet {
     }
 
     // MODIFIES: this
+    // EFFECTS:  adds a cannotHave to pet's cannotHaves
+    public void addCannotHaves(String cannotHave) {
+        cannotHaves.add(cannotHave);
+    }
+
+    // MODIFIES: this
+    // EFFECTS:  removes a cannotHave from pet's cannotHaves
+    public void removeCannotHaves(String cannotHave) {
+        cannotHaves.remove(cannotHave);
+    }
+
+    // MODIFIES: this
     // REQUIRES: petDataDir exists
     // EFFECTS:  gathers data from petDataDir, parses it, and then stores it
     protected void gatherPetData() throws IOException {
@@ -244,16 +275,18 @@ public abstract class Pet {
         JSONArray personalities = data.getJSONArray("personalities");
         JSONArray likes = data.getJSONArray("likes");
         JSONArray dislikes = data.getJSONArray("dislikes");
+        JSONArray cannotHaves = data.getJSONArray("cannotHaves");
 
         this.setPersonalities(jsonArrayToStringList(personalities));
         this.setLikes(jsonArrayToStringList(likes));
         this.setDislikes(jsonArrayToStringList(dislikes));
+        this.setCannotHaves(jsonArrayToStringList(cannotHaves));
 
         this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir"));
     }
 
     // EFFECTS: returns a list of String parsed from a JSONArray
-    public ArrayList<String> jsonArrayToStringList(JSONArray jsonArr) {
+    private ArrayList<String> jsonArrayToStringList(JSONArray jsonArr) {
         ArrayList<String> list = new ArrayList<>();
 
         for (int i = 0; i < jsonArr.length(); i++) {
@@ -302,6 +335,10 @@ public abstract class Pet {
 
     public ArrayList<String> getDislikes() {
         return this.dislikes;
+    }
+
+    public ArrayList<String> getCannotHaves() {
+        return this.cannotHaves;
     }
 
     public int getAge() {
@@ -363,6 +400,10 @@ public abstract class Pet {
 
     public void setDislikes(ArrayList<String> dislikes) {
         this.dislikes = dislikes;
+    }
+
+    public void setCannotHaves(ArrayList<String> cannotHave) {
+        this.cannotHaves = cannotHave;
     }
 
     public void setAge(int age) {

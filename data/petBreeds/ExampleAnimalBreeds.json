@@ -6,6 +6,7 @@
       "personalities": ["Personality1"],
       "likes": ["Like1"],
       "dislikes": ["Dislike1"],
+      "cannotHaves": ["CannotHave1"],
       "spriteFilesDir": "aleph"
     },
     {
@@ -13,6 +14,7 @@
       "personalities": ["Personality1","Personality2"],
       "likes": ["Like1","Like2"],
       "dislikes": ["Dislike1","Dislike2"],
+      "cannotHaves": ["CannotHave1","CannotHave2"],
       "spriteFilesDir": "bet"
     },
     {
@@ -20,6 +22,7 @@
       "personalities": ["Personality1","Personality2","Personality3"],
       "likes": ["Like1","Like2","Like3"],
       "dislikes": ["Dislike1","Dislike2","Dislike3"],
+      "cannotHaves": ["CannotHave1","CannotHave2","CannotHave3"],
       "spriteFilesDir": "gimel"
     }
   ]

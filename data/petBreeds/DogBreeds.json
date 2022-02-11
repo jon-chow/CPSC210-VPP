@@ -4,22 +4,25 @@
     {
       "breedName": "Shiba Inu",
       "personalities": ["Keen","Charming"],
-      "likes": ["","",""],
-      "dislikes": ["","",""],
+      "likes": ["Salmon Chunks","Lean Beef","Cantaloupe"],
+      "dislikes": [],
+      "cannotHaves": ["Chocolate", "Grapes"],
       "spriteFilesDir": "shiba_inu"
     },
     {
       "breedName": "Husky",
       "personalities": ["Intelligent","Gentle"],
-      "likes": ["Salmon Chunks"],
-      "dislikes": ["",""],
+      "likes": ["Chicken Leg"],
+      "dislikes": [],
+      "cannotHaves": ["Chocolate", "Grapes"],
       "spriteFilesDir": "husky"
     },
     {
       "breedName": "Pug",
       "personalities": ["Affectionate","Charming"],
-      "likes": ["","",""],
-      "dislikes": ["","",""],
+      "likes": [],
+      "dislikes": [],
+      "cannotHaves": ["Chocolate", "Grapes"],
       "spriteFilesDir": "pug"
     }
   ]
