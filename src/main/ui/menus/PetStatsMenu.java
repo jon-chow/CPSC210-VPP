@@ -35,11 +35,13 @@ public class PetStatsMenu {
         String personalities = pet.getPersonalities().toString().replaceAll("\\[|\\]","");
         String likes = pet.getLikes().toString().replaceAll("\\[|\\]","");
         String dislikes = pet.getDislikes().toString().replaceAll("\\[|\\]","");
+        String cannotHaves = pet.getCannotHaves().toString().replaceAll("\\[|\\]","");
 
         System.out.println("[ CHARACTERISTICS ]:");
         System.out.println("- Personalities: " + personalities);
         System.out.println("- Likes: " + likes);
         System.out.println("- Dislikes: " + dislikes);
+        System.out.println("- Cannot Have (these items will kill your pet!!!): " + cannotHaves);
     }
 
     // EFFECTS: displays a message about pet being dead
