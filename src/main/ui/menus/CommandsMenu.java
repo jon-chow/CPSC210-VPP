@@ -2,7 +2,7 @@ package ui.menus;
 
 import static ui.configurables.Commands.*;
 
-public class ViewCommandsMenu {
+public class CommandsMenu {
     // EFFECTS: prints out the controls for opening menus and playing the game
     public static void showControls() {
         String controls = "- '" + COMMANDS_KEY + "' || COMMANDS || View all the commands again\n"
