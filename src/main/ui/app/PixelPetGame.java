@@ -47,7 +47,7 @@ public class PixelPetGame {
 
         player = NewPlayerMenu.initNewPlayer(STARTING_MONEY);
         pet = AdoptionMenu.initAdoption();
-        ViewCommandsMenu.showControls();
+        CommandsMenu.showControls();
     }
 
     // EFFECTS: progresses the game

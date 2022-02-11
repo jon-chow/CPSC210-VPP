@@ -6,7 +6,7 @@ import java.util.Scanner;
 import ui.menus.InventoryMenu;
 import ui.menus.PetStatsMenu;
 import ui.menus.ShopMenu;
-import ui.menus.ViewCommandsMenu;
+import ui.menus.CommandsMenu;
 
 import static ui.configurables.Commands.*;
 
@@ -57,7 +57,7 @@ public class TerminalApp {
 
         if (command != null && command != "") {
             switch (command) {
-                case COMMANDS_KEY: ViewCommandsMenu.showControls();
+                case COMMANDS_KEY: CommandsMenu.showControls();
                     break;
                 case CHECK_PET_KEY: PetStatsMenu.checkPetStats(game.getPet(), game.getPlayer());
                     break;
