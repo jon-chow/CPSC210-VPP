@@ -143,6 +143,32 @@ class PetTest {
     }
 
     @Test
+    void consumeItemCannotHaveTest() {
+        Item item1 = null;
+        try {
+            item1 = new Item("Chicken","Food");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        animal.setHappiness(50);
+        animal.setHunger(50);
+        animal.setThirst(50);
+        animal.setHealth(50);
+
+        ArrayList<String> cannotHaves = new ArrayList();
+        cannotHaves.add("Chicken");
+        animal.setCannotHaves(cannotHaves);
+
+        animal.consumeItem(item1);
+        assertEquals(50, animal.getHappiness());
+        assertEquals(50, animal.getHunger());
+        assertEquals(50, animal.getThirst());
+        assertEquals(-999, animal.getHealth());
+        assertEquals(State.EATING, animal.getState());
+    }
+
+    @Test
     void makeNoiseTest() {
         assertNotEquals(0, animal.makeNoise().length());
     }
@@ -202,6 +228,25 @@ class PetTest {
 
         assertFalse(animal.checkIfDislikes(chicken));
         assertTrue(animal.checkIfDislikes(bone));
+    }
+
+    @Test
+    void checkIfCannotHaveTest() {
+        Item chicken = null;
+        Item bone = null;
+        try {
+            chicken = new Item("Chicken", "Food");
+            bone = new Item("Bone", "Toy");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ArrayList<String> cannotHave = new ArrayList<>();
+        cannotHave.add("Bone");
+        animal.setCannotHaves(cannotHave);
+
+        assertFalse(animal.checkIfCannotHave(chicken));
+        assertTrue(animal.checkIfCannotHave(bone));
     }
 
     @Test
@@ -405,6 +450,38 @@ class PetTest {
         ArrayList<String> expectedVal2 = new ArrayList<>();
         animal.removeDislikes("Chicken");
         assertEquals(expectedVal2, animal.getDislikes());
+    }
+
+    @Test
+    void addCannotHavesTest() {
+        ArrayList<String> cannotHaves = new ArrayList<>();
+        animal.setCannotHaves(cannotHaves);
+
+        animal.addCannotHaves("Chicken");
+        ArrayList<String> expectedVal1 = new ArrayList<>();
+        expectedVal1.add("Chicken");
+        assertEquals(expectedVal1, animal.getCannotHaves());
+
+        animal.addCannotHaves("Avocado");
+        ArrayList<String> expectedVal2 = new ArrayList<>();
+        expectedVal2.add("Chicken");
+        expectedVal2.add("Avocado");
+        assertEquals(expectedVal2, animal.getCannotHaves());
+    }
+
+    @Test
+    void removeCannotHavesTest() {
+        ArrayList<String> cannotHaves = new ArrayList<>(Arrays.asList("Chicken", "Avocado"));
+        animal.setCannotHaves(cannotHaves);
+
+        ArrayList<String> expectedVal1 = new ArrayList<>();
+        expectedVal1.add("Chicken");
+        animal.removeCannotHaves("Avocado");
+        assertEquals(expectedVal1, animal.getCannotHaves());
+
+        ArrayList<String> expectedVal2 = new ArrayList<>();
+        animal.removeCannotHaves("Chicken");
+        assertEquals(expectedVal2, animal.getCannotHaves());
     }
 
     @Test
