@@ -195,6 +195,24 @@ class PlayerTest {
     }
 
     @Test
+    void buyItemFromLittleInStockTest() throws IOException {
+        plr1.setMoney(2000);
+
+        Shop shop1 = new Shop("Petpix Toys");
+        Item item1 = new Item("Chicken", "Food");
+        shop1.addShopItem(item1, 5);
+
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        int expectedVal1C = 2000;
+
+        assertFalse(plr1.buyItemFrom(item1, 9, shop1));
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
+        assertEquals(expectedVal1C, plr1.getMoney());
+    }
+
+    @Test
     void playerNameTest() {
         plr1.setPlayerName("New Name");
         assertEquals("New Name", plr1.getPlayerName());
