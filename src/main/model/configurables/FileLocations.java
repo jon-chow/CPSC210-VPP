@@ -3,6 +3,9 @@ package model.configurables;
 // class for storing all sprites/json files paths
 // easier to configure directories this way
 public class FileLocations {
+    // PERSISTENCE FILE
+    public static final String persistenceDir = "data/Persistence.json";
+
     // GENERIC FOLDERS
     public static final String spritesDir = "data/sprites/";
     public static final String itemsSpriteDir = spritesDir + "items/";
