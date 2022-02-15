@@ -83,7 +83,7 @@ public class Player {
     public boolean buyItemFrom(Item item, int quantity, Shop shop) {
         int price = shop.getItemPrice(item) * quantity;
 
-        if (money >= price) {
+        if (money >= price && shop.getItemQuantity(item) >= quantity) {
             money -= price;
             addToInventory(item, quantity);
             shop.changeItemQuantity(item, -quantity);
