@@ -6,6 +6,7 @@ import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 import model.pets.Pet;
 
+// represents a player
 public class Player {
     private int money;
 

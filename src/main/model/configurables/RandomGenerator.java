@@ -3,6 +3,7 @@ package model.configurables;
 import java.util.ArrayList;
 import java.util.Random;
 
+// class for generating random probabilities for events
 public class RandomGenerator {
 //    public static boolean randomResult(double accuracy) {
 //        return (Math.random() <= accuracy);

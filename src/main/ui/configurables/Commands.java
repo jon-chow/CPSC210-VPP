@@ -1,5 +1,6 @@
 package ui.configurables;
 
+// class for storing command keywords
 public class Commands {
     // GENERAL COMMANDS
     public static final String COMMANDS_KEY = "commands";

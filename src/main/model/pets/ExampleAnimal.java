@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// represents an example pet
 public class ExampleAnimal extends Pet {
     private final String dataKey = "ExampleAnimal";
 

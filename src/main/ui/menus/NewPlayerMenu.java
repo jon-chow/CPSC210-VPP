@@ -5,6 +5,7 @@ import model.Player;
 import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
+// menu for creating a new player
 public class NewPlayerMenu {
     // EFFECTS: initiates the new player process
     public static Player initNewPlayer(int startingMoney) {

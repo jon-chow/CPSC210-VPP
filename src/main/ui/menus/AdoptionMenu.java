@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
+// menu for adopting a pet
 public class AdoptionMenu {
     private static AdoptionClinic adoptionClinic;
     private static Pet adoptedPet;

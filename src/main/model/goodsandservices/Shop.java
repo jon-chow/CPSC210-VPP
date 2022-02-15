@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+// represents a shop that sells pet items
 public class Shop {
     private final FileLocations fileLoc = new FileLocations();
     private final RandomGenerator rng = new RandomGenerator();
@@ -167,6 +168,9 @@ public class Shop {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS:  grabs all possible items and data from Items.json
+    //           and stores them in allPossibleItems
     private void fetchAllPossibleItems() throws IOException {
         String content = FileUtils.readFileToString(itemsDataDir, "utf-8");
         JSONObject itemsJson = new JSONObject(content);

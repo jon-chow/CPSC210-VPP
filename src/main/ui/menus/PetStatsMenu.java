@@ -3,6 +3,7 @@ package ui.menus;
 import model.Player;
 import model.pets.Pet;
 
+// menu for viewing the stats of a pet
 public class PetStatsMenu {
     // EFFECTS:
     public static void checkPetStats(Pet pet, Player player) {

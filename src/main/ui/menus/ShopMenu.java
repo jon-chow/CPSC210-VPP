@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import static ui.app.TerminalApp.scanner;
 import static ui.configurables.Commands.*;
 
+// menu for the shop
 public class ShopMenu {
     private static final String regex = "^[^\\s][a-zA-Z'\\d\\s]{1,}[^\\s]" + SHOP_SEPARATOR_KEY
             + "[^\\s][a-zA-Z\\d\\s]{1,}[^\\s]" + SHOP_SEPARATOR_KEY

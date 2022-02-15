@@ -26,6 +26,8 @@ vastness of **OOP** in both a **structural** and **creative** manner.
     <li>"...buy items at a shop and store them in my inventory"</li>
     <li>"...give treats/toys/food to my pet from my inventory"</li>
     <li>"...learn about my pet's health, personalities, likes and dislikes"</li>
-    <li>"...access different menus such as the store or my inventory"</li>
-    <li>"...earn in-game money"</li>
+
+[//]: # (    <li>"...access different menus such as the store or my inventory"</li>)
+
+[//]: # (    <li>"...earn in-game money"</li>)
 </ul>

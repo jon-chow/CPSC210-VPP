@@ -15,6 +15,7 @@ import model.goodsandservices.Item;
 
 import static ui.app.PixelPetGame.*;
 
+// represents an abstract pet
 public abstract class Pet {
     public final double likesMultiplier = 1.1;
     public final double dislikesMultiplier = 0.5;

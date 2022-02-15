@@ -9,6 +9,7 @@ import model.goodsandservices.Shop;
 import model.pets.*;
 import ui.menus.*;
 
+// class for handling the main game functions and menus
 public class PixelPetGame {
     public static final ArrayList<String> ANIMALS_IN_ADOPTION_CLINIC =
             new ArrayList<>(Arrays.asList("Example Animal", "Dog"));

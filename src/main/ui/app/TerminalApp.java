@@ -23,6 +23,7 @@ import static ui.configurables.Commands.*;
 //import com.googlecode.lanterna.screen.Screen;
 //import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 
+// class for handling game time and user input
 public class TerminalApp {
     public static final Scanner scanner = new Scanner(System.in);
 

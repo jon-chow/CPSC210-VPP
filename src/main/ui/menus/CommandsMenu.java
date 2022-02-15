@@ -2,6 +2,7 @@ package ui.menus;
 
 import static ui.configurables.Commands.*;
 
+// menu for referencing in-game commands
 public class CommandsMenu {
     // EFFECTS: prints out the controls for opening menus and playing the game
     public static void showControls() {

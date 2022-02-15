@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import static ui.app.PixelPetGame.ANIMALS_IN_ADOPTION_CLINIC;
 
+// represents an adoption clinic where the player can adopt a pet
 public class AdoptionClinic {
     private final FileLocations fileLoc = new FileLocations();
     private final ArrayList<String> animalTypes;

@@ -1,6 +1,7 @@
 package model.configurables;
 
-// Easier to configure directories this way
+// class for storing all sprites/json files paths
+// easier to configure directories this way
 public class FileLocations {
     // GENERIC FOLDERS
     public static final String spritesDir = "data/sprites/";

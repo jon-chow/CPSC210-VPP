@@ -1,5 +1,6 @@
 package model.pets;
 
+// represents the states of a pet
 public enum State {
     IDLING,
     MOVING,
