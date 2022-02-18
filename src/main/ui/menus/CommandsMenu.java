@@ -10,7 +10,9 @@ public class CommandsMenu {
                         + "- '" + CHECK_PET_KEY + "' || PET || View your pet's stats\n"
                         + "- '" + OPEN_SHOP_KEY + "' || SHOP || Open the shop menu\n"
                         + "- '" + OPEN_INVENTORY_KEY + "' || INVENTORY || View your inventory\n"
-                        + "- '" + VIEW_MONEY_KEY + "' || MONETARY || Check how much money you have\n";
+                        + "- '" + VIEW_MONEY_KEY + "' || MONETARY || Check how much money you have\n"
+                        + "- '" + SAVE_KEY + "' || SAVE DATA || Save the current session\n"
+                        + "- '" + LOAD_KEY + "' || LOAD DATA || Load a previous session\n";
 
         System.out.println("\nTo access a service, enter in the corresponding command:");
         System.out.println("[ COMMAND || SERVICE TYPE || DESCRIPTION ]");

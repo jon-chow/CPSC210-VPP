@@ -21,6 +21,8 @@ public class Commands {
     public static final String GIVE_TO_KEY = "give";
     public static final String INVENTORY_SEPARATOR_KEY = "::";
 
-    // PLAYER INFORMATION COMMANDS
+    // PLAYER COMMANDS
     public static final String VIEW_MONEY_KEY = "money";
+    public static final String SAVE_KEY = "save";
+    public static final String LOAD_KEY = "load";
 }
