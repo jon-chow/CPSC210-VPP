@@ -29,17 +29,19 @@ public class InventoryMenu {
 
         if (inventorySize != 0) {
             System.out.println("Here's a list of items in your inventory:");
-            System.out.println("[ ITEM NAME || ITEM TYPE || QUANTITY ]");
+            System.out.println("[ NAME (TYPE) [# IN INVENTORY] || "
+                    + "{HAPPINESS, HUNGER, THIRST, HEALTH GAINS} ]");
 
             for (int i = 0; i < inventorySize; i++) {
                 Item item = inventory.get(i);
-                String itemName = item.getName();
-                String itemType = item.getType();
-                int quantity = player.getInventoryQuantity().get(i);
 
-                System.out.println("- " + itemName + " || "
-                        + itemType + " || x"
-                        + quantity);
+                System.out.println("- " + item.getName() + " ("
+                        + item.getType() + ") [x"
+                        + player.getInventoryQuantity().get(i) + "] || {"
+                        + item.getHappinessPoints() + ", "
+                        + item.getHungerPoints() + ", "
+                        + item.getThirstPoints() + ", "
+                        + item.getHealthPoints() + "}");
             }
 
             displayCommands();

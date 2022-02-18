@@ -136,19 +136,20 @@ public class ShopMenu {
     // EFFECTS: displays all items that can be purchased in shop
     private static void printItems(Shop shop) {
         System.out.println("\nHere's a list of items you can purchase at " + shop.getShopName() + ":");
-        System.out.println("[ ITEM NAME || ITEM TYPE || PRICE || QUANTITY IN-STOCK ]");
+        System.out.println("[ NAME (TYPE) (PRICE) [# IN-STOCK] || "
+                + "{HAPPINESS, HUNGER, THIRST, HEALTH GAINS} ]");
 
         for (int i = 0; i < shop.getShopItems().size(); i++) {
             Item item = shop.getShopItems().get(i);
-            String itemName = item.getName();
-            String itemType = item.getType();
-            int price = shop.getPriceOfItems().get(i);
-            int quantityInStock = shop.getQuantityInStock().get(i);
 
-            System.out.println("- " + itemName + " || "
-                                    + itemType + " || $"
-                                    + price + " || x"
-                                    + quantityInStock);
+            System.out.println("- " + item.getName() + " ("
+                                    + item.getType() + ") ($"
+                                    + shop.getPriceOfItems().get(i) + ") [x"
+                                    + shop.getQuantityInStock().get(i) +  "] || {"
+                                    + item.getHappinessPoints() + ", "
+                                    + item.getHungerPoints() + ", "
+                                    + item.getThirstPoints() + ", "
+                                    + item.getHealthPoints() + "}");
         }
     }
 }
