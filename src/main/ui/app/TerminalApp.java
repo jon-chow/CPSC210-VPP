@@ -3,10 +3,7 @@ package ui.app;
 import java.io.IOException;
 import java.util.Scanner;
 
-import ui.menus.InventoryMenu;
-import ui.menus.PetStatsMenu;
-import ui.menus.ShopMenu;
-import ui.menus.CommandsMenu;
+import ui.menus.*;
 
 import static ui.configurables.Commands.*;
 
@@ -35,8 +32,14 @@ public class TerminalApp {
         beginTicks();
     }
 
+    // MODIFIES: this
+    // EFFECTS: reloads a new game instance
+    public void reloadGameSession(PixelPetGame game) {
+        this.game = game;
+    }
+
     // EFFECTS: begins the ticking process; game is running
-    private void beginTicks() throws InterruptedException {
+    private void beginTicks() throws InterruptedException, IOException {
         while (!game.isEnded()) {
             tick();
             Thread.sleep(1000L / PixelPetGame.TICKS_PER_SECOND);
@@ -47,13 +50,13 @@ public class TerminalApp {
     }
 
     // EFFECTS: adds one tick to the game; proceeds the game
-    private void tick() {
+    private void tick() throws IOException {
         game.tick();
         handleUserInput();
     }
 
     // EFFECTS: handles user commands and inputs
-    private void handleUserInput() {
+    private void handleUserInput() throws IOException {
         String command = scanner.nextLine();
 
         if (command != null && command != "") {
@@ -68,6 +71,10 @@ public class TerminalApp {
                 case OPEN_INVENTORY_KEY: InventoryMenu.viewInventory(game.getPlayer(), game.getPet());
                     break;
                 case VIEW_MONEY_KEY: InventoryMenu.checkMoney(game.getPlayer());
+                    break;
+                case SAVE_KEY: PersistenceMenu.displaySaveMenu(game);
+                    break;
+                case LOAD_KEY: PersistenceMenu.displayLoadMenu(game);
                     break;
                 default:
                     break;
