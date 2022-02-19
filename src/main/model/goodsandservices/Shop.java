@@ -2,6 +2,7 @@ package model.goodsandservices;
 
 import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
+import model.persistence.Writable;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,8 +11,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static model.persistence.ConverterJsonArrays.*;
+
 // represents a shop that sells pet items
-public class Shop {
+public class Shop implements Writable {
     private final FileLocations fileLoc = new FileLocations();
     private final RandomGenerator rng = new RandomGenerator();
 
@@ -184,6 +187,19 @@ public class Shop {
 
             allPossibleItems.add(new Item(itemName, itemType));
         }
+    }
+
+
+    // EFFECTS: converts all shop data to a JSONObject and returns it
+    @Override
+    public JSONObject toJsonObj() {
+        JSONObject shopObject = new JSONObject();
+        shopObject.put("items", arrayListItemToJson(shopItems));
+        shopObject.put("quantities", arrayListIntToJson(quantityInStock));
+        shopObject.put("prices", arrayListIntToJson(priceOfItems));
+        shopObject.put("name", shopName);
+
+        return shopObject;
     }
 
     // EFFECTS: returns true if item exists in shopItems

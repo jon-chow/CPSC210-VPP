@@ -2,6 +2,7 @@ package model.pets;
 
 import model.configurables.FileLocations;
 import model.configurables.RandomGenerator;
+import model.persistence.Writable;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,10 +14,11 @@ import java.util.Arrays;
 
 import model.goodsandservices.Item;
 
+import static model.persistence.ConverterJsonArrays.arrayListStringToJson;
 import static ui.app.PixelPetGame.*;
 
 // represents an abstract pet
-public abstract class Pet {
+public abstract class Pet implements Writable {
     public final double likesMultiplier = 1.1;
     public final double dislikesMultiplier = 0.5;
 
@@ -295,6 +297,32 @@ public abstract class Pet {
             list.add(str);
         }
         return list;
+    }
+
+    // EFFECTS: converts all pet data to a JSONObject and returns it
+    @Override
+    public JSONObject toJsonObj() {
+        JSONObject itemDetails = new JSONObject();
+
+        itemDetails.put("name", name);
+        itemDetails.put("type", animalType);
+        itemDetails.put("breed", breed);
+        itemDetails.put("state", state);
+
+        itemDetails.put("age", age);
+        itemDetails.put("happiness", happiness);
+        itemDetails.put("hunger", hunger);
+        itemDetails.put("thirst", thirst);
+        itemDetails.put("health", health);
+        itemDetails.put("numWaste", numWaste);
+
+//        itemDetails.put("allNoises", arrayListStringToJson(allNoises));
+//        itemDetails.put("likes", arrayListStringToJson(likes));
+//        itemDetails.put("dislikes", arrayListStringToJson(dislikes));
+//        itemDetails.put("personalities", arrayListStringToJson(personalities));
+//        itemDetails.put("cannotHaves", arrayListStringToJson(cannotHaves));
+
+        return itemDetails;
     }
 
     // GETTERS

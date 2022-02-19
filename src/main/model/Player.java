@@ -4,10 +4,15 @@ import java.util.ArrayList;
 
 import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
+import model.persistence.Writable;
 import model.pets.Pet;
 
+import org.json.JSONObject;
+
+import static model.persistence.ConverterJsonArrays.*;
+
 // represents a player
-public class Player {
+public class Player implements Writable {
     private int money;
 
     private String playerName;
@@ -93,6 +98,22 @@ public class Player {
         }
     }
 
+    // EFFECTS: converts all player data to a JSONObject and returns it
+    @Override
+    public JSONObject toJsonObj() {
+        JSONObject playerObject = new JSONObject();
+
+        JSONObject inventory = new JSONObject();
+        inventory.put("quantities", arrayListIntToJson(inventoryQuantity));
+        inventory.put("items", arrayListItemToJson(this.inventory));
+
+        playerObject.put("inventory", inventory);
+        playerObject.put("money", money);
+        playerObject.put("name", playerName);
+
+        return playerObject;
+    }
+
     // GETTERS
     public int getMoney() {
         return money;
@@ -126,5 +147,4 @@ public class Player {
     public void setInventoryQuantity(ArrayList<Integer> inventoryQuantity) {
         this.inventoryQuantity = inventoryQuantity;
     }
-
 }

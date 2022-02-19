@@ -1,6 +1,7 @@
 package model.goodsandservices;
 
 import model.configurables.FileLocations;
+import model.persistence.Writable;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 // represents an item
-public class Item {
+public class Item implements Writable {
     private final FileLocations fileLoc = new FileLocations();
 
     private final String dataKey = "Item";
@@ -72,6 +73,22 @@ public class Item {
         this.hungerPoints  = carePoints.getInt(1);
         this.thirstPoints = carePoints.getInt(2);
         this.healthPoints = carePoints.getInt(3);
+    }
+
+    // EFFECTS:  converts all item data to a JSONObject and returns it
+    @Override
+    public JSONObject toJsonObj() {
+        JSONObject itemDetails = new JSONObject();
+
+        itemDetails.put("name", name);
+        itemDetails.put("type", type);
+//        itemDetails.put("happinessPoints", happinessPoints);
+//        itemDetails.put("hungerPoints", hungerPoints);
+//        itemDetails.put("thirstPoints", thirstPoints);
+//        itemDetails.put("healthPoints", healthPoints);
+//        itemDetails.put("price", price);
+
+        return itemDetails;
     }
 
     // GETTERS
