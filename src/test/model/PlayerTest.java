@@ -196,7 +196,7 @@ class PlayerTest {
 
     @Test
     void buyItemFromLittleInStockTest() throws IOException {
-        plr1.setMoney(2000);
+        plr1.setMoney(10000);
 
         Shop shop1 = new Shop("Petpix Toys");
         Item item1 = new Item("Chicken", "Food");
@@ -204,9 +204,49 @@ class PlayerTest {
 
         ArrayList<Item> expectedVal1A = new ArrayList<>();
         ArrayList<Integer> expectedVal1B = new ArrayList<>();
-        int expectedVal1C = 2000;
+        int expectedVal1C = 10000;
 
         assertFalse(plr1.buyItemFrom(item1, 9, shop1));
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
+        assertEquals(expectedVal1C, plr1.getMoney());
+    }
+
+    @Test
+    void buyItemFromNeitherEnoughTest() throws IOException {
+        plr1.setMoney(0);
+
+        Shop shop1 = new Shop("Petpix Toys");
+        Item item1 = new Item("Chicken", "Food");
+        Item item2 = new Item("Bone", "Toy");
+        shop1.addShopItem(item1, 1);
+        shop1.addShopItem(item2, 1);
+
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        int expectedVal1C = 0;
+
+        assertFalse(plr1.buyItemFrom(item1, 2, shop1));
+        assertEquals(expectedVal1A, plr1.getInventory());
+        assertEquals(expectedVal1B, plr1.getInventoryQuantity());
+        assertEquals(expectedVal1C, plr1.getMoney());
+    }
+
+    @Test
+    void buyItemFromJustRightTest() throws IOException {
+        Shop shop1 = new Shop("Petpix Toys");
+        Item item1 = new Item("Chicken", "Food");
+        shop1.addShopItem(item1, 1);
+
+        plr1.setMoney(item1.getPrice());
+
+        ArrayList<Item> expectedVal1A = new ArrayList<>();
+        ArrayList<Integer> expectedVal1B = new ArrayList<>();
+        expectedVal1A.add(item1);
+        expectedVal1B.add(1);
+        int expectedVal1C = 0;
+
+        assertTrue(plr1.buyItemFrom(item1, 1, shop1));
         assertEquals(expectedVal1A, plr1.getInventory());
         assertEquals(expectedVal1B, plr1.getInventoryQuantity());
         assertEquals(expectedVal1C, plr1.getMoney());
