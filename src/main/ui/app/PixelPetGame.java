@@ -40,18 +40,27 @@ public class PixelPetGame {
     private Pet pet;
     private ArrayList<Shop> shops;
 
-    // EFFECTS: constructs a new PixelPetGame
-    public PixelPetGame() throws IOException {
+    // EFFECTS: constructs a new PixelPetGame and preconfigures
+    //          the PixelPetGame if isForTest is true
+    public PixelPetGame(boolean isForTest) throws IOException {
         Shop shop = ShopMenu.initShop("Kira Kira Pets");
         shops = new ArrayList<>();
         shops.add(shop);
-        player = NewPlayerMenu.initNewPlayer(STARTING_MONEY);
-        pet = AdoptionMenu.initAdoption();
 
-        sessionId = generateSessionId(player.getPlayerName(), pet.getName(), shop.getShopName());
-        System.out.println("Your personal ID for saving and loading the game is " + sessionId + ".\n"
-                            + "Be sure to write it down somewhere or remember it!");
-        CommandsMenu.showControls();
+        if (!isForTest) {
+            player = NewPlayerMenu.initNewPlayer(STARTING_MONEY);
+            pet = AdoptionMenu.initAdoption();
+
+            sessionId = generateSessionId(player.getPlayerName(), pet.getName(), shop.getShopName());
+            System.out.println("Your personal ID for saving and loading the game is " + sessionId + ".\n"
+                    + "Be sure to write it down somewhere or remember it!");
+            CommandsMenu.showControls();
+        } else {
+            pet = new ExampleAnimal("Test Animal", "Aleph");
+            player = new Player();
+            player.setPlayerName("Test Player");
+            player.setMoney(9999999);
+        }
     }
 
     // MODIFIES: this

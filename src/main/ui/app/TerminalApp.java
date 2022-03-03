@@ -28,18 +28,18 @@ public class TerminalApp {
 
     // EFFECTS: creates a new instance of PixelPetGame
     public void start() throws IOException, InterruptedException {
-        game = new PixelPetGame();
+        game = new PixelPetGame(false);
         beginTicks();
     }
 
-    // MODIFIES: this
-    // EFFECTS: reloads a new game instance
-    public void reloadGameSession(PixelPetGame game) {
-        this.game = game;
-    }
+//    // MODIFIES: this
+//    // EFFECTS: reloads a new game instance
+//    public void reloadGameSession(PixelPetGame game) {
+//        this.game = game;
+//    }
 
     // EFFECTS: begins the ticking process; game is running
-    private void beginTicks() throws InterruptedException, IOException {
+    private void beginTicks() throws InterruptedException {
         while (!game.isEnded()) {
             tick();
             Thread.sleep(1000L / PixelPetGame.TICKS_PER_SECOND);
@@ -50,16 +50,16 @@ public class TerminalApp {
     }
 
     // EFFECTS: adds one tick to the game; proceeds the game
-    private void tick() throws IOException {
+    private void tick() {
         game.tick();
         handleUserInput();
     }
 
     // EFFECTS: handles user commands and inputs
-    private void handleUserInput() throws IOException {
+    private void handleUserInput() {
         String command = scanner.nextLine();
 
-        if (command != null && command != "") {
+        if (command != null && !command.equals("")) {
             switch (command) {
                 case COMMANDS_KEY: CommandsMenu.showControls();
                     break;
