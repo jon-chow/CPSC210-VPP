@@ -9,16 +9,16 @@ import java.util.ArrayList;
 
 // a converter between ArrayLists and JSONArrays
 public class ConverterJsonArrays {
-    // EFFECTS: converts an ArrayList<String> to a JSONArray and returns it
-    public static JSONArray arrayListStringToJson(ArrayList<String> arrayList) {
-        JSONArray jsonArray = new JSONArray();
-
-        for (String string : arrayList) {
-            jsonArray.put(string);
-        }
-
-        return jsonArray;
-    }
+//    // EFFECTS: converts an ArrayList<String> to a JSONArray and returns it
+//    public static JSONArray arrayListStringToJson(ArrayList<String> arrayList) {
+//        JSONArray jsonArray = new JSONArray();
+//
+//        for (String string : arrayList) {
+//            jsonArray.put(string);
+//        }
+//
+//        return jsonArray;
+//    }
 
     // EFFECTS: converts an ArrayList<Integer> to a JSONArray and returns it
     public static JSONArray arrayListIntToJson(ArrayList<Integer> arrayList) {
@@ -43,16 +43,16 @@ public class ConverterJsonArrays {
         return jsonArray;
     }
 
-    // EFFECTS: converts a JSONArray to an ArrayList<String> and returns it
-    public static ArrayList<String> jsonToArrayListString(JSONArray arrayList) {
-        ArrayList<String> stringArray = new ArrayList<>();
-
-        for (int i = 0; i < arrayList.length(); i++) {
-            stringArray.add(arrayList.getString(i));
-        }
-
-        return stringArray;
-    }
+//    // EFFECTS: converts a JSONArray to an ArrayList<String> and returns it
+//    public static ArrayList<String> jsonToArrayListString(JSONArray arrayList) {
+//        ArrayList<String> stringArray = new ArrayList<>();
+//
+//        for (int i = 0; i < arrayList.length(); i++) {
+//            stringArray.add(arrayList.getString(i));
+//        }
+//
+//        return stringArray;
+//    }
 
     // EFFECTS: converts a JSONArray to an ArrayList<Integer> and returns it
     public static ArrayList<Integer> jsonToArrayListInt(JSONArray arrayList) {
