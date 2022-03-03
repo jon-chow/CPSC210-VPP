@@ -19,11 +19,13 @@ class ReaderWriterTest {
 
     PixelPetGame game;
 
+    ConverterJsonArrays converterJsonArrays;
     PersistenceReader reader;
     PersistenceWriter writer;
 
     @BeforeEach
     void runBefore() throws IOException {
+        converterJsonArrays = new ConverterJsonArrays();
         testPersistenceFile = new File("data/persistence/ReaderWriterTest.json");
         game = new PixelPetGame(true);
     }
