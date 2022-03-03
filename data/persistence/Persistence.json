@@ -1,0 +1,67 @@
+{"sessions": [{
+    "data": {
+        "shop": {
+            "quantities": [
+                15,
+                15,
+                10,
+                10,
+                10
+            ],
+            "name": "Kira Kira Pets",
+            "prices": [
+                180,
+                200,
+                80,
+                30,
+                380
+            ],
+            "items": [
+                {
+                    "name": "Chocolate",
+                    "type": "Food"
+                },
+                {
+                    "name": "Squeaky Mouse",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Ball of Yarn",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Grapes",
+                    "type": "Food"
+                },
+                {
+                    "name": "Chicken",
+                    "type": "Toy"
+                }
+            ]
+        },
+        "ticksPassed": 1,
+        "secondsPassed": 0,
+        "pet": {
+            "thirst": 100,
+            "happiness": 100,
+            "numWaste": 0,
+            "name": "asd",
+            "health": 100,
+            "state": "IDLING",
+            "type": "Dog",
+            "breed": "Husky",
+            "age": 0,
+            "hunger": 100
+        },
+        "player": {
+            "money": 10000,
+            "name": "jon",
+            "inventory": {
+                "quantities": [],
+                "items": []
+            }
+        }
+    },
+    "id": 1610603613,
+    "saveTime": "03-03-2022 14:12:39"
+}]}
