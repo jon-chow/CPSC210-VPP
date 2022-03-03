@@ -14,7 +14,7 @@ import java.util.Arrays;
 
 import model.goodsandservices.Item;
 
-import static model.persistence.ConverterJsonArrays.arrayListStringToJson;
+// import static model.persistence.ConverterJsonArrays.arrayListStringToJson;
 import static ui.app.PixelPetGame.*;
 
 // represents an abstract pet
@@ -316,7 +316,6 @@ public abstract class Pet implements Writable {
         itemDetails.put("health", health);
         itemDetails.put("numWaste", numWaste);
 
-//        itemDetails.put("allNoises", arrayListStringToJson(allNoises));
 //        itemDetails.put("likes", arrayListStringToJson(likes));
 //        itemDetails.put("dislikes", arrayListStringToJson(dislikes));
 //        itemDetails.put("personalities", arrayListStringToJson(personalities));
