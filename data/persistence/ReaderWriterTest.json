@@ -1,0 +1,79 @@
+{"sessions": [{
+    "data": {
+        "shop": {
+            "quantities": [
+                15,
+                15,
+                10,
+                10,
+                10
+            ],
+            "name": "Kira Kira Pets",
+            "prices": [
+                230,
+                100,
+                80,
+                80,
+                150
+            ],
+            "items": [
+                {
+                    "name": "Chicken",
+                    "type": "Food"
+                },
+                {
+                    "name": "Blob",
+                    "type": "Unknown"
+                },
+                {
+                    "name": "Tug O' Rope",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Ball of Yarn",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Bone",
+                    "type": "Toy"
+                }
+            ]
+        },
+        "ticksPassed": 0,
+        "secondsPassed": 0,
+        "pet": {
+            "thirst": 100,
+            "happiness": 100,
+            "numWaste": 0,
+            "name": "Aleph",
+            "health": 100,
+            "state": "IDLING",
+            "type": "ExampleAnimal",
+            "breed": "Aleph",
+            "age": 0,
+            "hunger": 100
+        },
+        "player": {
+            "money": 5000,
+            "name": "Initial",
+            "inventory": {
+                "quantities": [
+                    3,
+                    6
+                ],
+                "items": [
+                    {
+                        "name": "Chicken",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Bone",
+                        "type": "Toy"
+                    }
+                ]
+            }
+        }
+    },
+    "id": 10,
+    "saveTime": "03-03-2022 14:12:04"
+}]}
