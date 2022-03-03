@@ -4,7 +4,7 @@ package model.configurables;
 // easier to configure directories this way
 public class FileLocations {
     // PERSISTENCE FILE
-    public static final String persistenceDir = "data/Persistence.json";
+    public static final String persistenceDir = "data/persistence/Persistence.json";
 
     // GENERIC FOLDERS
     public static final String spritesDir = "data/sprites/";
