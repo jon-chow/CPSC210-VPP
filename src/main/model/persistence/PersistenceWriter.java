@@ -1,6 +1,6 @@
 package model.persistence;
 
-import model.configurables.FileLocations;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -15,22 +15,15 @@ import ui.app.PixelPetGame;
 public class PersistenceWriter {
     private static final int INDENT_FCT = 4;
 
-    private final FileLocations fileLoc = new FileLocations();
-    private final FileWriter fileWriter = new FileWriter(fileLoc.persistenceDir);
-
-    private final DateTimeFormatter dateTimeFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-
+    private FileWriter fileWriter;
     private JSONObject playerObject;
     private JSONObject petObject;
     private JSONObject shopObject;
 
-    // EFFECTS: constructs a new persistence writer
-    public PersistenceWriter(PixelPetGame game) throws IOException {
-        save(game);
-    }
-
-    // EFFECTS: saves the game's current session
-    private void save(PixelPetGame game) throws IOException {
+    // EFFECTS: constructs a new persistence
+    //          that saves game data to persistenceFile
+    public PersistenceWriter(File persistenceFile, PixelPetGame game) throws IOException {
+        fileWriter = new FileWriter(persistenceFile);
         playerObject = game.getPlayer().toJsonObj();
         petObject = game.getPet().toJsonObj();
         shopObject = game.getShopByName("Kira Kira Pets").toJsonObj();
@@ -41,24 +34,17 @@ public class PersistenceWriter {
         dataObject.put("shop", shopObject);
         dataObject.put("ticksPassed", game.getTicksPassed());
         dataObject.put("secondsPassed", game.getSecondsPassed());
-
         JSONObject slotObject = new JSONObject();
         slotObject.put("data", dataObject);
         slotObject.put("id", game.getSessionId());
-        slotObject.put("saveTime", LocalDateTime.now().format(dateTimeFormat));
-
+        slotObject.put("saveTime", LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
         JSONArray saveSlotsArray = new JSONArray();
         saveSlotsArray.put(slotObject);
-
         JSONObject savesData = new JSONObject();
         savesData.put("sessions", saveSlotsArray);
 
-        writeToJson(savesData);
-    }
-
-    // EFFECTS: writes the data to the data persistence json file
-    private void writeToJson(JSONObject gameData) throws IOException {
-        fileWriter.write(gameData.toString(INDENT_FCT));
+        fileWriter.write(savesData.toString(INDENT_FCT));
         fileWriter.flush();
         fileWriter.close();
     }

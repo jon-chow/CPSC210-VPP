@@ -1,9 +1,11 @@
 package ui.menus;
 
+import model.configurables.FileLocations;
 import model.exceptions.CannotFindSessionIdException;
 import model.persistence.*;
 import ui.app.PixelPetGame;
 
+import java.io.File;
 import java.io.IOException;
 
 import static ui.app.TerminalApp.scanner;
@@ -11,6 +13,9 @@ import static ui.configurables.Commands.*;
 
 // menu for loading or saving game data
 public class PersistenceMenu {
+    private static final FileLocations fileLoc = new FileLocations();
+    private static final File persistenceFile = new File(fileLoc.persistenceDir);
+
     // EFFECTS: displays the menu for saving data
     public static void displaySaveMenu(PixelPetGame game) {
         System.out.println("Are you sure you'd like to save the current session?");
@@ -34,7 +39,7 @@ public class PersistenceMenu {
     // EFFECTS: saves the current session's game data
     public static void saveGameData(PixelPetGame game) {
         try {
-            new PersistenceWriter(game);
+            new PersistenceWriter(persistenceFile, game);
             System.out.println("Data was saved successfully!");
         } catch (IOException e) {
             System.err.println("Failed to save data!");
@@ -50,7 +55,6 @@ public class PersistenceMenu {
 
         try {
             sessionId = Integer.parseInt(command);
-
             System.out.println("Are you sure you'd like to load this session?");
             if (confirmationMenu()) {
                 loadGameData(game, sessionId);
@@ -65,10 +69,10 @@ public class PersistenceMenu {
     // EFFECTS: loads game data from a previous session
     public static void loadGameData(PixelPetGame game, int sessionId) {
         try {
-            new PersistenceReader(game, sessionId);
+            new PersistenceReader(persistenceFile, game, sessionId);
             System.out.println("Data was loaded successfully!");
         } catch (CannotFindSessionIdException e) {
-            System.err.println("Failed to load session!");
+            System.err.println("Failed to load!");
         } catch (IOException e) {
             System.err.println("Failed to read data!");
         }

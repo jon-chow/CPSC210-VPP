@@ -25,9 +25,6 @@ import static model.persistence.ConverterJsonArrays.jsonToArrayListItem;
 
 // reads in data from the Persistence.json to the game
 public class PersistenceReader {
-    private final FileLocations fileLoc = new FileLocations();
-    private final File persistenceFile = new File(fileLoc.persistenceDir);
-
     private String content;
     private JSONObject savesData;
     private JSONArray sessionsArray;
@@ -37,7 +34,8 @@ public class PersistenceReader {
     JSONObject data;
 
     // EFFECTS: constructs a new persistence reader
-    public PersistenceReader(PixelPetGame game, int sessionId) throws IOException, CannotFindSessionIdException {
+    public PersistenceReader(File persistenceFile, PixelPetGame game, int sessionId)
+            throws IOException, CannotFindSessionIdException {
         content = FileUtils.readFileToString(persistenceFile, "utf-8");
         savesData = new JSONObject(content);
         sessionsArray = savesData.getJSONArray("sessions");
@@ -47,7 +45,7 @@ public class PersistenceReader {
     // EFFECTS: loads a previous game session
     private void load(PixelPetGame game, int sessionId) throws CannotFindSessionIdException, IOException {
         if (!findBySessionID(sessionId)) {
-            throw new CannotFindSessionIdException("Session ID was not found in the database!");
+            throw new CannotFindSessionIdException();
         }
 
         int secondsPassed = data.getInt("secondsPassed");
@@ -123,7 +121,6 @@ public class PersistenceReader {
         int petHealth = petObject.getInt("health");
         int petNumWaste = petObject.getInt("numWaste");
 
-//        ArrayList<String> petAllNoises = jsonToArrayListString(petObject.getJSONArray("allNoises"));
 //        ArrayList<String> likes = jsonToArrayListString(petObject.getJSONArray("likes"));
 //        ArrayList<String> dislikes = jsonToArrayListString(petObject.getJSONArray("dislikes"));
 //        ArrayList<String> personalities = jsonToArrayListString(petObject.getJSONArray("personalities"));
@@ -139,6 +136,11 @@ public class PersistenceReader {
         pet.setThirst(petThirst);
         pet.setHealth(petHealth);
         pet.setNumWaste(petNumWaste);
+
+//        pet.setLikes(likes);
+//        pet.setDislikes(dislikes);
+//        pet.setLikes(personalities);
+//        pet.setDislikes(cannotHaves);
 
         return pet;
     }
