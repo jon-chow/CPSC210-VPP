@@ -10,32 +10,32 @@
             ],
             "name": "Kira Kira Pets",
             "prices": [
-                230,
+                80,
                 100,
-                80,
-                80,
-                150
+                30,
+                150,
+                80
             ],
             "items": [
                 {
-                    "name": "Chicken",
-                    "type": "Food"
+                    "name": "Tug O' Rope",
+                    "type": "Toy"
                 },
                 {
                     "name": "Blob",
                     "type": "Unknown"
                 },
                 {
-                    "name": "Tug O' Rope",
-                    "type": "Toy"
-                },
-                {
-                    "name": "Ball of Yarn",
-                    "type": "Toy"
+                    "name": "Grapes",
+                    "type": "Food"
                 },
                 {
                     "name": "Bone",
                     "type": "Toy"
+                },
+                {
+                    "name": "Salmon Chunks",
+                    "type": "Food"
                 }
             ]
         },
@@ -75,5 +75,5 @@
         }
     },
     "id": 10,
-    "saveTime": "03-03-2022 14:12:04"
+    "saveTime": "16-03-2022 18:31:15"
 }]}

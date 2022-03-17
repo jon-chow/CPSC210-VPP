@@ -27,7 +27,7 @@ class ReaderWriterTest {
     void runBefore() throws IOException {
         converterJsonArrays = new ConverterJsonArrays();
         testPersistenceFile = new File("data/persistence/ReaderWriterTest.json");
-        game = new PixelPetGame(true);
+        game = new PixelPetGame(true, null);
     }
 
     @Test
