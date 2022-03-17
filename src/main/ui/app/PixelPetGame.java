@@ -46,10 +46,10 @@ public class PixelPetGame {
         Shop shop = ShopMenu.initShop("Kira Kira Pets");
         shops = new ArrayList<>();
         shops.add(shop);
-        player = ui.getPlayer();
-        pet = ui.getPet();
 
         if (!isForTest) {
+            player = ui.getPlayer();
+            pet = ui.getPet();
             sessionId = generateSessionId(player.getPlayerName(), pet.getName(), shop.getShopName());
             System.out.println("Your personal ID for saving and loading the game is " + sessionId + ".\n"
                     + "Be sure to write it down somewhere or remember it!");
