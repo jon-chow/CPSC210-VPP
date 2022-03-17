@@ -12,7 +12,7 @@ import ui.menus.*;
 // class for handling the main game functionalities and menus
 public class PixelPetGame {
     public static final ArrayList<String> ANIMALS_IN_ADOPTION_CLINIC =
-            new ArrayList<>(Arrays.asList("Example Animal", "Dog"));
+            new ArrayList<>(Arrays.asList("ExampleAnimal", "Dog"));
 
     public static final int TICKS_PER_SECOND = 10;
 
@@ -26,7 +26,7 @@ public class PixelPetGame {
     private static final int THIRST_LOSS_PER_SECOND = 5;
     private static final int HEALTH_LOSS_PER_SECOND = 5;
 
-    private static final int STARTING_MONEY = 10000;
+    public static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
 
     private static final int SECONDS_PER_AGING = 10;
@@ -40,17 +40,16 @@ public class PixelPetGame {
     private Pet pet;
     private ArrayList<Shop> shops;
 
-    // EFFECTS: constructs a new PixelPetGame and preconfigures
+    // EFFECTS: constructs a new PixelPetGame and pre-configures
     //          the PixelPetGame if isForTest is true
-    public PixelPetGame(boolean isForTest) throws IOException {
+    public PixelPetGame(boolean isForTest, GuiApp ui) throws IOException {
         Shop shop = ShopMenu.initShop("Kira Kira Pets");
         shops = new ArrayList<>();
         shops.add(shop);
+        player = ui.getPlayer();
+        pet = ui.getPet();
 
         if (!isForTest) {
-            player = NewPlayerMenu.initNewPlayer(STARTING_MONEY);
-            pet = AdoptionMenu.initAdoption();
-
             sessionId = generateSessionId(player.getPlayerName(), pet.getName(), shop.getShopName());
             System.out.println("Your personal ID for saving and loading the game is " + sessionId + ".\n"
                     + "Be sure to write it down somewhere or remember it!");
