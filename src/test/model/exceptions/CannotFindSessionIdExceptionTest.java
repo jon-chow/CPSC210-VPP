@@ -3,6 +3,7 @@ package model.exceptions;
 import model.persistence.PersistenceReader;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.app.GuiApp;
 import ui.app.PixelPetGame;
 
 import java.io.File;
@@ -16,9 +17,9 @@ class CannotFindSessionIdExceptionTest {
     PersistenceReader reader;
 
     @BeforeEach
-    void runBefore() throws IOException {
+    void runBefore() throws IOException, InterruptedException {
         testPersistenceFile = new File("data/persistence/ExceptionTest.json");
-        game = new PixelPetGame(true);
+        game = new PixelPetGame(true, null);
     }
 
     @Test
