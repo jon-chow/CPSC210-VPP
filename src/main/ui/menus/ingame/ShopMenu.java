@@ -1,14 +1,15 @@
-package ui.menus;
+package ui.menus.ingame;
 
 import model.Player;
 import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
+import ui.menus.ingame.InventoryMenu;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
-import static ui.app.TerminalApp.scanner;
+import static ui.app.GuiApp.scanner;
 import static ui.configurables.Commands.*;
 
 // menu for the shop
