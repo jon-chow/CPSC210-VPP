@@ -1,6 +1,8 @@
 package model.persistence;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import model.exceptions.CannotFindSessionIdException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -24,7 +26,7 @@ class ReaderWriterTest {
     PersistenceWriter writer;
 
     @BeforeEach
-    void runBefore() throws IOException {
+    void runBefore() throws IOException, CannotFindSessionIdException {
         converterJsonArrays = new ConverterJsonArrays();
         testPersistenceFile = new File("data/persistence/ReaderWriterTest.json");
         game = new PixelPetGame(true, null);
