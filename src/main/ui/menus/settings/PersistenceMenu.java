@@ -1,4 +1,4 @@
-package ui.menus;
+package ui.menus.settings;
 
 import model.configurables.FileLocations;
 import model.exceptions.CannotFindSessionIdException;
@@ -8,7 +8,7 @@ import ui.app.PixelPetGame;
 import java.io.File;
 import java.io.IOException;
 
-import static ui.app.TerminalApp.scanner;
+import static ui.app.GuiApp.scanner;
 import static ui.configurables.Commands.*;
 
 // menu for loading or saving game data
