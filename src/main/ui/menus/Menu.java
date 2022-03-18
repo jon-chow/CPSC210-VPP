@@ -3,6 +3,7 @@ package ui.menus;
 import ui.app.GuiApp;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // represents an abstract menu
@@ -20,4 +21,24 @@ public abstract class Menu implements ActionListener {
         this.ui = ui;
         this.menu = menu;
     }
+
+    // EFFECTS: triggers when an event from a JComponent is called
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String command = e.getActionCommand();
+        JComponent source = (JComponent) e.getSource();
+
+        try {
+            performAction(command, source);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        ui.revalidate();
+        ui.repaint();
+        ui.pack();
+    }
+
+    // EFFECTS: helper for actionPerformed; performs the desired action
+    protected abstract void performAction(String command, JComponent source) throws Exception;
 }
