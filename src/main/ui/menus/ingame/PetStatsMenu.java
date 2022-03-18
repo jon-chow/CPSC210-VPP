@@ -1,4 +1,4 @@
-package ui.menus;
+package ui.menus.ingame;
 
 import model.Player;
 import model.pets.Pet;
