@@ -1,11 +1,11 @@
-package ui.menus;
+package ui.menus.mainmenu;
 
 import model.Player;
 import ui.app.GuiApp;
+import ui.menus.Menu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import static ui.menus.JComponentBuilder.*;
@@ -20,13 +20,14 @@ public class NewPlayerMenu extends Menu {
     private JTextArea confirmText;
     private JPanel confirmButtonContainer;
 
+    private final String defaultName = "Player";
     private String name;
     private Player player;
 
     // EFFECTS: constructs the main menu
     public NewPlayerMenu(GuiApp ui, JLayeredPane menu, int startingMoney) throws IOException, FontFormatException {
         super(ui, menu);
-        name = "Player";
+        name = defaultName;
         initMenu(startingMoney);
     }
 
@@ -61,7 +62,7 @@ public class NewPlayerMenu extends Menu {
                         + "Please enter your player name in the box below...",
                 28f, width - 100, height / 6);
 
-        nameTextBox = createJTextField("Player", 24f, width / 2, height / 12,
+        nameTextBox = createJTextField(defaultName, 24f, width / 2, height / 12,
                         JTextField.CENTER, true);
         nameTextBox.setForeground(FIELD_TEXT_COLOR);
 
@@ -71,11 +72,13 @@ public class NewPlayerMenu extends Menu {
 
         continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
+        menu.getRootPane().setDefaultButton(continueButton);
     }
 
     // EFFECTS: creates a prompt asking for the player to confirm their name
     private void newPlayerConfirmName() throws IOException, FontFormatException {
         ui.clearMenu();
+        checkValidName();
         JPanel confirmBox = createJPanel(TRANSPARENT, width, height);
         confirmBox.setLayout(new BoxLayout(confirmBox, BoxLayout.Y_AXIS));
 
@@ -87,6 +90,14 @@ public class NewPlayerMenu extends Menu {
         confirmBox.add(confirmButtonContainer);
 
         menu.add(confirmBox);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the name to the defaultName if name is empty
+    private void checkValidName() {
+        if (name.equals("")) {
+            name = defaultName;
+        }
     }
 
     // EFFECTS: creates the confirmation text components
@@ -106,6 +117,7 @@ public class NewPlayerMenu extends Menu {
         confirmButtonContainer = createJPanel(TRANSPARENT, width, height);
         confirmButtonContainer.add(yesButton);
         confirmButtonContainer.add(noButton);
+        menu.getRootPane().setDefaultButton(yesButton);
     }
 
     // EFFECTS: creates a hello message
@@ -124,6 +136,7 @@ public class NewPlayerMenu extends Menu {
 
         JPanel continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
+        menu.getRootPane().setDefaultButton(continueButton);
 
         menu.add(Box.createVerticalStrut(height / 5));
         helloBox.add(helloText);
@@ -135,27 +148,18 @@ public class NewPlayerMenu extends Menu {
         ui.setPlayer(player);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-
-        try {
-            switch (command) {
-                case "continueNameClicked": {
-                    name = nameTextBox.getText();
-                    newPlayerConfirmName();
-                }
-                break;
-                case "confirmYesClicked": generateHelloMessage();
-                    break;
-                case "confirmNoClicked": generateNamePrompt();
-                    break;
-                case "continueHelloClicked": new AdoptionMenu(ui, menu);
-                    break;
-                default: break;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    // EFFECTS: helper for actionPerformed; performs the desired action
+    protected void performAction(String command, JComponent source)
+            throws IOException, FontFormatException, InterruptedException {
+        if (command.equals("continueNameClicked")) {
+            name = nameTextBox.getText();
+            newPlayerConfirmName();
+        } else if (command.equals("confirmYesClicked")) {
+            generateHelloMessage();
+        } else if (command.equals("confirmNoClicked")) {
+            generateNamePrompt();
+        } else if (command.equals("continueHelloClicked")) {
+            new AdoptionMenu(ui, menu);
         }
     }
 

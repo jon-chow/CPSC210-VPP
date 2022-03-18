@@ -1,11 +1,12 @@
-package ui.menus;
+package ui.menus.mainmenu;
 
 import ui.app.GuiApp;
+import ui.menus.Menu;
+import ui.menus.settings.LoadMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -72,27 +73,15 @@ public class MainMenu extends Menu {
                 this, 24f, width, height);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-
-        switch (command) {
-            case "playButtonClicked":
-                try {
-                    new NewPlayerMenu(ui, menu, STARTING_MONEY);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-                break;
-            case "loadButtonClicked": System.out.println("load");
-                break;
-            case "settingsButtonClicked": System.out.println("settings");
-                break;
-            default: break;
+    // EFFECTS: helper for actionPerformed; performs the desired action
+    protected void performAction(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("playButtonClicked")) {
+            new NewPlayerMenu(ui, menu, STARTING_MONEY);
+        } else if (command.equals("loadButtonClicked")) {
+            new LoadMenu(ui, menu);
+        } else if (command.equals("settingsButtonClicked")) {
+            System.out.println("settings");
         }
-
-        ui.revalidate();
-        ui.repaint();
-        ui.pack();
     }
 }

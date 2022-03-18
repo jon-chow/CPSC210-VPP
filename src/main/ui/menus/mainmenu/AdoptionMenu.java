@@ -1,8 +1,10 @@
-package ui.menus;
+package ui.menus.mainmenu;
 
+import model.exceptions.CannotFindSessionIdException;
 import model.goodsandservices.AdoptionClinic;
 import model.pets.Pet;
 import ui.app.GuiApp;
+import ui.menus.Menu;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,21 +12,12 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ui.app.GuiApp.scanner;
-import static ui.configurables.Commands.*;
 import static ui.configurables.InterfaceAesthetics.*;
 import static ui.menus.JComponentBuilder.*;
 import static ui.menus.JComponentBuilder.createJPanel;
 
 // menu for adopting a pet
 public class AdoptionMenu extends Menu {
-    private AdoptionClinic adoptionClinic;
-    private Pet adoptedPet;
-
-    private String selectedAnimalType;
-    private String selectedBreed;
-    private String name;
-
     private JTextArea animalTypeText;
     private JPanel animalTypeContainer;
     private JTextArea breedText;
@@ -39,9 +32,19 @@ public class AdoptionMenu extends Menu {
     private JTextField nameTextBox;
     private JPanel continueButtonContainer;
 
+    private AdoptionClinic adoptionClinic;
+    private Pet adoptedPet;
+
+    private String selectedAnimalType;
+    private String selectedBreed;
+
+    private final String defaultName = "Pet";
+    private String name;
+
     // EFFECTS: constructs the main menu
     public AdoptionMenu(GuiApp ui, JLayeredPane menu) throws IOException, FontFormatException {
         super(ui, menu);
+        name = defaultName;
         initMenu();
     }
 
@@ -49,17 +52,6 @@ public class AdoptionMenu extends Menu {
     public void initMenu() throws IOException, FontFormatException {
         adoptionClinic = new AdoptionClinic();
         generateAnimalTypePrompt();
-
-//        boolean hasAdoptedPet = false;
-//        while (!hasAdoptedPet) {
-//            System.out.println("Welcome to the Pixel Pet Adoption Clinic!");
-//            selectedAnimalType = adoptionDeclareAnimalType();
-//            selectedBreed = adoptionDeclareBreed(selectedAnimalType);
-//            hasAdoptedPet = adoptionConfirmAdoption(selectedAnimalType, selectedBreed);
-//        }
-//        adoptedPet = adoptionClinic.generatePet(selectedAnimalType, selectedBreed);
-//
-//        adoptionNamePet(adoptedPet.getBreed());
     }
 
     // EFFECTS: creates a prompt for selecting the pet's animal type
@@ -167,6 +159,7 @@ public class AdoptionMenu extends Menu {
         confirmPetTypeButtonContainer = createJPanel(TRANSPARENT, width, height);
         confirmPetTypeButtonContainer.add(yesButton);
         confirmPetTypeButtonContainer.add(noButton);
+        menu.getRootPane().setDefaultButton(yesButton);
     }
 
     // EFFECTS: creates a prompt asking for the pet's name
@@ -202,11 +195,13 @@ public class AdoptionMenu extends Menu {
 
         continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
+        menu.getRootPane().setDefaultButton(continueButton);
     }
 
     // EFFECTS: creates a prompt asking for the player to confirm their pet's name
     private void petNameConfirm() throws IOException, FontFormatException {
         ui.clearMenu();
+        checkValidName();
         JPanel confirmBox = createJPanel(TRANSPARENT, width, height);
         confirmBox.setLayout(new BoxLayout(confirmBox, BoxLayout.Y_AXIS));
 
@@ -218,6 +213,14 @@ public class AdoptionMenu extends Menu {
         confirmBox.add(confirmPetNameButtonContainer);
 
         menu.add(confirmBox);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: changes the name to the defaultName if name is empty
+    private void checkValidName() {
+        if (name.equals("")) {
+            name = defaultName;
+        }
     }
 
     // EFFECTS: creates the confirmation text components
@@ -237,10 +240,11 @@ public class AdoptionMenu extends Menu {
         confirmPetNameButtonContainer = createJPanel(TRANSPARENT, width, height);
         confirmPetNameButtonContainer.add(yesButton);
         confirmPetNameButtonContainer.add(noButton);
+        menu.getRootPane().setDefaultButton(yesButton);
     }
     
     // EFFECTS: creates a congratulations message
-    private void generateCongratsMessage() throws IOException, FontFormatException, InterruptedException {
+    private void generateCongratsMessage() throws IOException, FontFormatException {
         ui.clearMenu();
         JPanel congratsBox = createJPanel(TRANSPARENT, width, height);
         congratsBox.setLayout(new BoxLayout(congratsBox, BoxLayout.Y_AXIS));
@@ -255,6 +259,7 @@ public class AdoptionMenu extends Menu {
 
         JPanel continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
+        menu.getRootPane().setDefaultButton(continueButton);
 
         menu.add(Box.createVerticalStrut(height / 5));
         congratsBox.add(congratsText);
@@ -267,46 +272,28 @@ public class AdoptionMenu extends Menu {
         ui.setPet(adoptedPet);
     }
 
-    @SuppressWarnings({"checkstyle:MethodLength", "checkstyle:SuppressWarnings"})
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-        JButton source = (JButton) e.getSource();
-
-        try {
-            switch (command) {
-                case "AnimalTypeClicked": {
-                    selectedAnimalType = source.getName();
-                    generateBreedPrompt();
-                }
-                    break;
-                case "BreedClicked": {
-                    selectedBreed = source.getName();
-                    generatePetTypeConfirm();
-                }
-                break;
-                case "confirmYesPetTypeClicked":
-                case "confirmNoPetNameClicked":
-                    generateNamePrompt();
-                    break;
-                case "confirmNoPetTypeClicked": generateAnimalTypePrompt();
-                    break;
-                case "confirmYesPetNameClicked": {
-                    name = nameTextBox.getText();
-                    generateCongratsMessage();
-                }
-                    break;
-                case "continueNameClicked": {
-                    name = nameTextBox.getText();
-                    petNameConfirm();
-                }
-                    break;
-                case "continueCongratsClicked": ui.start();
-                    break;
-                default: break;
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    // EFFECTS: helper for actionPerformed; performs the desired action
+    protected void performAction(String command, JComponent source)
+            throws IOException, FontFormatException,
+            InterruptedException, CannotFindSessionIdException {
+        if (command.equals("AnimalTypeClicked")) {
+            selectedAnimalType = source.getName();
+            generateBreedPrompt();
+        } else if (command.equals("BreedClicked")) {
+            selectedBreed = source.getName();
+            generatePetTypeConfirm();
+        } else if (command.equals("confirmYesPetTypeClicked") || command.equals("confirmNoPetNameClicked")) {
+            generateNamePrompt();
+        } else if (command.equals("confirmNoPetTypeClicked")) {
+            generateAnimalTypePrompt();
+        } else if (command.equals("confirmYesPetNameClicked")) {
+            name = nameTextBox.getText();
+            generateCongratsMessage();
+        } else if (command.equals("continueNameClicked")) {
+            name = nameTextBox.getText();
+            petNameConfirm();
+        } else if (command.equals("continueCongratsClicked")) {
+            ui.start(false, false);
         }
     }
 }
