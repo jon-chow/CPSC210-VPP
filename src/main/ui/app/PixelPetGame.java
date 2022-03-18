@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import model.Player;
+import model.exceptions.CannotFindSessionIdException;
 import model.goodsandservices.Shop;
 import model.pets.*;
-import ui.menus.*;
+import ui.menus.ingame.ShopMenu;
 
 // class for handling the main game functionalities and menus
 public class PixelPetGame {
@@ -42,7 +43,7 @@ public class PixelPetGame {
 
     // EFFECTS: constructs a new PixelPetGame and pre-configures
     //          the PixelPetGame if isForTest is true
-    public PixelPetGame(boolean isForTest, GuiApp ui) throws IOException {
+    public PixelPetGame(boolean isForTest, GuiApp ui) throws IOException, CannotFindSessionIdException {
         Shop shop = ShopMenu.initShop("Kira Kira Pets");
         shops = new ArrayList<>();
         shops.add(shop);
@@ -50,31 +51,20 @@ public class PixelPetGame {
         if (!isForTest) {
             player = ui.getPlayer();
             pet = ui.getPet();
-            sessionId = generateSessionId(player.getPlayerName(), pet.getName(), shop.getShopName());
-            System.out.println("Your personal ID for saving and loading the game is " + sessionId + ".\n"
-                    + "Be sure to write it down somewhere or remember it!");
-            CommandsMenu.showControls();
+            ui.setGame(this);
         } else {
-            pet = new ExampleAnimal("Test Animal", "Aleph");
             player = new Player();
-            player.setPlayerName("Test Player");
+            pet = new ExampleAnimal("Animal", "Aleph");
+            sessionId = generateSessionId();
+            player.setPlayerName("Player");
             player.setMoney(9999999);
         }
     }
 
     // MODIFIES: this
     // EFFECTS: generates a new session id for the current session and returns it
-    private int generateSessionId(String playerName, String petName, String shopName) {
-        String rawKey = (playerName + petName + shopName).replaceAll("\\s","");
-        int encodedKey = 0;
-
-        for (int i = 0; i < rawKey.length(); i++) {
-            encodedKey += rawKey.charAt(i);
-        }
-
-        encodedKey = (int) (encodedKey * System.currentTimeMillis() / 1000L);
-
-        return Math.abs(encodedKey);
+    private int generateSessionId() {
+        return Math.abs((int) (System.currentTimeMillis() / 1000L));
     }
 
     // EFFECTS: progresses the game
