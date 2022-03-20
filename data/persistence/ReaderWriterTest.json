@@ -1,65 +1,100 @@
-{"sessions": [{
-    "data": {
-        "shop": {
-            "quantities": [
-                15,
-                15,
-                10,
-                10,
-                10
-            ],
-            "name": "Kira Kira Pets",
-            "prices": [
-                230,
-                100,
-                80,
-                200,
-                180
-            ],
-            "items": [
-                {
-                    "name": "Chicken",
-                    "type": "Food"
-                },
-                {
-                    "name": "Blob",
-                    "type": "Unknown"
-                },
-                {
-                    "name": "Salmon Chunks",
-                    "type": "Food"
-                },
-                {
-                    "name": "Squeaky Mouse",
-                    "type": "Toy"
-                },
-                {
-                    "name": "Chocolate",
-                    "type": "Food"
-                }
-            ]
-        },
-        "ticksPassed": 0,
-        "secondsPassed": 0,
-        "pet": {
-            "thirst": 100,
-            "happiness": 100,
-            "numWaste": 0,
-            "name": "Aleph",
-            "health": 100,
-            "state": "IDLING",
-            "type": "ExampleAnimal",
-            "breed": "Aleph",
-            "age": 0,
-            "hunger": 100
-        },
-        "player": {
-            "money": 5000,
-            "name": "Initial",
-            "inventory": {
+{"sessions": [
+    {
+        "data": {
+            "shop": {
                 "quantities": [
-                    3,
-                    6
+                    15,
+                    15,
+                    10,
+                    10,
+                    10
+                ],
+                "name": "Kira Kira Pets",
+                "prices": [
+                    80,
+                    80,
+                    180,
+                    30,
+                    200
+                ],
+                "items": [
+                    {
+                        "name": "Tug O' Rope",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Ball of Yarn",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Chocolate",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Grapes",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Squeaky Mouse",
+                        "type": "Toy"
+                    }
+                ]
+            },
+            "ticksPassed": 0,
+            "secondsPassed": 0,
+            "pet": {
+                "thirst": 100,
+                "happiness": 100,
+                "numWaste": 0,
+                "name": "Aleph",
+                "health": 100,
+                "state": "IDLING",
+                "type": "ExampleAnimal",
+                "breed": "Aleph",
+                "age": 0,
+                "hunger": 100
+            },
+            "player": {
+                "money": 5000,
+                "name": "Initial",
+                "inventory": {
+                    "quantities": [
+                        3,
+                        6
+                    ],
+                    "items": [
+                        {
+                            "name": "Chicken",
+                            "type": "Food"
+                        },
+                        {
+                            "name": "Bone",
+                            "type": "Toy"
+                        }
+                    ]
+                }
+            }
+        },
+        "id": 10,
+        "saveTime": "20-03-2022 15:51:22"
+    },
+    {
+        "data": {
+            "shop": {
+                "quantities": [
+                    15,
+                    15,
+                    10,
+                    10,
+                    10
+                ],
+                "name": "Kira Kira Pets",
+                "prices": [
+                    230,
+                    200,
+                    80,
+                    80,
+                    80
                 ],
                 "items": [
                     {
@@ -67,13 +102,50 @@
                         "type": "Food"
                     },
                     {
-                        "name": "Bone",
+                        "name": "Squeaky Mouse",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Tug O' Rope",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Salmon Chunks",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Ball of Yarn",
                         "type": "Toy"
                     }
                 ]
+            },
+            "ticksPassed": 0,
+            "secondsPassed": 0,
+            "pet": {
+                "thirst": 100,
+                "happiness": 100,
+                "numWaste": 0,
+                "name": "Shiba Inu",
+                "health": 100,
+                "state": "IDLING",
+                "type": "Dog",
+                "breed": "Shiba Inu",
+                "age": 0,
+                "hunger": 100
+            },
+            "player": {
+                "money": 1000,
+                "name": "Next",
+                "inventory": {
+                    "quantities": [1],
+                    "items": [{
+                        "name": "Chicken",
+                        "type": "Food"
+                    }]
+                }
             }
-        }
-    },
-    "id": 10,
-    "saveTime": "18-03-2022 11:31:48"
-}]}
+        },
+        "id": 9,
+        "saveTime": "20-03-2022 15:51:22"
+    }
+]}

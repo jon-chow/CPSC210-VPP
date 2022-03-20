@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,37 +16,79 @@ import ui.app.PixelPetGame;
 public class PersistenceWriter {
     private static final int INDENT_FCT = 4;
 
+    private String content;
+    private JSONObject oldSavesData;
+    private JSONArray oldSessionsArray;
+
     private FileWriter fileWriter;
     private JSONObject playerObject;
     private JSONObject petObject;
     private JSONObject shopObject;
 
+    private PixelPetGame game;
+
     // EFFECTS: constructs a new persistence
     //          that saves game data to persistenceFile
     public PersistenceWriter(File persistenceFile, PixelPetGame game) throws IOException {
+        this.game = game;
+
+        content = FileUtils.readFileToString(persistenceFile, "utf-8");
+        oldSavesData = new JSONObject(content);
+        oldSessionsArray = oldSavesData.getJSONArray("sessions");
+
         fileWriter = new FileWriter(persistenceFile);
         playerObject = game.getPlayer().toJsonObj();
         petObject = game.getPet().toJsonObj();
         shopObject = game.getShopByName("Kira Kira Pets").toJsonObj();
 
+        createObjects();
+
+        JSONObject savesData = new JSONObject();
+        savesData.put("sessions", oldSessionsArray);
+
+        fileWriter.write(savesData.toString(INDENT_FCT));
+        fileWriter.flush();
+        fileWriter.close();
+    }
+
+
+    // EFFECTS: helper for PersistenceWriter;
+    //          creates the JSONObjects to be written
+    private void createObjects() {
         JSONObject dataObject = new JSONObject();
         dataObject.put("player", playerObject);
         dataObject.put("pet", petObject);
         dataObject.put("shop", shopObject);
         dataObject.put("ticksPassed", game.getTicksPassed());
         dataObject.put("secondsPassed", game.getSecondsPassed());
-        JSONObject slotObject = new JSONObject();
-        slotObject.put("data", dataObject);
-        slotObject.put("id", game.getSessionId());
-        slotObject.put("saveTime", LocalDateTime.now()
-                .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
-        JSONArray saveSlotsArray = new JSONArray();
-        saveSlotsArray.put(slotObject);
-        JSONObject savesData = new JSONObject();
-        savesData.put("sessions", saveSlotsArray);
 
-        fileWriter.write(savesData.toString(INDENT_FCT));
-        fileWriter.flush();
-        fileWriter.close();
+        createSessionObject(dataObject);
+    }
+
+    // EFFECTS: helper for createObjects;
+    //          creates the session JSONObject
+    private void createSessionObject(JSONObject dataObject) {
+        boolean isExisting = false;
+
+        for (int i = 0; i < oldSessionsArray.length(); i++) {
+            JSONObject session = oldSessionsArray.getJSONObject(i);
+
+            if (game.getSessionId() == session.getInt("id")) {
+                isExisting = true;
+                session.put("data", dataObject);
+                session.put("saveTime", LocalDateTime.now()
+                        .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+            }
+        }
+
+        if (!isExisting) {
+            JSONObject slotObject = new JSONObject();
+            slotObject.put("data", dataObject);
+            slotObject.put("id", game.getSessionId());
+            slotObject.put("saveTime", LocalDateTime.now()
+                    .format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")));
+
+            oldSessionsArray.put(slotObject);
+        }
     }
 }
