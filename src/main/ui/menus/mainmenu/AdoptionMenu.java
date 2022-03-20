@@ -8,7 +8,6 @@ import ui.menus.Menu;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -32,6 +31,9 @@ public class AdoptionMenu extends Menu {
     private JTextField nameTextBox;
     private JPanel continueButtonContainer;
 
+    private JTextArea congratsHead;
+    private JTextArea congratsText;
+
     private AdoptionClinic adoptionClinic;
     private Pet adoptedPet;
 
@@ -49,7 +51,7 @@ public class AdoptionMenu extends Menu {
     }
 
     // EFFECTS: initiates the adoption process
-    public void initMenu() throws IOException, FontFormatException {
+    protected void initMenu() throws IOException, FontFormatException {
         adoptionClinic = new AdoptionClinic();
         generateAnimalTypePrompt();
     }
@@ -57,17 +59,12 @@ public class AdoptionMenu extends Menu {
     // EFFECTS: creates a prompt for selecting the pet's animal type
     private void generateAnimalTypePrompt() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel petBox = createJPanel(TRANSPARENT, width, height);
-        petBox.setLayout(new BoxLayout(petBox, BoxLayout.Y_AXIS));
-
         createAnimalTypeText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        petBox.add(animalTypeText);
-        petBox.add(Box.createVerticalStrut(10));
-        petBox.add(animalTypeContainer);
-
-        menu.add(petBox);
+        menu.add(animalTypeText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(animalTypeContainer);
     }
 
     // EFFECTS: creates the prompt text components for animal type
@@ -76,34 +73,25 @@ public class AdoptionMenu extends Menu {
 
         animalTypeText = createJTextArea("Welcome to the Pixel Pet Adoption Clinic, "
                         + ui.getPlayer().getPlayerName() + "!"
-                + "\nPlease select the type of pet you would like to adopt from the list below:",
-                28f, width - 100, height / 4);
+                + "\n\nPlease select the type of pet you would like to adopt from the list below:",
+                28f, width - 100, height / 3);
 
         animalTypeContainer = createJPanel(TRANSPARENT, width, height);
 
-        for (String animalType : allAnimalTypes) {
-            JButton animalButton = createJButton(animalType, "AnimalTypeClicked", this,
-                    24f, width, height / 10);
-            animalButton.setName(animalType);
-            animalButton.setBackground(BUTTON_COLOR_2);
-            animalTypeContainer.add(animalButton);
-        }
+        createListButtons(allAnimalTypes, "AnimalTypeClicked", animalTypeContainer);
+
+        menu.getRootPane().setDefaultButton((JButton) animalTypeContainer.getComponent(0));
     }
 
     // EFFECTS: creates a prompt for selecting the pet's breed
     private void generateBreedPrompt() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel petBox = createJPanel(TRANSPARENT, width, height);
-        petBox.setLayout(new BoxLayout(petBox, BoxLayout.Y_AXIS));
-
         createBreedText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        petBox.add(breedText);
-        petBox.add(Box.createVerticalStrut(10));
-        petBox.add(breedContainer);
-
-        menu.add(petBox);
+        menu.add(breedText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(breedContainer);
     }
 
     // EFFECTS: creates the prompt text components for breed
@@ -116,29 +104,32 @@ public class AdoptionMenu extends Menu {
 
         breedContainer = createJPanel(TRANSPARENT, width, height);
 
-        for (String breed : allBreeds) {
-            JButton breedButton = createJButton(breed, "BreedClicked", this,
-                    24f, width, height / 10);
-            breedButton.setName(breed);
-            breedButton.setBackground(BUTTON_COLOR_2);
-            breedContainer.add(breedButton);
-        }
+        createListButtons(allBreeds, "BreedClicked", breedContainer);
+
+        menu.getRootPane().setDefaultButton((JButton) breedContainer.getComponent(0));
     }
 
     // EFFECTS: creates a prompt asking for the player to confirm their pet choice
     private void generatePetTypeConfirm() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel confirmBox = createJPanel(TRANSPARENT, width, height);
-        confirmBox.setLayout(new BoxLayout(confirmBox, BoxLayout.Y_AXIS));
-
         createPetTypeConfirmText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        confirmBox.add(confirmPetTypeText);
-        confirmBox.add(Box.createVerticalStrut(10));
-        confirmBox.add(confirmPetTypeButtonContainer);
+        menu.add(confirmPetTypeText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(confirmPetTypeButtonContainer);
+    }
 
-        menu.add(confirmBox);
+    // EFFECTS: helper for creating unknown count of buttons in a container
+    private void createListButtons(ArrayList<String> allButtons, String actionCommand, JPanel container)
+            throws IOException, FontFormatException {
+        for (String buttonText : allButtons) {
+            JButton button = createJButton(buttonText, actionCommand, this,
+                    24f, width, height / 10);
+            button.setName(buttonText);
+            button.setBackground(BUTTON_COLOR_2);
+            container.add(button);
+        }
     }
 
     // EFFECTS: creates the pet type confirmation text components
@@ -165,19 +156,14 @@ public class AdoptionMenu extends Menu {
     // EFFECTS: creates a prompt asking for the pet's name
     private void generateNamePrompt() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel nameBox = createJPanel(TRANSPARENT, width, height);
-        nameBox.setLayout(new BoxLayout(nameBox, BoxLayout.Y_AXIS));
-
         createNamePromptText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        nameBox.add(namePromptText);
-        nameBox.add(Box.createVerticalStrut(10));
-        nameBox.add(nameTextBox);
-        nameBox.add(Box.createVerticalStrut(10));
-        nameBox.add(continueButtonContainer);
-
-        menu.add(nameBox);
+        menu.add(namePromptText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(nameTextBox);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(continueButtonContainer);
     }
 
     // EFFECTS: creates the prompt text components for pet name
@@ -202,17 +188,12 @@ public class AdoptionMenu extends Menu {
     private void petNameConfirm() throws IOException, FontFormatException {
         ui.clearMenu();
         checkValidName();
-        JPanel confirmBox = createJPanel(TRANSPARENT, width, height);
-        confirmBox.setLayout(new BoxLayout(confirmBox, BoxLayout.Y_AXIS));
-
         createPetNameConfirmText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        confirmBox.add(confirmPetNameText);
-        confirmBox.add(Box.createVerticalStrut(10));
-        confirmBox.add(confirmPetNameButtonContainer);
-
-        menu.add(confirmBox);
+        menu.add(confirmPetNameText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(confirmPetNameButtonContainer);
     }
 
     // MODIFIES: this
@@ -246,30 +227,36 @@ public class AdoptionMenu extends Menu {
     // EFFECTS: creates a congratulations message
     private void generateCongratsMessage() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel congratsBox = createJPanel(TRANSPARENT, width, height);
-        congratsBox.setLayout(new BoxLayout(congratsBox, BoxLayout.Y_AXIS));
+        createCongratsText();
 
-        JTextArea congratsText = createJTextArea("Congratulations " + ui.getPlayer().getPlayerName() + "!"
-                + "\nThe papers have been finalized and you have successfully adopted " + name + "!",
-                28f, width - 100, height / 5);
+        menu.add(Box.createVerticalStrut(height / 5));
+        menu.add(congratsHead);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(congratsText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(continueButtonContainer);
+
+        adoptedPet = adoptionClinic.generatePet(selectedAnimalType, selectedBreed);
+        adoptedPet.setName(name);
+        ui.setPet(adoptedPet);
+    }
+
+    // EFFECTS: creates the congratulations message text components
+    private void createCongratsText() throws IOException, FontFormatException {
+        congratsHead = createJTextArea("Congratulations " + ui.getPlayer().getPlayerName() + "!",
+                28f, width - 100, height / 8);
+
+        congratsText = createJTextArea("The papers have been finalized"
+                        + " and you have successfully adopted " + name + "!",
+                28f, width - 100, height / 4);
 
         JButton continueButton = createJButton("Continue", "continueCongratsClicked", this,
                 24f, width, height / 10);
         continueButton.setBackground(BUTTON_COLOR_2);
 
-        JPanel continueButtonContainer = createJPanel(TRANSPARENT, width, height);
+        continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
         menu.getRootPane().setDefaultButton(continueButton);
-
-        menu.add(Box.createVerticalStrut(height / 5));
-        congratsBox.add(congratsText);
-        congratsBox.add(Box.createVerticalStrut(10));
-        congratsBox.add(continueButtonContainer);
-        menu.add(congratsBox);
-
-        adoptedPet = adoptionClinic.generatePet(selectedAnimalType, selectedBreed);
-        adoptedPet.setName(name);
-        ui.setPet(adoptedPet);
     }
 
     // EFFECTS: helper for actionPerformed; performs the desired action
@@ -293,7 +280,7 @@ public class AdoptionMenu extends Menu {
             name = nameTextBox.getText();
             petNameConfirm();
         } else if (command.equals("continueCongratsClicked")) {
-            ui.start(false, false);
+            ui.start(false, true);
         }
     }
 }

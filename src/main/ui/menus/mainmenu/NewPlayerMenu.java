@@ -19,8 +19,10 @@ public class NewPlayerMenu extends Menu {
 
     private JTextArea confirmText;
     private JPanel confirmButtonContainer;
+    private JTextArea helloText;
 
     private final String defaultName = "Player";
+    private int startingMoney;
     private String name;
     private Player player;
 
@@ -28,11 +30,12 @@ public class NewPlayerMenu extends Menu {
     public NewPlayerMenu(GuiApp ui, JLayeredPane menu, int startingMoney) throws IOException, FontFormatException {
         super(ui, menu);
         name = defaultName;
-        initMenu(startingMoney);
+        this.startingMoney = startingMoney;
+        initMenu();
     }
 
     // EFFECTS: initiates the new player process
-    public void initMenu(int startingMoney) throws IOException, FontFormatException {
+    protected void initMenu() throws IOException, FontFormatException {
         player = new Player();
         player.setMoney(startingMoney);
         generateNamePrompt();
@@ -41,36 +44,36 @@ public class NewPlayerMenu extends Menu {
     // EFFECTS: creates a prompt asking for the player's name
     private void generateNamePrompt() throws IOException, FontFormatException {
         ui.clearMenu();
-        JPanel nameBox = createJPanel(TRANSPARENT, width, height);
-        nameBox.setLayout(new BoxLayout(nameBox, BoxLayout.Y_AXIS));
-
         createPromptText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        nameBox.add(promptText);
-        nameBox.add(Box.createVerticalStrut(10));
-        nameBox.add(nameTextBox);
-        nameBox.add(Box.createVerticalStrut(10));
-        nameBox.add(continueButtonContainer);
-
-        menu.add(nameBox);
+        menu.add(promptText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(nameTextBox);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(continueButtonContainer);
     }
 
     // EFFECTS: creates the prompt text components
     private void createPromptText() throws IOException, FontFormatException {
         promptText = createJTextArea("Hello player, and welcome to Pixel Pet!\n"
                         + "Please enter your player name in the box below...",
-                28f, width - 100, height / 6);
+                28f, width - 100, 120);
 
         nameTextBox = createJTextField(defaultName, 24f, width / 2, height / 12,
                         JTextField.CENTER, true);
         nameTextBox.setForeground(FIELD_TEXT_COLOR);
 
+        JButton returnButton = createJButton("Main Menu", "returnSessionLoadClicked", this,
+                24f, 100, 50);
+        returnButton.setBackground(BUTTON_COLOR_2);
+
         JButton continueButton = createJButton("Continue", "continueNameClicked", this,
-                        24f, width, height / 10);
+                        24f, 100, 50);
         continueButton.setBackground(BUTTON_COLOR_2);
 
         continueButtonContainer = createJPanel(TRANSPARENT, width, height);
+        continueButtonContainer.add(returnButton);
         continueButtonContainer.add(continueButton);
         menu.getRootPane().setDefaultButton(continueButton);
     }
@@ -79,17 +82,12 @@ public class NewPlayerMenu extends Menu {
     private void newPlayerConfirmName() throws IOException, FontFormatException {
         ui.clearMenu();
         checkValidName();
-        JPanel confirmBox = createJPanel(TRANSPARENT, width, height);
-        confirmBox.setLayout(new BoxLayout(confirmBox, BoxLayout.Y_AXIS));
-
         createConfirmText();
 
         menu.add(Box.createVerticalStrut(height / 5));
-        confirmBox.add(confirmText);
-        confirmBox.add(Box.createVerticalStrut(10));
-        confirmBox.add(confirmButtonContainer);
-
-        menu.add(confirmBox);
+        menu.add(confirmText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(confirmButtonContainer);
     }
 
     // MODIFIES: this
@@ -123,35 +121,38 @@ public class NewPlayerMenu extends Menu {
     // EFFECTS: creates a hello message
     private void generateHelloMessage() throws IOException, FontFormatException, InterruptedException {
         ui.clearMenu();
-        JPanel helloBox = createJPanel(TRANSPARENT, width, height);
-        helloBox.setLayout(new BoxLayout(helloBox, BoxLayout.Y_AXIS));
+        createHelloText();
 
-        JTextArea helloText = createJTextArea("Hello " + name + "!"
-                + "\nLet's move onto adopting a new pet!",
+        menu.add(Box.createVerticalStrut(height / 5));
+        menu.add(helloText);
+        menu.add(Box.createVerticalStrut(10));
+        menu.add(continueButtonContainer);
+
+        player.setPlayerName(name);
+        ui.setPlayer(player);
+    }
+
+    // EFFECTS: creates the hello message text components
+    private void createHelloText() throws IOException, FontFormatException {
+        helloText = createJTextArea("Hello " + name + "!"
+                        + "\nLet's move onto adopting a new pet!",
                 28f, width - 100, height / 5);
 
         JButton continueButton = createJButton("Continue", "continueHelloClicked", this,
                 24f, width, height / 10);
         continueButton.setBackground(BUTTON_COLOR_2);
 
-        JPanel continueButtonContainer = createJPanel(TRANSPARENT, width, height);
+        continueButtonContainer = createJPanel(TRANSPARENT, width, height);
         continueButtonContainer.add(continueButton);
         menu.getRootPane().setDefaultButton(continueButton);
-
-        menu.add(Box.createVerticalStrut(height / 5));
-        helloBox.add(helloText);
-        helloBox.add(Box.createVerticalStrut(10));
-        helloBox.add(continueButtonContainer);
-        menu.add(helloBox);
-
-        player.setPlayerName(name);
-        ui.setPlayer(player);
     }
 
     // EFFECTS: helper for actionPerformed; performs the desired action
     protected void performAction(String command, JComponent source)
             throws IOException, FontFormatException, InterruptedException {
-        if (command.equals("continueNameClicked")) {
+        if (command.equals("returnSessionLoadClicked")) {
+            new MainMenu(ui, menu);
+        } else if (command.equals("continueNameClicked")) {
             name = nameTextBox.getText();
             newPlayerConfirmName();
         } else if (command.equals("confirmYesClicked")) {

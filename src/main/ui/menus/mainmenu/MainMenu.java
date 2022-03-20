@@ -19,7 +19,7 @@ import static ui.configurables.InterfaceAesthetics.*;
 
 // menu at the start of the game
 public class MainMenu extends Menu {
-    private JButton playButton;
+    private JButton newGameButton;
     private JButton loadButton;
     private JButton settingsButton;
 
@@ -30,9 +30,8 @@ public class MainMenu extends Menu {
     }
 
     // EFFECTS: initializes assets to the main menu
-    public void initMenu() throws IOException, FontFormatException {
-        menu.setLayout(new BoxLayout(menu, BoxLayout.PAGE_AXIS));
-        menu.setBounds(0, 0, width, height);
+    protected void initMenu() throws IOException, FontFormatException {
+        ui.clearMenu();
 
         BufferedImage myPicture2 = ImageIO.read(new File(assetsDir + "Logo.png"));
         Image img2 = new ImageIcon(myPicture2).getImage()
@@ -40,10 +39,11 @@ public class MainMenu extends Menu {
         JLabel logo = new JLabel(new ImageIcon(img2));
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        menu.setLayout(new BoxLayout(menu, BoxLayout.PAGE_AXIS));
         menu.add(Box.createVerticalStrut(height / 12));
         menu.add(logo);
         menu.add(generateButtons());
-
+        menu.getRootPane().setDefaultButton(newGameButton);
         ui.pack();
     }
 
@@ -56,16 +56,16 @@ public class MainMenu extends Menu {
 
         createButtons();
 
-        buttonsBox.add(playButton);
+        buttonsBox.add(newGameButton);
         buttonsBox.add(loadButton);
         buttonsBox.add(settingsButton);
 
         return buttonsBox;
     }
 
-    // EFFECTS: creates the play, load, and settings buttons
+    // EFFECTS: creates the new game, load, and settings buttons
     private void createButtons() throws IOException, FontFormatException {
-        playButton = createJButton("Play", "playButtonClicked",
+        newGameButton = createJButton("New Game", "newGameButtonClicked",
                 this, 24f, width, height);
         loadButton = createJButton("Load", "loadButtonClicked",
                 this, 24f, width, height);
@@ -76,7 +76,7 @@ public class MainMenu extends Menu {
     // EFFECTS: helper for actionPerformed; performs the desired action
     protected void performAction(String command, JComponent source)
             throws IOException, FontFormatException {
-        if (command.equals("playButtonClicked")) {
+        if (command.equals("newGameButtonClicked")) {
             new NewPlayerMenu(ui, menu, STARTING_MONEY);
         } else if (command.equals("loadButtonClicked")) {
             new LoadMenu(ui, menu);
