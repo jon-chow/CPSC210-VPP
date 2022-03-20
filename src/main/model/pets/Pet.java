@@ -285,7 +285,7 @@ public abstract class Pet implements Writable {
         this.setDislikes(jsonArrayToStringList(dislikes));
         this.setCannotHaves(jsonArrayToStringList(cannotHaves));
 
-        this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir"));
+        this.setSpritesDir(this.getSpritesDir() + data.getString("spriteFilesDir") + "/");
     }
 
     // EFFECTS: returns a list of String parsed from a JSONArray
