@@ -22,6 +22,9 @@ public abstract class Menu implements ActionListener {
         this.menu = menu;
     }
 
+    // EFFECTS: initiates the menu
+    protected abstract void initMenu() throws Exception;
+
     // EFFECTS: triggers when an event from a JComponent is called
     @Override
     public void actionPerformed(ActionEvent e) {
