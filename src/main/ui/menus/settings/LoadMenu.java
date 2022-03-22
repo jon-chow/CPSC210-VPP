@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 import static ui.configurables.InterfaceAesthetics.*;
-import static ui.menus.JComponentBuilder.*;
+import static ui.configurables.JComponentBuilder.*;
 
 // menu for creating a new player
 public class LoadMenu extends Menu {
