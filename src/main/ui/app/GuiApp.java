@@ -1,8 +1,6 @@
 package ui.app;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -13,10 +11,8 @@ import model.configurables.FileLocations;
 import model.exceptions.CannotFindSessionIdException;
 import model.pets.Pet;
 
-import ui.menus.*;
 import ui.menus.ingame.*;
 import ui.menus.mainmenu.MainMenu;
-import ui.menus.settings.PersistenceMenu;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,11 +21,10 @@ import javax.swing.border.LineBorder;
 import static java.lang.System.exit;
 import static model.configurables.FileLocations.backgroundsDir;
 
-import static ui.configurables.Commands.*;
 import static ui.configurables.InterfaceAesthetics.*;
 
 // class for handling game time and user input
-public class GuiApp extends JFrame implements ActionListener {
+public class GuiApp extends JFrame {
     public static final Scanner scanner = new Scanner(System.in);
 
     private static final String gameTitle = "Pixel Pet";
@@ -40,6 +35,8 @@ public class GuiApp extends JFrame implements ActionListener {
     private PixelPetGame game;
     private Player player;
     private Pet pet;
+
+    private int secondsPassed;
 
     private JPanel window;
     private JLayeredPane content;
@@ -89,7 +86,6 @@ public class GuiApp extends JFrame implements ActionListener {
         background.setName("Background");
         background.setBounds(0,-20, width, height);
         content.add(background, new Integer(0));
-        changeBackground("PixelPetBackground.png");
 
         menu = new JLayeredPane();
         menu.setName("Menu");
@@ -106,6 +102,13 @@ public class GuiApp extends JFrame implements ActionListener {
         menu.repaint();
     }
 
+    // EFFECTS: clears out any ongoing session and returns to the main menu
+    public void returnToMainMenu() throws IOException, FontFormatException {
+        gameMenu = null;
+        super.setTitle(gameTitle);
+        new MainMenu(this, menu);
+    }
+
     // MODIFIES: this
     // EFFECTS: changes the game background image
     public void changeBackground(String fileName) throws IOException {
@@ -114,27 +117,33 @@ public class GuiApp extends JFrame implements ActionListener {
         background.setIcon(new ImageIcon(img));
     }
 
-    // TODO:
     // MODIFIES: this
     // EFFECTS: creates a new instance of PixelPetGame
     public void start(boolean isForTest, boolean isNewSession) throws IOException,
-            CannotFindSessionIdException, FontFormatException, InterruptedException {
+            CannotFindSessionIdException, FontFormatException {
         if (isNewSession) {
             game = new PixelPetGame(isForTest, this);
         }
 
         super.setTitle(gameTitle + " - Session ID: " + game.getSessionId());
         gameMenu = new GameMenu(this, menu);
-//        CommandsMenu.showControls();
     }
 
     // EFFECTS: begins the ticking process; game is running
     private void startTimer() {
-        timer = new Timer(1000 / game.TICKS_PER_SECOND, ae -> {
-            if (!(gameMenu == null)) {
+        secondsPassed = 0;
+        timer = new Timer(1000 / PixelPetGame.TICKS_PER_SECOND, ae -> {
+            if (!(game == null || gameMenu == null)) {
                 tick();
+
+                if (secondsPassed < game.getSecondsPassed()) {
+                    //
+                }
+                secondsPassed = game.getSecondsPassed();
+
                 if (game.isEnded() && game.getPet().checkIsDead()) {
-                    PetStatsMenu.showPetDiedMenu(game.getPet());
+                    System.out.println("Oh no! " + pet.getName() + " has died!");
+                    System.out.println("How unfortunate...");
                     try {
                         Thread.sleep(2500L);
                     } catch (InterruptedException e) {
@@ -152,59 +161,17 @@ public class GuiApp extends JFrame implements ActionListener {
     private void tick() {
         game.tick();
         render();
-//        handleUserInput();
     }
 
-    // MODIFIES: gameMenu
-    // EFFECTS: renders the ui graphics for the gameMenu
+    // MODIFIES: gameMenu, petEnvironment
+    // EFFECTS: renders the in-game graphics
     private void render() {
         if (game.isEnded()) {
             return;
         }
 
-        gameMenu.getPetEnvironment().renderGraphics();
+        gameMenu.renderGraphics(game);
         getContentPane().repaint();
-    }
-
-    // EFFECTS: handles user commands and inputs
-    private void handleUserInput() {
-        String command = scanner.nextLine();
-
-        switch (command) {
-            case COMMANDS_KEY: CommandsMenu.showControls();
-                break;
-            case CHECK_PET_KEY: PetStatsMenu.checkPetStats(game.getPet(), game.getPlayer());
-                break;
-            case OPEN_SHOP_KEY:
-                ShopMenu.openShopMenu(game.getShopByName("Kira Kira Pets"), game.getPlayer());
-                break;
-            case OPEN_INVENTORY_KEY: InventoryMenu.viewInventory(game.getPlayer(), game.getPet());
-                break;
-            case VIEW_MONEY_KEY: InventoryMenu.checkMoney(game.getPlayer());
-                break;
-            case SAVE_KEY: PersistenceMenu.displaySaveMenu(game);
-                break;
-            case LOAD_KEY: PersistenceMenu.displayLoadMenu(game);
-                break;
-            case QUIT_GAME_KEY: exit(0);
-                break;
-            default:
-                break;
-        }
-    }
-
-    // EFFECTS: triggers when an event from a JComponent is called
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String command = e.getActionCommand();
-        performAction(command);
-    }
-
-    // EFFECTS: helper for actionPerformed; performs the desired action
-    private void performAction(String command) {
-        if (command.equals("")) {
-            return;
-        }
     }
 
     // GETTERS:
