@@ -22,15 +22,16 @@ public class PixelPetGame {
     public static final int MAX_THIRST = 100;
     public static final int MAX_HEALTH = 100;
 
-    private static final int HAPPINESS_LOSS_PER_SECOND = 1;
-    private static final int HUNGER_LOSS_PER_SECOND = 1;
-    private static final int THIRST_LOSS_PER_SECOND = 1;
-    private static final int HEALTH_LOSS_PER_SECOND = 1;
+    private static final int HAPPINESS_LOSS = 1;
+    private static final int HUNGER_LOSS = 1;
+    private static final int THIRST_LOSS = 1;
+    private static final int HEALTH_LOSS = 1;
 
     public static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
 
     private static final int SECONDS_PER_AGING = 60;
+    private static final int SECONDS_PER_CARE_LEVELS_DECREMENT = 5;
 
     private int sessionId;
     private int ticksPassed = 0;
@@ -77,10 +78,12 @@ public class PixelPetGame {
                 pet.setAge(pet.getAge() + 1);
             }
 
-            pet.decrementCareLevels(HAPPINESS_LOSS_PER_SECOND,
-                    HUNGER_LOSS_PER_SECOND,
-                    THIRST_LOSS_PER_SECOND,
-                    HEALTH_LOSS_PER_SECOND);
+            if ((secondsPassed % SECONDS_PER_CARE_LEVELS_DECREMENT) == 0) {
+                pet.decrementCareLevels(HAPPINESS_LOSS,
+                        HUNGER_LOSS,
+                        THIRST_LOSS,
+                        HEALTH_LOSS);
+            }
 
             player.setMoney(player.getMoney() + MONEY_GAINED_PER_SECOND);
         }
