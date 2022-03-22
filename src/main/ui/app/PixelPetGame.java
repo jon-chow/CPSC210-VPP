@@ -15,22 +15,22 @@ public class PixelPetGame {
     public static final ArrayList<String> ANIMALS_IN_ADOPTION_CLINIC =
             new ArrayList<>(Arrays.asList("ExampleAnimal", "Dog"));
 
-    public static final int TICKS_PER_SECOND = 10;
+    public static final int TICKS_PER_SECOND = 100;
 
     public static final int MAX_HAPPINESS = 100;
     public static final int MAX_HUNGER = 100;
     public static final int MAX_THIRST = 100;
     public static final int MAX_HEALTH = 100;
 
-    private static final int HAPPINESS_LOSS_PER_SECOND = 5;
-    private static final int HUNGER_LOSS_PER_SECOND = 5;
-    private static final int THIRST_LOSS_PER_SECOND = 5;
-    private static final int HEALTH_LOSS_PER_SECOND = 5;
+    private static final int HAPPINESS_LOSS_PER_SECOND = 1;
+    private static final int HUNGER_LOSS_PER_SECOND = 1;
+    private static final int THIRST_LOSS_PER_SECOND = 1;
+    private static final int HEALTH_LOSS_PER_SECOND = 1;
 
     public static final int STARTING_MONEY = 10000;
     private static final int MONEY_GAINED_PER_SECOND = 100;
 
-    private static final int SECONDS_PER_AGING = 10;
+    private static final int SECONDS_PER_AGING = 60;
 
     private int sessionId;
     private int ticksPassed = 0;
@@ -47,6 +47,7 @@ public class PixelPetGame {
         Shop shop = ShopMenu.initShop("Kira Kira Pets");
         shops = new ArrayList<>();
         shops.add(shop);
+        sessionId = generateSessionId();
 
         if (!isForTest) {
             player = ui.getPlayer();
@@ -55,7 +56,6 @@ public class PixelPetGame {
         } else {
             player = new Player();
             pet = new ExampleAnimal("Animal", "Aleph");
-            sessionId = generateSessionId();
             player.setPlayerName("Player");
             player.setMoney(9999999);
         }
@@ -73,7 +73,7 @@ public class PixelPetGame {
         if (ticksPassed % TICKS_PER_SECOND == 0) {
             secondsPassed++;
 
-            if ((secondsPassed & SECONDS_PER_AGING) == 0) {
+            if ((secondsPassed % SECONDS_PER_AGING) == 0) {
                 pet.setAge(pet.getAge() + 1);
             }
 
