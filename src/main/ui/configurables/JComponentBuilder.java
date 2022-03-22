@@ -1,4 +1,4 @@
-package ui.menus;
+package ui.configurables;
 
 import ui.configurables.InterfaceAesthetics;
 
