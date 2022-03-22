@@ -12,6 +12,8 @@ public class FileLocations {
     public static final String spritesDir = assetsDir + "sprites/";
 
     // SPECIFIC FILES
+    public static final String backupSpriteDir = spritesDir + "BackupSprite.png";
+
     public static final String persistenceDir = dataDir + "persistence/Persistence.json";
     public static final String itemsDir = dataDir + "Items.json";
     public static final String exampleBreedsDir = dataDir + "petBreeds/ExampleAnimalBreeds.json";
