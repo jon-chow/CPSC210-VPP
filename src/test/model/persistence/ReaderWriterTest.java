@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ import ui.app.PixelPetGame;
 
 class ReaderWriterTest {
     File testPersistenceFile;
+    File testPersistenceNewFile;
 
     PixelPetGame game;
 
@@ -29,6 +31,7 @@ class ReaderWriterTest {
     void runBefore() throws IOException, CannotFindSessionIdException {
         converterJsonArrays = new ConverterJsonArrays();
         testPersistenceFile = new File("data/persistence/ReaderWriterTest.json");
+        testPersistenceNewFile = new File("data/persistence/WriterNewTest.json");
         game = new PixelPetGame(true, null);
     }
 
@@ -136,5 +139,38 @@ class ReaderWriterTest {
         plr.setInventoryQuantity(quantities);
 
         return plr;
+    }
+
+    void newGame() throws IOException {
+        game.setPlayer(createNextPlayer());
+        game.setPet(new Dog("Shiba Inu", "Shiba Inu"));
+        game.setSessionId(0);
+    }
+
+    @Test
+    void WriteNewTest() {
+        try {
+            newGame();
+            cleanFile(testPersistenceNewFile);
+            reader = new PersistenceReader(testPersistenceNewFile, game, 0);
+            fail();
+        } catch(CannotFindSessionIdException e) {
+            try {
+                writer = new PersistenceWriter(testPersistenceNewFile, game);
+                reader = new PersistenceReader(testPersistenceNewFile, game, 0);
+            } catch (Exception ex) {
+                fail();
+            }
+        } catch(IOException e) {
+            fail();
+        }
+    }
+
+    // helper for WriteNewTest; cleans the testPersistenceNewFile
+    void cleanFile(File persistenceFile) throws IOException {
+        FileWriter fileWriter = new FileWriter(persistenceFile);
+        fileWriter.write("{\"sessions\": []}");
+        fileWriter.flush();
+        fileWriter.close();
     }
 }

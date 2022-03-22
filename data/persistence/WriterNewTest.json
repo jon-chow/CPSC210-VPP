@@ -1,0 +1,70 @@
+{"sessions": [{
+    "data": {
+        "shop": {
+            "quantities": [
+                15,
+                15,
+                10,
+                10,
+                10
+            ],
+            "name": "Kira Kira Pets",
+            "prices": [
+                180,
+                80,
+                200,
+                150,
+                100
+            ],
+            "items": [
+                {
+                    "name": "Chocolate",
+                    "type": "Food"
+                },
+                {
+                    "name": "Tug O' Rope",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Squeaky Mouse",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Bone",
+                    "type": "Toy"
+                },
+                {
+                    "name": "Blob",
+                    "type": "Unknown"
+                }
+            ]
+        },
+        "ticksPassed": 0,
+        "secondsPassed": 0,
+        "pet": {
+            "thirst": 100,
+            "happiness": 100,
+            "numWaste": 0,
+            "name": "Shiba Inu",
+            "health": 100,
+            "state": "IDLING",
+            "type": "Dog",
+            "breed": "Shiba Inu",
+            "age": 0,
+            "hunger": 100
+        },
+        "player": {
+            "money": 1000,
+            "name": "Next",
+            "inventory": {
+                "quantities": [1],
+                "items": [{
+                    "name": "Chicken",
+                    "type": "Food"
+                }]
+            }
+        }
+    },
+    "id": 0,
+    "saveTime": "21-03-2022 18:03:51"
+}]}
