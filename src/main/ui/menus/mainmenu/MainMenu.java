@@ -14,7 +14,7 @@ import java.io.IOException;
 import static model.configurables.FileLocations.*;
 import static ui.app.PixelPetGame.STARTING_MONEY;
 
-import static ui.menus.JComponentBuilder.*;
+import static ui.configurables.JComponentBuilder.*;
 import static ui.configurables.InterfaceAesthetics.*;
 
 // menu at the start of the game
@@ -31,6 +31,7 @@ public class MainMenu extends Menu {
 
     // EFFECTS: initializes assets to the main menu
     protected void initMenu() throws IOException, FontFormatException {
+        ui.changeBackground("PixelPetBackground.png");
         ui.clearMenu();
 
         BufferedImage myPicture2 = ImageIO.read(new File(assetsDir + "Logo.png"));
@@ -58,7 +59,7 @@ public class MainMenu extends Menu {
 
         buttonsBox.add(newGameButton);
         buttonsBox.add(loadButton);
-        buttonsBox.add(settingsButton);
+//        buttonsBox.add(settingsButton);
 
         return buttonsBox;
     }

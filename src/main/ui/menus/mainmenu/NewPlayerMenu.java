@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-import static ui.menus.JComponentBuilder.*;
+import static ui.configurables.JComponentBuilder.*;
 import static ui.configurables.InterfaceAesthetics.*;
 
 // menu for creating a new player

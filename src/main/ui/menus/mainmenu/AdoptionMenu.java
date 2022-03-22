@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import static ui.configurables.InterfaceAesthetics.*;
-import static ui.menus.JComponentBuilder.*;
-import static ui.menus.JComponentBuilder.createJPanel;
+import static ui.configurables.JComponentBuilder.*;
+import static ui.configurables.JComponentBuilder.createJPanel;
 
 // menu for adopting a pet
 public class AdoptionMenu extends Menu {
