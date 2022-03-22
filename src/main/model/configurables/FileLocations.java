@@ -7,6 +7,7 @@ public class FileLocations {
     public static final String dataDir = "data/";
     public static final String assetsDir = dataDir + "assets/";
     public static final String backgroundsDir = assetsDir + "backgrounds/";
+    public static final String sceneryDir = assetsDir + "scenes/";
     public static final String iconsDir = assetsDir + "icons/";
     public static final String spritesDir = assetsDir + "sprites/";
 
