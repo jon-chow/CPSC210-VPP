@@ -1,6 +1,7 @@
 package ui.menus.ingame;
 
 import ui.app.GuiApp;
+import ui.app.PixelPetGame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,10 +10,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import static model.configurables.FileLocations.iconsDir;
-import static model.configurables.FileLocations.sceneryDir;
+import static model.configurables.FileLocations.*;
 import static ui.configurables.InterfaceAesthetics.*;
-import static ui.menus.JComponentBuilder.createJPanel;
+import static ui.configurables.JComponentBuilder.*;
 
 // represents the habitable environment, containing the scene and the pet
 public class PetEnvironment extends JPanel {
@@ -24,10 +24,11 @@ public class PetEnvironment extends JPanel {
 
     private JPanel pet;
     private JLabel petSprite;
+
 //    private Polygon boundary;
 
     // EFFECTS: constructs the pet environment
-    public PetEnvironment(GuiApp ui, int width, int height) throws IOException {
+    public PetEnvironment(GuiApp ui, int width, int height) throws IOException, FontFormatException {
         this.ui = ui;
         this.width = width;
         this.height = height;
@@ -66,7 +67,7 @@ public class PetEnvironment extends JPanel {
         BufferedImage bufferedImage;
         Image petImg;
 
-        bufferedImage = ImageIO.read(new File(iconsDir + "PixelPet.png"));
+        bufferedImage = ImageIO.read(new File(backupSpriteDir));
         petImg = new ImageIcon(bufferedImage).getImage()
                 .getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 
@@ -82,7 +83,7 @@ public class PetEnvironment extends JPanel {
         pet.add(petSprite);
     }
 
-    // EFFECTS: draws the pet sprite
+    // EFFECTS: updates the drawing of the pet sprite
     private void updatePetSprite(String spriteFile) {
         try {
             BufferedImage bufferedImage =
@@ -107,7 +108,7 @@ public class PetEnvironment extends JPanel {
     // TODO:
     // MODIFIES: this
     // EFFECTS: updates the environment's graphics
-    public void renderGraphics() {
+    public void renderGraphics(PixelPetGame game) {
 
     }
 
