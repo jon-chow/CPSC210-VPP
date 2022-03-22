@@ -1,18 +1,27 @@
 package ui.menus.ingame;
 
+import model.Player;
 import model.configurables.FileLocations;
+import model.goodsandservices.Item;
+import model.goodsandservices.Shop;
 import model.persistence.PersistenceWriter;
 import ui.app.GuiApp;
 import ui.app.PixelPetGame;
 import ui.menus.Menu;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import static model.configurables.FileLocations.backupSpriteDir;
 import static ui.configurables.InterfaceAesthetics.*;
 import static ui.configurables.JComponentBuilder.*;
 
@@ -26,20 +35,19 @@ public class GameMenu extends Menu {
 
     private PetEnvironment petEnvironment;
 
+    // Pet Stats Menu Fields
     private final TitledBorder generalBorder = BorderFactory.createTitledBorder("General");
     private JPanel generalContainer;
     private JTextArea nameText;
     private JTextArea animalTypeText;
     private JTextArea breedText;
     private JTextArea ageText;
-
     private final TitledBorder careLevelsBorder = BorderFactory.createTitledBorder("Care Levels");
     private JPanel careLevelsContainer;
     private JTextArea happinessBar;
     private JTextArea thirstBar;
     private JTextArea hungerBar;
     private JTextArea healthBar;
-
     private final TitledBorder characteristicsBorder = BorderFactory.createTitledBorder("Characteristics");
     private JPanel characteristicsContainer;
     private JTextArea likesText;
@@ -47,15 +55,33 @@ public class GameMenu extends Menu {
     private JTextArea personalitiesText;
     private JTextArea cannotHavesText;
 
-    private JTextArea mainMenuPromptText;
-    private JPanel mainMenuButtonContainer;
+    // Shop Menu Fields
+    private final String shopName = "Kira Kira Pets";
+    private final TitledBorder shopItemsBorder = BorderFactory.createTitledBorder("Items");
+    private JPanel shopItemsContainer;
+    private final TitledBorder shopItemInfoBorder = BorderFactory.createTitledBorder("Information");
+    private JPanel shopItemInfoContainer;
+    private JTextArea shopPlayerMoneyText;
+    private JTextArea shopItemNameText;
+    private JTextArea shopItemTypeText;
+    private JTextArea shopItemPriceText;
+    private JTextArea shopItemQuantityText;
+    private JPanel shopItemBuyButtonContainer;
+    private String selectedItemName = "";
+    private String selectedItemType = "";
 
+    // Save Menu Fields
     private JTextArea savePromptText;
     private JPanel saveButtonContainer;
     private JTextArea saveSuccessfulText;
     private JPanel saveSuccessfulButtonContainer;
 
-    private boolean isPetStatsMenuOpen = false;
+    // Main Menu Prompt Fields
+    private JTextArea mainMenuPromptText;
+    private JPanel mainMenuButtonContainer;
+
+    private boolean isPetStatsMenuLoaded = false;
+    private boolean isShopMenuLoaded = false;
 
     // EFFECTS: constructs the main menu
     public GameMenu(GuiApp ui, JLayeredPane menu) throws IOException, FontFormatException {
@@ -252,7 +278,7 @@ public class GameMenu extends Menu {
         promptContainer.removeAll();
         promptContainer.setLayout(new BoxLayout(promptContainer, BoxLayout.Y_AXIS));
 
-        JButton backButton = createJButton("Back", "backPetStatsClicked", this,
+        JButton backButton = createJButton("Back", "backClicked", this,
                 24f, width, 40);
         backButton.setBackground(BUTTON_COLOR_2);
 
@@ -392,21 +418,201 @@ public class GameMenu extends Menu {
     }
 
 
+    // CODE FOR THE SHOP MENU
+    // EFFECTS: generates shop menu
+    private void generateShop() throws IOException, FontFormatException {
+        promptContainer.removeAll();
+        promptContainer.setLayout(new BoxLayout(promptContainer, BoxLayout.Y_AXIS));
+        selectedItemName = "";
+        selectedItemType = "";
+
+        JButton backButton = createJButton("Back", "backClicked", this,
+                24f, width, 40);
+        backButton.setBackground(BUTTON_COLOR_2);
+
+        JPanel backButtonContainer = createJPanel(TRANSPARENT, width, 48);
+        backButtonContainer.add(backButton);
+
+        generateShopItemsPanel();
+        generateShopItemInfoPanel();
+
+        promptContainer.add(Box.createVerticalStrut(50));
+        promptContainer.add(backButtonContainer);
+        promptContainer.add(Box.createVerticalStrut(5));
+        promptContainer.add(shopItemsContainer);
+        promptContainer.add(Box.createVerticalStrut(5));
+        promptContainer.add(shopItemInfoContainer);
+        togglePrompts(true);
+    }
+
+    // EFFECTS: generates the items list component for shop menu
+    private void generateShopItemsPanel() throws IOException, FontFormatException {
+        shopItemsContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 320);
+        shopItemsContainer.setLayout(new BoxLayout(shopItemsContainer, BoxLayout.Y_AXIS));
+        shopItemsContainer.setBorder(shopItemsBorder);
+        shopItemsBorder.setTitleColor(BUTTON_TEXT_COLOR);
+        createShopItemsPanel(20f);
+    }
+
+    // EFFECTS: creates the shop item buttons
+    private void createShopItemsPanel(float fontSize) throws IOException, FontFormatException {
+        Shop shop = ui.getGame().getShopByName(shopName);
+        ArrayList<Item> items = shop.getShopItems();
+        ArrayList<Integer> quantities = ui.getGame().getShopByName(shopName).getQuantityInStock();
+
+        shopItemsContainer.removeAll();
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+
+            JPanel itemContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 56);
+            JButton itemButton = createJButton(item.getType() + ": \'" + item.getName()
+                            + "\' x" + quantities.get(i) + " ($" + item.getPrice() + ")",
+                    item.getName() + "~" + item.getType()
+                            + "~$" + item.getPrice() + "~" + quantities.get(i),
+                    shopButtonClicked, fontSize, width - 200, 48);
+            itemButton.setPreferredSize(new Dimension(width - 300, 48));
+
+
+            item.getSpritesDir();
+            itemContainer.add(itemButton);
+            itemContainer.add(new JLabel(createItemIcon(item,48, 48)));
+            shopItemsContainer.add(itemContainer);
+        }
+
+        JPanel pseudoContainer = createJPanel(TRANSPARENT, width - 200, 56);
+        pseudoContainer.setPreferredSize(new Dimension(width - 200, 56));
+        shopItemsContainer.add(pseudoContainer);
+    }
+
+    // ActionListener for shop item buttons
+    private ActionListener shopButtonClicked = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<String> parsedInfo =
+                    new ArrayList<>(Arrays.asList(e.getActionCommand().split("~")));
+            String itemName = parsedInfo.get(0);
+            String itemType = parsedInfo.get(1);
+
+            selectedItemName = itemName;
+            selectedItemType = itemType;
+
+            shopItemNameText.setText("Item Name: " + itemName);
+            shopItemTypeText.setText("Item Type: " + itemType);
+            shopItemPriceText.setText("Price: " + parsedInfo.get(2));
+            shopItemQuantityText.setText("Quantity: " + parsedInfo.get(3));
+        }
+    };
+
+    // EFFECTS: creates an icon for the item
+    private ImageIcon createItemIcon(Item item, int width, int height) throws IOException {
+        BufferedImage iconBufferedImg = ImageIO.read(new File(backupSpriteDir));
+
+        try {
+            iconBufferedImg = ImageIO.read(new File(item.getSpritesDir()
+                    + (item.getName() + "_" + item.getType()).toLowerCase() + ".png"));
+        } catch (Exception e) {
+            // sprite was unable to load
+        }
+
+        Image iconImg = new ImageIcon(iconBufferedImg).getImage()
+                .getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(iconImg);
+    }
+
+    // EFFECTS: generates the item info component for shop menu
+    private void generateShopItemInfoPanel() throws IOException, FontFormatException {
+        createShopItemInfoPanel(20f);
+        shopItemInfoContainer.add(shopItemNameText);
+        shopItemInfoContainer.add(Box.createVerticalStrut(5));
+        shopItemInfoContainer.add(shopItemTypeText);
+        shopItemInfoContainer.add(Box.createVerticalStrut(5));
+//        shopItemInfoContainer.add(shopItemPriceText);
+//        shopItemInfoContainer.add(Box.createVerticalStrut(5));
+//        shopItemInfoContainer.add(shopItemQuantityText);
+//        shopItemInfoContainer.add(Box.createVerticalStrut(5));
+        shopItemInfoContainer.add(shopItemBuyButtonContainer);
+        shopItemInfoContainer.add(Box.createVerticalStrut(5));
+        shopItemInfoContainer.add(shopPlayerMoneyText);
+    }
+
+    // EFFECTS: creates the shop item buttons
+    private void createShopItemInfoPanel(float fontSize)
+            throws IOException, FontFormatException {
+        shopItemNameText = createJTextArea("Item Name: ",
+                fontSize, width / 2, 50);
+        shopItemTypeText = createJTextArea("Item Type: ",
+                fontSize, width / 2, 50);
+        shopItemPriceText = createJTextArea("Price: ",
+                fontSize, width / 2, 50);
+        shopItemQuantityText = createJTextArea("Quantity: ",
+                fontSize, width / 2, 50);
+
+        shopItemBuyButtonContainer = createJPanel(TRANSPARENT, width, 58);
+        JButton buyButton = createJButton("Buy", "shopItemBuyClicked", this,
+                fontSize, width / 2, 50);
+        buyButton.setPreferredSize(new Dimension(width / 2, 50));
+        buyButton.setBackground(BUTTON_COLOR_2);
+        shopItemBuyButtonContainer.add(buyButton);
+
+        shopPlayerMoneyText = createJTextArea("Money: " + ui.getGame().getPlayer().getMoney(),
+                fontSize, width / 2, 50);
+
+        shopItemInfoContainer = createJPanel(GAME_BAR_UI_COLOR,width - 200, (50 + 8 + 5) * 4);
+        shopItemInfoContainer.setLayout(new BoxLayout(shopItemInfoContainer, BoxLayout.Y_AXIS));
+        shopItemInfoContainer.setBorder(shopItemInfoBorder);
+        shopItemInfoBorder.setTitleColor(BUTTON_TEXT_COLOR);
+    }
+
+    // EFFECTS: checks to see if buying the item is valid,
+    //          then handles the player transaction if valid
+    private void buyItem(String itemName, String itemType) {
+        Item itemToCheck = validItem(itemName, itemType);
+        Player player = ui.getGame().getPlayer();
+        Shop shop = ui.getGame().getShopByName(shopName);
+
+        if (itemToCheck != null) {
+            if (player.buyItemFrom(itemToCheck, 1, shop)) {
+                shopPlayerMoneyText.setText("Money: $" + player.getMoney());
+            }
+        }
+    }
+
+    // EFFECTS: returns the item if there exists an item of the name itemName and type itemType
+    private Item validItem(String itemName, String itemType) {
+        ArrayList<Item> shopItems = ui.getGame().getShopByName(shopName).getShopItems();
+
+        for (Item item : shopItems) {
+            String comparingName = item.getName().toLowerCase();
+            String comparingType = item.getType().toLowerCase();
+            boolean foundItemName = (comparingName.equals(itemName.toLowerCase()));
+            boolean foundItemType = (comparingType.equals(itemType.toLowerCase()));
+
+            if (foundItemName && foundItemType) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+
     // MODIFIES: this, petEnvironment
     // EFFECTS: renders the ui graphics for the gameMenu
     public void renderGraphics(PixelPetGame game) {
-        petEnvironment.renderGraphics(game);
+//        petEnvironment.renderGraphics(game);
 
-        if (isPetStatsMenuOpen) {
+        if (isPetStatsMenuLoaded) {
             try {
                 updatePetStats();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        if (isShopMenuLoaded) {
+            shopPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
+        }
     }
 
-    // TODO:
     // EFFECTS: helper for actionPerformed; performs the desired action
     protected void performAction(String command, JComponent source) throws IOException, FontFormatException {
         if (command.equals("mainMenuClicked")) {
@@ -419,14 +625,18 @@ public class GameMenu extends Menu {
             new PersistenceWriter(persistenceFile, ui.getGame());
             displaySaveSuccessful();
         } else if (command.equals("shopClicked")) {
-            // TODO
+            isShopMenuLoaded = true;
+            generateShop();
+        } else if (command.equals("shopItemBuyClicked")) {
+            buyItem(selectedItemName, selectedItemType);
+            createShopItemsPanel(20f);
         } else if (command.equals("inventoryClicked")) {
             // TODO
         } else if (command.equals("petStatsClicked")) {
-            isPetStatsMenuOpen = true;
+            isPetStatsMenuLoaded = true;
             generatePetStats();
         } else if (command.equals("cancelMainMenuClicked") || command.equals("cancelSaveClicked")
-                || command.equals("continueSaveSuccessfulClicked") || command.equals("backPetStatsClicked")) {
+                || command.equals("continueSaveSuccessfulClicked") || command.equals("backClicked")) {
             togglePrompts(false);
         }
     }

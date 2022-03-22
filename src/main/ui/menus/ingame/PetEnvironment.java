@@ -1,7 +1,7 @@
 package ui.menus.ingame;
 
 import ui.app.GuiApp;
-import ui.app.PixelPetGame;
+//import ui.app.PixelPetGame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -62,6 +62,15 @@ public class PetEnvironment extends JPanel {
         scene.setIcon(new ImageIcon(img));
     }
 
+    // MODIFIES: this
+    // EFFECTS: translates the pet's location starting at the center of the room
+    private void translatePet(int x, int y) {
+        Insets insets = scene.getInsets();
+        pet.setBounds((width - pet.getPreferredSize().width) / 2 + insets.left + x,
+                (height - pet.getPreferredSize().height) / 2 + insets.top + y,
+                pet.getPreferredSize().width, pet.getPreferredSize().height);
+    }
+
     // EFFECTS: draws the pet sprite
     private void drawPetSprite() throws IOException {
         BufferedImage bufferedImage;
@@ -83,34 +92,25 @@ public class PetEnvironment extends JPanel {
         pet.add(petSprite);
     }
 
-    // EFFECTS: updates the drawing of the pet sprite
-    private void updatePetSprite(String spriteFile) {
-        try {
-            BufferedImage bufferedImage =
-                    ImageIO.read(new File(ui.getGame().getPet().getSpritesDir() + spriteFile));
-            Image petImg = new ImageIcon(bufferedImage).getImage()
-                    .getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-            petSprite = new JLabel(new ImageIcon(petImg));
-        } catch (IOException e) {
-            System.err.println("Unable to load pet sprite: " + spriteFile);
-        }
-    }
+//    // EFFECTS: updates the drawing of the pet sprite
+//    private void updatePetSprite(String spriteFile) {
+//        try {
+//            BufferedImage bufferedImage =
+//                    ImageIO.read(new File(ui.getGame().getPet().getSpritesDir() + spriteFile));
+//            Image petImg = new ImageIcon(bufferedImage).getImage()
+//                    .getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+//            petSprite = new JLabel(new ImageIcon(petImg));
+//        } catch (IOException e) {
+//            System.err.println("Unable to load pet sprite: " + spriteFile);
+//        }
+//    }
 
-    // MODIFIES: this
-    // EFFECTS: translates the pet's location starting at the center of the room
-    private void translatePet(int x, int y) {
-        Insets insets = scene.getInsets();
-        pet.setBounds((width - pet.getPreferredSize().width) / 2 + insets.left + x,
-                (height - pet.getPreferredSize().height) / 2 + insets.top + y,
-                pet.getPreferredSize().width, pet.getPreferredSize().height);
-    }
-
-    // TODO:
-    // MODIFIES: this
-    // EFFECTS: updates the environment's graphics
-    public void renderGraphics(PixelPetGame game) {
-
-    }
+//    // TODO:
+//    // MODIFIES: this
+//    // EFFECTS: updates the environment's graphics
+//    public void renderGraphics(PixelPetGame game) {
+//        updatePetSprite("");
+//    }
 
 //    // EFFECTS: creates the environment boundary
 //    public void makeBoundary() {

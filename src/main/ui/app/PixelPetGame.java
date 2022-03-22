@@ -8,7 +8,6 @@ import model.Player;
 import model.exceptions.CannotFindSessionIdException;
 import model.goodsandservices.Shop;
 import model.pets.*;
-import ui.menus.ingame.ShopMenu;
 
 // class for handling the main game functionalities and menus
 public class PixelPetGame {
@@ -27,8 +26,8 @@ public class PixelPetGame {
     private static final int THIRST_LOSS = 1;
     private static final int HEALTH_LOSS = 1;
 
-    public static final int STARTING_MONEY = 10000;
-    private static final int MONEY_GAINED_PER_SECOND = 100;
+    public static final int STARTING_MONEY = 1000;
+    private static final int MONEY_GAINED_PER_SECOND = 20;
 
     private static final int SECONDS_PER_AGING = 60;
     private static final int SECONDS_PER_CARE_LEVELS_DECREMENT = 5;
@@ -45,7 +44,10 @@ public class PixelPetGame {
     // EFFECTS: constructs a new PixelPetGame and pre-configures
     //          the PixelPetGame if isForTest is true
     public PixelPetGame(boolean isForTest, GuiApp ui) throws IOException, CannotFindSessionIdException {
-        Shop shop = ShopMenu.initShop("Kira Kira Pets");
+        Shop shop = new Shop("Kira Kira Pets");
+        shop.stockWithRandomItems(2, 15);
+        shop.stockWithRandomItems(3, 10);
+
         shops = new ArrayList<>();
         shops.add(shop);
         sessionId = generateSessionId();

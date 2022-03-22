@@ -34,10 +34,10 @@ public class MainMenu extends Menu {
         ui.changeBackground("PixelPetBackground.png");
         ui.clearMenu();
 
-        BufferedImage myPicture2 = ImageIO.read(new File(assetsDir + "Logo.png"));
-        Image img2 = new ImageIcon(myPicture2).getImage()
+        BufferedImage logoBufferedImg = ImageIO.read(new File(assetsDir + "Logo.png"));
+        Image logoImg = new ImageIcon(logoBufferedImg).getImage()
                 .getScaledInstance(400, 240,  java.awt.Image.SCALE_SMOOTH);
-        JLabel logo = new JLabel(new ImageIcon(img2));
+        JLabel logo = new JLabel(new ImageIcon(logoImg));
         logo.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         menu.setLayout(new BoxLayout(menu, BoxLayout.PAGE_AXIS));
