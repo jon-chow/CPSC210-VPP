@@ -95,8 +95,6 @@ public class GameMenu extends Menu {
     private JPanel mainMenuButtonContainer;
 
     private boolean isPetStatsMenuLoaded = false;
-    private boolean isShopMenuLoaded = false;
-    private boolean isInventoryMenuLoaded = false;
 
     // EFFECTS: constructs the main menu
     public GameMenu(GuiApp ui, JLayeredPane menu) throws IOException, FontFormatException {
@@ -461,7 +459,6 @@ public class GameMenu extends Menu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(shopItemInfoContainer);
         togglePrompts(true);
-        isShopMenuLoaded = true;
     }
 
     // EFFECTS: generates the items list component for shop menu
@@ -637,7 +634,6 @@ public class GameMenu extends Menu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(inventoryItemInfoContainer);
         togglePrompts(true);
-        isInventoryMenuLoaded = true;
     }
 
     // EFFECTS: generates the items list component for inventory menu
@@ -759,11 +755,11 @@ public class GameMenu extends Menu {
             updatePetStats();
         }
 
-        if (isShopMenuLoaded) {
+        if (shopPlayerMoneyText != null) {
             shopPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
         }
 
-        if (isInventoryMenuLoaded) {
+        if (inventoryPlayerMoneyText != null) {
             inventoryPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
         }
     }
