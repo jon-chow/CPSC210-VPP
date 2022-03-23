@@ -45,8 +45,8 @@ public class GuiApp extends JFrame {
 
     private GameMenu gameMenu;
 
-    private int width;
-    private int height;
+    private final int width;
+    private final int height;
 
     // EFFECTS: constructs a window app
     public GuiApp(int width, int height) throws IOException, InterruptedException,

@@ -16,13 +16,13 @@ import static ui.configurables.JComponentBuilder.*;
 
 // represents the habitable environment, containing the scene and the pet
 public class PetEnvironment extends JPanel {
-    private GuiApp ui;
-    private int width;
-    private int height;
+    private final GuiApp ui;
+    private final int width;
+    private final int height;
 
-    private JLabel scene;
+    private final JLabel scene;
 
-    private JPanel pet;
+    private final JPanel pet;
     private JLabel petSprite;
 
 //    private Polygon boundary;
@@ -105,7 +105,6 @@ public class PetEnvironment extends JPanel {
 //        }
 //    }
 
-//    // TODO:
 //    // MODIFIES: this
 //    // EFFECTS: updates the environment's graphics
 //    public void renderGraphics(PixelPetGame game) {

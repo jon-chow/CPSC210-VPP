@@ -22,7 +22,7 @@ public class NewPlayerMenu extends Menu {
     private JTextArea helloText;
 
     private final String defaultName = "Player";
-    private int startingMoney;
+    private final int startingMoney;
     private String name;
     private Player player;
 

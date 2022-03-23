@@ -481,8 +481,8 @@ public class GameMenu extends Menu {
             Item item = items.get(i);
 
             JPanel itemContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 56);
-            JButton itemButton = createJButton(item.getType() + ": \'" + item.getName()
-                            + "\' x" + quantities.get(i) + " ($" + item.getPrice() + ")",
+            JButton itemButton = createJButton(item.getType() + ": '" + item.getName()
+                            + "' x" + quantities.get(i) + " ($" + item.getPrice() + ")",
                     item.getName() + "~" + item.getType()
                             + "~$" + item.getPrice() + "~" + quantities.get(i),
                     shopButtonClicked, fontSize, width - 200, 48);
@@ -501,7 +501,7 @@ public class GameMenu extends Menu {
     }
 
     // ActionListener for shop item buttons
-    private ActionListener shopButtonClicked = new ActionListener() {
+    private final ActionListener shopButtonClicked = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             ArrayList<String> parsedInfo =
@@ -656,8 +656,8 @@ public class GameMenu extends Menu {
             Item item = items.get(i);
 
             JPanel itemContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 56);
-            JButton itemButton = createJButton(item.getType() + ": \'" + item.getName()
-                            + "\' x" + quantities.get(i),
+            JButton itemButton = createJButton(item.getType() + ": '" + item.getName()
+                            + "' x" + quantities.get(i),
                     item.getName() + "~" + item.getType()
                             + "~" + quantities.get(i),
                     inventoryButtonClicked, fontSize, width - 200, 48);
@@ -676,7 +676,7 @@ public class GameMenu extends Menu {
     }
 
     // ActionListener for inventory item buttons
-    private ActionListener inventoryButtonClicked = new ActionListener() {
+    private final ActionListener inventoryButtonClicked = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             ArrayList<String> parsedInfo =
