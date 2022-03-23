@@ -5,6 +5,7 @@ import model.configurables.FileLocations;
 import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
 import model.persistence.PersistenceWriter;
+import model.pets.Pet;
 import ui.app.GuiApp;
 import ui.app.PixelPetGame;
 import ui.menus.Menu;
@@ -67,8 +68,21 @@ public class GameMenu extends Menu {
     private JTextArea shopItemPriceText;
     private JTextArea shopItemQuantityText;
     private JPanel shopItemBuyButtonContainer;
-    private String selectedItemName = "";
-    private String selectedItemType = "";
+    private String shopSelectedItemName = "";
+    private String shopSelectedItemType = "";
+
+    // Inventory Menu Fields
+    private final TitledBorder inventoryItemsBorder = BorderFactory.createTitledBorder("Items");
+    private JPanel inventoryItemsContainer;
+    private final TitledBorder inventoryItemInfoBorder = BorderFactory.createTitledBorder("Information");
+    private JPanel inventoryItemInfoContainer;
+    private JTextArea inventoryPlayerMoneyText;
+    private JTextArea inventoryItemNameText;
+    private JTextArea inventoryItemTypeText;
+    private JTextArea inventoryItemQuantityText;
+    private JPanel inventoryItemUseButtonContainer;
+    private String inventorySelectedItemName = "";
+    private String inventorySelectedItemType = "";
 
     // Save Menu Fields
     private JTextArea savePromptText;
@@ -82,6 +96,7 @@ public class GameMenu extends Menu {
 
     private boolean isPetStatsMenuLoaded = false;
     private boolean isShopMenuLoaded = false;
+    private boolean isInventoryMenuLoaded = false;
 
     // EFFECTS: constructs the main menu
     public GameMenu(GuiApp ui, JLayeredPane menu) throws IOException, FontFormatException {
@@ -246,6 +261,8 @@ public class GameMenu extends Menu {
 
     // EFFECTS: displays the save successful
     private void displaySaveSuccessful() throws IOException, FontFormatException {
+        new PersistenceWriter(persistenceFile, ui.getGame());
+
         promptContainer.removeAll();
         createSaveSuccessfulText();
 
@@ -298,6 +315,7 @@ public class GameMenu extends Menu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(backButtonContainer);
         togglePrompts(true);
+        isPetStatsMenuLoaded = true;
     }
 
     // EFFECTS: generates the general component for pet stats menu
@@ -423,8 +441,8 @@ public class GameMenu extends Menu {
     private void generateShop() throws IOException, FontFormatException {
         promptContainer.removeAll();
         promptContainer.setLayout(new BoxLayout(promptContainer, BoxLayout.Y_AXIS));
-        selectedItemName = "";
-        selectedItemType = "";
+        shopSelectedItemName = "";
+        shopSelectedItemType = "";
 
         JButton backButton = createJButton("Back", "backClicked", this,
                 24f, width, 40);
@@ -443,6 +461,7 @@ public class GameMenu extends Menu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(shopItemInfoContainer);
         togglePrompts(true);
+        isShopMenuLoaded = true;
     }
 
     // EFFECTS: generates the items list component for shop menu
@@ -458,7 +477,7 @@ public class GameMenu extends Menu {
     private void createShopItemsPanel(float fontSize) throws IOException, FontFormatException {
         Shop shop = ui.getGame().getShopByName(shopName);
         ArrayList<Item> items = shop.getShopItems();
-        ArrayList<Integer> quantities = ui.getGame().getShopByName(shopName).getQuantityInStock();
+        ArrayList<Integer> quantities = shop.getQuantityInStock();
 
         shopItemsContainer.removeAll();
         for (int i = 0; i < items.size(); i++) {
@@ -475,7 +494,7 @@ public class GameMenu extends Menu {
 
             item.getSpritesDir();
             itemContainer.add(itemButton);
-            itemContainer.add(new JLabel(createItemIcon(item,48, 48)));
+            itemContainer.add(new JLabel(createItemIcon(item, 48, 48)));
             shopItemsContainer.add(itemContainer);
         }
 
@@ -493,8 +512,8 @@ public class GameMenu extends Menu {
             String itemName = parsedInfo.get(0);
             String itemType = parsedInfo.get(1);
 
-            selectedItemName = itemName;
-            selectedItemType = itemType;
+            shopSelectedItemName = itemName;
+            shopSelectedItemType = itemType;
 
             shopItemNameText.setText("Item Name: " + itemName);
             shopItemTypeText.setText("Item Type: " + itemType);
@@ -502,22 +521,6 @@ public class GameMenu extends Menu {
             shopItemQuantityText.setText("Quantity: " + parsedInfo.get(3));
         }
     };
-
-    // EFFECTS: creates an icon for the item
-    private ImageIcon createItemIcon(Item item, int width, int height) throws IOException {
-        BufferedImage iconBufferedImg = ImageIO.read(new File(backupSpriteDir));
-
-        try {
-            iconBufferedImg = ImageIO.read(new File(item.getSpritesDir()
-                    + (item.getName() + "_" + item.getType()).toLowerCase() + ".png"));
-        } catch (Exception e) {
-            // sprite was unable to load
-        }
-
-        Image iconImg = new ImageIcon(iconBufferedImg).getImage()
-                .getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
-        return new ImageIcon(iconImg);
-    }
 
     // EFFECTS: generates the item info component for shop menu
     private void generateShopItemInfoPanel() throws IOException, FontFormatException {
@@ -566,9 +569,9 @@ public class GameMenu extends Menu {
     // EFFECTS: checks to see if buying the item is valid,
     //          then handles the player transaction if valid
     private void buyItem(String itemName, String itemType) {
-        Item itemToCheck = validItem(itemName, itemType);
         Player player = ui.getGame().getPlayer();
         Shop shop = ui.getGame().getShopByName(shopName);
+        Item itemToCheck = validItem(shop.getShopItems(), itemName, itemType);
 
         if (itemToCheck != null) {
             if (player.buyItemFrom(itemToCheck, 1, shop)) {
@@ -578,10 +581,8 @@ public class GameMenu extends Menu {
     }
 
     // EFFECTS: returns the item if there exists an item of the name itemName and type itemType
-    private Item validItem(String itemName, String itemType) {
-        ArrayList<Item> shopItems = ui.getGame().getShopByName(shopName).getShopItems();
-
-        for (Item item : shopItems) {
+    private Item validItem(ArrayList<Item> itemsList, String itemName, String itemType) {
+        for (Item item : itemsList) {
             String comparingName = item.getName().toLowerCase();
             String comparingType = item.getType().toLowerCase();
             boolean foundItemName = (comparingName.equals(itemName.toLowerCase()));
@@ -594,55 +595,245 @@ public class GameMenu extends Menu {
         return null;
     }
 
+    // EFFECTS: creates an icon for the item
+    private ImageIcon createItemIcon(Item item, int width, int height) throws IOException {
+        BufferedImage iconBufferedImg = ImageIO.read(new File(backupSpriteDir));
 
-    // MODIFIES: this, petEnvironment
+        try {
+            iconBufferedImg = ImageIO.read(new File(item.getSpritesDir()
+                    + (item.getName() + "_" + item.getType()).toLowerCase() + ".png"));
+        } catch (Exception e) {
+            // sprite was unable to load
+        }
+
+        Image iconImg = new ImageIcon(iconBufferedImg).getImage()
+                .getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(iconImg);
+    }
+
+
+    // CODE FOR THE INVENTORY MENU
+    // EFFECTS: generates inventory menu
+    private void generateInventory() throws IOException, FontFormatException {
+        promptContainer.removeAll();
+        promptContainer.setLayout(new BoxLayout(promptContainer, BoxLayout.Y_AXIS));
+        inventorySelectedItemName = "";
+        inventorySelectedItemType = "";
+
+        JButton backButton = createJButton("Back", "backClicked", this,
+                24f, width, 40);
+        backButton.setBackground(BUTTON_COLOR_2);
+
+        JPanel backButtonContainer = createJPanel(TRANSPARENT, width, 48);
+        backButtonContainer.add(backButton);
+
+        generateInventoryItemsPanel();
+        generateInventoryItemInfoPanel();
+
+        promptContainer.add(Box.createVerticalStrut(50));
+        promptContainer.add(backButtonContainer);
+        promptContainer.add(Box.createVerticalStrut(5));
+        promptContainer.add(inventoryItemsContainer);
+        promptContainer.add(Box.createVerticalStrut(5));
+        promptContainer.add(inventoryItemInfoContainer);
+        togglePrompts(true);
+        isInventoryMenuLoaded = true;
+    }
+
+    // EFFECTS: generates the items list component for inventory menu
+    private void generateInventoryItemsPanel() throws IOException, FontFormatException {
+        inventoryItemsContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 320);
+        inventoryItemsContainer.setLayout(new BoxLayout(inventoryItemsContainer, BoxLayout.Y_AXIS));
+        inventoryItemsContainer.setBorder(inventoryItemsBorder);
+        inventoryItemsBorder.setTitleColor(BUTTON_TEXT_COLOR);
+        createInventoryItemsPanel(20f);
+    }
+
+    // EFFECTS: creates the inventory item buttons
+    private void createInventoryItemsPanel(float fontSize) throws IOException, FontFormatException {
+        Player player = ui.getGame().getPlayer();
+        ArrayList<Item> items = player.getInventory();
+        ArrayList<Integer> quantities = player.getInventoryQuantity();
+
+        inventoryItemsContainer.removeAll();
+        for (int i = 0; i < items.size(); i++) {
+            Item item = items.get(i);
+
+            JPanel itemContainer = createJPanel(GAME_BAR_UI_COLOR, width - 200, 56);
+            JButton itemButton = createJButton(item.getType() + ": \'" + item.getName()
+                            + "\' x" + quantities.get(i),
+                    item.getName() + "~" + item.getType()
+                            + "~" + quantities.get(i),
+                    inventoryButtonClicked, fontSize, width - 200, 48);
+            itemButton.setPreferredSize(new Dimension(width - 300, 48));
+
+
+            item.getSpritesDir();
+            itemContainer.add(itemButton);
+            itemContainer.add(new JLabel(createItemIcon(item,48, 48)));
+            inventoryItemsContainer.add(itemContainer);
+        }
+
+        JPanel pseudoContainer = createJPanel(TRANSPARENT, width - 200, 56);
+        pseudoContainer.setPreferredSize(new Dimension(width - 200, 56));
+        inventoryItemsContainer.add(pseudoContainer);
+    }
+
+    // ActionListener for inventory item buttons
+    private ActionListener inventoryButtonClicked = new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ArrayList<String> parsedInfo =
+                    new ArrayList<>(Arrays.asList(e.getActionCommand().split("~")));
+            String itemName = parsedInfo.get(0);
+            String itemType = parsedInfo.get(1);
+
+            inventorySelectedItemName = itemName;
+            inventorySelectedItemType = itemType;
+
+            inventoryItemNameText.setText("Item Name: " + itemName);
+            inventoryItemTypeText.setText("Item Type: " + itemType);
+            inventoryItemQuantityText.setText("Quantity: " + parsedInfo.get(2));
+        }
+    };
+
+    // EFFECTS: generates the item info component for inventory menu
+    private void generateInventoryItemInfoPanel() throws IOException, FontFormatException {
+        createInventoryItemInfoPanel(20f);
+        inventoryItemInfoContainer.add(inventoryItemNameText);
+        inventoryItemInfoContainer.add(Box.createVerticalStrut(5));
+        inventoryItemInfoContainer.add(inventoryItemTypeText);
+        inventoryItemInfoContainer.add(Box.createVerticalStrut(5));
+//        inventoryItemInfoContainer.add(inventoryItemQuantityText);
+//        inventoryItemInfoContainer.add(Box.createVerticalStrut(5));
+        inventoryItemInfoContainer.add(inventoryItemUseButtonContainer);
+        inventoryItemInfoContainer.add(Box.createVerticalStrut(5));
+        inventoryItemInfoContainer.add(inventoryPlayerMoneyText);
+    }
+
+    // EFFECTS: creates the inventory item buttons
+    private void createInventoryItemInfoPanel(float fontSize) throws IOException, FontFormatException {
+        inventoryItemNameText = createJTextArea("Item Name: ",
+                fontSize, width / 2, 50);
+        inventoryItemTypeText = createJTextArea("Item Type: ",
+                fontSize, width / 2, 50);
+        inventoryItemQuantityText = createJTextArea("Quantity: ",
+                fontSize, width / 2, 50);
+
+        inventoryItemUseButtonContainer = createJPanel(TRANSPARENT, width, 58);
+        JButton useButton = createJButton("Use", "inventoryItemUseClicked", this,
+                fontSize, width / 2, 50);
+        useButton.setPreferredSize(new Dimension(width / 2, 50));
+        useButton.setBackground(BUTTON_COLOR_2);
+        inventoryItemUseButtonContainer.add(useButton);
+
+        inventoryPlayerMoneyText = createJTextArea("Money: " + ui.getGame().getPlayer().getMoney(),
+                fontSize, width / 2, 50);
+
+        inventoryItemInfoContainer = createJPanel(GAME_BAR_UI_COLOR,width - 200, (50 + 8 + 5) * 4);
+        inventoryItemInfoContainer.setLayout(new BoxLayout(inventoryItemInfoContainer, BoxLayout.Y_AXIS));
+        inventoryItemInfoContainer.setBorder(inventoryItemInfoBorder);
+        inventoryItemInfoBorder.setTitleColor(BUTTON_TEXT_COLOR);
+    }
+
+    // EFFECTS: checks to see if giving the item is valid,
+    //          then handles the player-to-pet transaction if valid
+    private void giveItemToPet(String itemName, String itemType) {
+        Player player = ui.getGame().getPlayer();
+        Pet pet = ui.getGame().getPet();
+        Item itemToCheck = validItem(player.getInventory(), itemName, itemType);
+
+        if (itemToCheck != null) {
+            if (player.giveItemTo(itemToCheck, pet, 1)) {
+                // successfully gave item
+            }
+        }
+    }
+
+    // MODIFIES: this
     // EFFECTS: renders the ui graphics for the gameMenu
     public void renderGraphics(PixelPetGame game) {
 //        petEnvironment.renderGraphics(game);
 
         if (isPetStatsMenuLoaded) {
-            try {
-                updatePetStats();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            updatePetStats();
         }
 
         if (isShopMenuLoaded) {
             shopPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
         }
+
+        if (isInventoryMenuLoaded) {
+            inventoryPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
+        }
     }
 
     // EFFECTS: helper for actionPerformed; performs the desired action
     protected void performAction(String command, JComponent source) throws IOException, FontFormatException {
-        if (command.equals("mainMenuClicked")) {
-            generateMainMenuPrompt();
-        } else if (command.equals("confirmMainMenuClicked")) {
-            ui.returnToMainMenu();
-        } else if (command.equals("saveClicked")) {
-            generateSavePrompt();
-        } else if (command.equals("confirmSaveClicked")) {
-            new PersistenceWriter(persistenceFile, ui.getGame());
-            displaySaveSuccessful();
-        } else if (command.equals("shopClicked")) {
-            isShopMenuLoaded = true;
-            generateShop();
-        } else if (command.equals("shopItemBuyClicked")) {
-            buyItem(selectedItemName, selectedItemType);
-            createShopItemsPanel(20f);
-        } else if (command.equals("inventoryClicked")) {
-            // TODO
-        } else if (command.equals("petStatsClicked")) {
-            isPetStatsMenuLoaded = true;
-            generatePetStats();
-        } else if (command.equals("cancelMainMenuClicked") || command.equals("cancelSaveClicked")
+        performActionMainMenu(command, source);
+        performActionSaveMenu(command, source);
+        performActionShopMenu(command, source);
+        performActionInventoryMenu(command, source);
+        performActionPetStatsMenu(command, source);
+
+        if (command.equals("cancelMainMenuClicked") || command.equals("cancelSaveClicked")
                 || command.equals("continueSaveSuccessfulClicked") || command.equals("backClicked")) {
             togglePrompts(false);
         }
     }
 
-    // GETTER:
-    public PetEnvironment getPetEnvironment() {
-        return petEnvironment;
+    // EFFECTS: helper for performAction; main menu specific
+    private void performActionMainMenu(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("mainMenuClicked")) {
+            generateMainMenuPrompt();
+        } else if (command.equals("confirmMainMenuClicked")) {
+            ui.returnToMainMenu();
+        }
     }
+
+    // EFFECTS: helper for performAction; save menu specific
+    private void performActionSaveMenu(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("saveClicked")) {
+            generateSavePrompt();
+        } else if (command.equals("confirmSaveClicked")) {
+            displaySaveSuccessful();
+        }
+    }
+
+    // EFFECTS: helper for performAction; shop menu specific
+    private void performActionShopMenu(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("shopClicked")) {
+            generateShop();
+        } else if (command.equals("shopItemBuyClicked")) {
+            buyItem(shopSelectedItemName, shopSelectedItemType);
+            createShopItemsPanel(20f);
+        }
+    }
+
+    // EFFECTS: helper for performAction; inventory menu specific
+    private void performActionInventoryMenu(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("inventoryClicked")) {
+            generateInventory();
+        } else if (command.equals("inventoryItemUseClicked")) {
+            giveItemToPet(inventorySelectedItemName, inventorySelectedItemType);
+            createInventoryItemsPanel(20f);
+        }
+    }
+
+    // EFFECTS: helper for performAction; pet stats menu specific
+    private void performActionPetStatsMenu(String command, JComponent source)
+            throws IOException, FontFormatException {
+        if (command.equals("petStatsClicked")) {
+            generatePetStats();
+        }
+    }
+
+    // GETTER:
+//    public PetEnvironment getPetEnvironment() {
+//        return petEnvironment;
+//    }
 }
