@@ -9,16 +9,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Unit tests for the EventLog class
- */
 public class EventLogTest {
 	private Event e1;
 	private Event e2;
 	private Event e3;
 	
 	@BeforeEach
-	public void loadEvents() {
+	public void runBefore() {
 		e1 = new Event("A1");
 		e2 = new Event("A2");
 		e3 = new Event("A3");
@@ -29,7 +26,7 @@ public class EventLogTest {
 	}
 	
 	@Test
-	public void testLogEvent() {	
+	public void logEventTest() {
 		List<Event> l = new ArrayList<Event>();
 		
 		EventLog el = EventLog.getInstance();
@@ -43,7 +40,7 @@ public class EventLogTest {
 	}
 
 	@Test
-	public void testClear() {
+	public void clearTest() {
 		EventLog el = EventLog.getInstance();
 		el.clear();
 		Iterator<Event> itr = el.iterator();
