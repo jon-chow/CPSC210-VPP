@@ -44,7 +44,7 @@ vastness of **OOP** in both a **structural** and **creative** manner.
 
 ## Credits
 
-<p style="font-size:18px;">Image Assets:</p>
+<p style="font-size:18px;">Art Assets:</p>
 <ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
     <li>Game Cat Icon (by Daniel Moreno):
 https://www.pinterest.ca/pin/344032859020619279/</li>
