@@ -4,6 +4,7 @@
 <ul style="font-size:18px;list-style-type:circle">
     <li><a href="#project-overview">Project Overview</a></li>
     <li><a href="#user-stories">User Stories</a></li>
+    <li><a href="#known-issues">Known Issues</a></li>
 </ul>
 
 ## Project Overview
@@ -31,4 +32,12 @@ vastness of **OOP** in both a **structural** and **creative** manner.
     <li>"...load my player, pet, and the shop's data from the previous save point"</li>
 
 [//]: # (    <li>"...earn in-game money"</li>)
+</ul>
+
+
+## Known Issues
+
+<p style="font-size:20px;">Display:</p>
+<ul style="font-size:16px;list-style-type:'❗';margin-top:-10px;">
+    <li>Problem with properly displaying UI on MacOS; possible compatibility issues with fonts</li>
 </ul>
