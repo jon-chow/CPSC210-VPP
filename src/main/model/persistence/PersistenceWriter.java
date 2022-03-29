@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import model.logger.Event;
+import model.logger.EventLog;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,6 +17,7 @@ import ui.app.PixelPetGame;
 // writes data from the game to Persistence.json
 public class PersistenceWriter {
     private static final int INDENT_FCT = 4;
+    private EventLog eventLog = EventLog.getInstance();
 
     private String content;
     private JSONObject oldSavesData;
@@ -49,6 +52,8 @@ public class PersistenceWriter {
         fileWriter.write(savesData.toString(INDENT_FCT));
         fileWriter.flush();
         fileWriter.close();
+
+        eventLog.logEvent(new Event("Saved game session ID" + game.getSessionId() + "."));
     }
 
 

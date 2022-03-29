@@ -1,10 +1,11 @@
 package model.persistence;
 
+import model.logger.Event;
+import model.logger.EventLog;
 import model.pets.Dog;
 import model.pets.ExampleAnimal;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import model.configurables.FileLocations;
 import org.apache.commons.io.FileUtils;
 import java.io.File;
 
@@ -25,6 +26,8 @@ import static model.persistence.ConverterJsonArrays.jsonToArrayListItem;
 
 // reads in data from the Persistence.json to the game
 public class PersistenceReader {
+    private EventLog eventLog = EventLog.getInstance();
+
     private String content;
     private JSONObject savesData;
     private JSONArray sessionsArray;
@@ -64,6 +67,8 @@ public class PersistenceReader {
         game.setShops(shops);
         game.setTicksPassed(ticksPassed);
         game.setSecondsPassed(secondsPassed);
+
+        eventLog.logEvent(new Event("Loaded game session ID" + sessionId + "."));
     }
 
     // EFFECTS: searches for a slot in the persistence data that contains the specified sessionId

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import model.goodsandservices.Item;
 import model.goodsandservices.Shop;
+import model.logger.Event;
+import model.logger.EventLog;
 import model.persistence.Writable;
 import model.pets.Pet;
 
@@ -13,12 +15,11 @@ import static model.persistence.ConverterJsonArrays.*;
 
 // represents a player
 public class Player implements Writable {
+    private EventLog eventLog = EventLog.getInstance();
+
     private int money;
-
     private String playerName;
-
     private ArrayList<Item> inventory;
-
     private ArrayList<Integer> inventoryQuantity;
 
     // EFFECTS: constructs a default player
@@ -52,6 +53,9 @@ public class Player implements Writable {
         } else {
             inventoryQuantity.set(itemIndex, inventoryQuantity.get(itemIndex) + quantity);
         }
+
+        eventLog.logEvent(new Event("Added " + itemName
+                + "(x" + quantity + ") to inventory."));
     }
 
     // MODIFIES: this
@@ -69,6 +73,9 @@ public class Player implements Writable {
             inventoryQuantity.remove(itemIndex);
             inventory.remove(itemIndex);
         }
+
+        eventLog.logEvent(new Event("Removed " + item.getName()
+                + "(x" + quantity + ") from inventory."));
     }
 
     // MODIFIES: this, Pet
@@ -80,6 +87,8 @@ public class Player implements Writable {
         int itemQuantityInInventory = inventoryQuantity.get(inventory.indexOf(item));
 
         if (itemQuantityInInventory >= quantity) {
+            eventLog.logEvent(new Event("Gave " + item.getName()
+                    + "(x" + quantity + ") to " + pet.getName() + "."));
             removeFromInventory(item, quantity);
 
             for (int i = 0; i < quantity; i++) {
@@ -104,6 +113,8 @@ public class Player implements Writable {
             money -= price;
             addToInventory(item, quantity);
             shop.changeItemQuantity(item, -quantity);
+            eventLog.logEvent(new Event("Bought " + item.getName()
+                    + "(x" + quantity + ") from " + shop.getShopName() + "."));
             return true;
         } else {
             return false;
