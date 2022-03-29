@@ -5,6 +5,7 @@
     <li><a href="#project-overview">Project Overview</a></li>
     <li><a href="#user-stories">User Stories</a></li>
     <li><a href="#known-issues">Known Issues</a></li>
+    <li><a href="#credits">Credits</a></li>
 </ul>
 
 ## Project Overview
@@ -34,10 +35,27 @@ vastness of **OOP** in both a **structural** and **creative** manner.
 [//]: # (    <li>"...earn in-game money"</li>)
 </ul>
 
-
 ## Known Issues
 
-<p style="font-size:20px;">Display:</p>
+<p style="font-size:18px;">Display:</p>
 <ul style="font-size:16px;list-style-type:'❗';margin-top:-10px;">
     <li>Problem with properly displaying UI on MacOS; possible compatibility issues with fonts</li>
+</ul>
+
+## Credits
+
+<p style="font-size:18px;">Image Assets:</p>
+<ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
+    <li>Game Cat Icon (by Daniel Moreno):
+https://www.pinterest.ca/pin/344032859020619279/</li>
+    <li>Environment Room Art (by pixeled--pink):
+https://www.deviantart.com/pixeled--pink/art/Isometric-Pixel-Room-Mint-Studio-829957249</li>
+    <li>Pixel Retro Game Font (by Daymarius):
+https://www.dafont.com/retro-gaming.font</li>
+</ul>
+
+<p style="font-size:18px;">Code:</p>
+<ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
+    <li>EventLog and Event class (UBC CPSC210):
+https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git</li>
 </ul>
