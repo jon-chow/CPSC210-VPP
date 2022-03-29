@@ -33,11 +33,23 @@ public class Player implements Writable {
     // REQUIRES: quantity > 0
     // EFFECTS: adds a quantity number of item to the inventory
     public void addToInventory(Item item, int quantity) {
-        if (!(inventory.contains(item))) {
+        String itemName = item.getName();
+        String itemType = item.getType();
+        boolean isInInventory = false;
+        int itemIndex = -1;
+
+        for (int i = 0; i < inventory.size(); i++) {
+            Item invItem = inventory.get(i);
+            if (invItem.getName().equals(itemName) && invItem.getType().equals(itemType)) {
+                isInInventory = true;
+                itemIndex = i;
+            }
+        }
+
+        if (!isInInventory) {
             inventory.add(item);
             inventoryQuantity.add(quantity);
         } else {
-            int itemIndex = inventory.indexOf(item);
             inventoryQuantity.set(itemIndex, inventoryQuantity.get(itemIndex) + quantity);
         }
     }
