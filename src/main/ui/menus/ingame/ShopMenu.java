@@ -62,7 +62,6 @@ public class ShopMenu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(shopItemInfoContainer);
         gameMenu.togglePrompts(true);
-        gameMenu.setShopMenuLoaded(true);
     }
 
     // EFFECTS: generates the items list component for shop menu
@@ -171,7 +170,7 @@ public class ShopMenu {
 
     // EFFECTS: updates the shop menu ui
     public static void updateShopMenu(GuiApp ui) {
-        shopPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
+        shopPlayerMoneyText.setText("Money: $" + ui.getGame().getPlayer().getMoney());
     }
 
     // EFFECTS: checks to see if buying the item is valid,

@@ -1,5 +1,6 @@
 package ui.menus.ingame;
 
+import model.Player;
 import model.configurables.FileLocations;
 import ui.app.GuiApp;
 import ui.app.PixelPetGame;
@@ -26,9 +27,7 @@ public class GameMenu extends Menu {
     private JTextArea mainMenuPromptText;
     private JPanel mainMenuButtonContainer;
 
-    private boolean isPetStatsMenuLoaded = false;
-    private boolean isShopMenuLoaded = false;
-    private boolean isInventoryMenuLoaded = false;
+    private boolean hasAssetsLoaded = false;
 
     // EFFECTS: constructs the main menu
     public GameMenu(GuiApp ui, JLayeredPane menu) throws IOException, FontFormatException {
@@ -39,7 +38,17 @@ public class GameMenu extends Menu {
     // EFFECTS: initializes assets to the game menu
     protected void initMenu() throws IOException, FontFormatException {
         ui.changeBackground("PixelPetBackground2.png");
+        preloadAssets();
         generateInterface();
+    }
+
+    // EFFECTS: preloads required ui assets
+    private void preloadAssets() throws IOException, FontFormatException {
+        generateInterface();
+        PetStatsMenu.generatePetStats(ui, menu, this, promptContainer, width, height);
+        InventoryMenu.generateInventory(ui, menu, this, promptContainer, width, height);
+        ShopMenu.generateShop(ui, menu, this, promptContainer, width, height);
+        hasAssetsLoaded = true;
     }
 
     // EFFECTS: generates the top bar, bottom bar, and game environment
@@ -162,15 +171,9 @@ public class GameMenu extends Menu {
     public void renderGraphics(PixelPetGame game) {
 //        petEnvironment.renderGraphics(game);
 
-        if (isPetStatsMenuLoaded) {
+        if (hasAssetsLoaded) {
             PetStatsMenu.updatePetStats(ui);
-        }
-
-        if (isShopMenuLoaded) {
             ShopMenu.updateShopMenu(ui);
-        }
-
-        if (isInventoryMenuLoaded) {
             InventoryMenu.updateInventoryMenu(ui);
         }
     }
@@ -243,17 +246,4 @@ public class GameMenu extends Menu {
 //    public PetEnvironment getPetEnvironment() {
 //        return petEnvironment;
 //    }
-
-    // SETTER:
-    public void setPetStatsMenuLoaded(boolean petStatsMenuLoaded) {
-        isPetStatsMenuLoaded = petStatsMenuLoaded;
-    }
-
-    public void setShopMenuLoaded(boolean shopMenuLoaded) {
-        isShopMenuLoaded = shopMenuLoaded;
-    }
-
-    public void setInventoryMenuLoaded(boolean inventoryMenuLoaded) {
-        isInventoryMenuLoaded = inventoryMenuLoaded;
-    }
 }

@@ -62,7 +62,6 @@ public class PetStatsMenu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(backButtonContainer);
         gameMenu.togglePrompts(true);
-        gameMenu.setPetStatsMenuLoaded(true);
     }
 
     // EFFECTS: generates the general component for pet stats menu

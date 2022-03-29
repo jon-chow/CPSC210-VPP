@@ -59,7 +59,6 @@ public class InventoryMenu {
         promptContainer.add(Box.createVerticalStrut(5));
         promptContainer.add(inventoryItemInfoContainer);
         gameMenu.togglePrompts(true);
-        gameMenu.setInventoryMenuLoaded(true);
     }
 
     // EFFECTS: generates the items list component for inventory menu
@@ -163,7 +162,7 @@ public class InventoryMenu {
 
     // EFFECTS: updates the shop menu ui
     public static void updateInventoryMenu(GuiApp ui) {
-        inventoryPlayerMoneyText.setText("Money: $" + ui.getPlayer().getMoney());
+        inventoryPlayerMoneyText.setText("Money: $" + ui.getGame().getPlayer().getMoney());
     }
 
     // EFFECTS: checks to see if giving the item is valid,
