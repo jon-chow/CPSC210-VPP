@@ -1,12 +1,18 @@
 package ui.configurables;
 
+import model.goodsandservices.Item;
 import ui.configurables.InterfaceAesthetics;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import static model.configurables.FileLocations.backupSpriteDir;
 
 // a class for building preset JComponents
 public class JComponentBuilder {
@@ -81,5 +87,21 @@ public class JComponentBuilder {
         textArea.setEditable(false);
 
         return textArea;
+    }
+
+    // EFFECTS: creates an icon for the item
+    public static ImageIcon createItemIcon(Item item, int width, int height) throws IOException {
+        BufferedImage iconBufferedImg = ImageIO.read(new File(backupSpriteDir));
+
+        try {
+            iconBufferedImg = ImageIO.read(new File(item.getSpritesDir()
+                    + (item.getName() + "_" + item.getType()).toLowerCase() + ".png"));
+        } catch (Exception e) {
+            // sprite was unable to load
+        }
+
+        Image iconImg = new ImageIcon(iconBufferedImg).getImage()
+                .getScaledInstance(width, height,  java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(iconImg);
     }
 }
