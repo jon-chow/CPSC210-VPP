@@ -1,3 +1,5 @@
-
 Game Icon (by Daniel Moreno): https://www.pinterest.ca/pin/344032859020619279/
 Room Art (by pixeled--pink): https://www.deviantart.com/pixeled--pink/art/Isometric-Pixel-Room-Mint-Studio-829957249
+
+
+EventLog and Event class: https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
