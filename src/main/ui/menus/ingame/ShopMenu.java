@@ -16,7 +16,6 @@ import java.util.Arrays;
 
 import static ui.configurables.InterfaceAesthetics.*;
 import static ui.configurables.JComponentBuilder.*;
-import static ui.configurables.JComponentBuilder.createJPanel;
 
 // represents the shop menu
 public class ShopMenu {

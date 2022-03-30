@@ -17,18 +17,18 @@ import ui.app.PixelPetGame;
 // writes data from the game to Persistence.json
 public class PersistenceWriter {
     private static final int INDENT_FCT = 4;
-    private EventLog eventLog = EventLog.getInstance();
+    private final EventLog eventLog = EventLog.getInstance();
 
-    private String content;
-    private JSONObject oldSavesData;
-    private JSONArray oldSessionsArray;
+    private final String content;
+    private final JSONObject oldSavesData;
+    private final JSONArray oldSessionsArray;
 
-    private FileWriter fileWriter;
-    private JSONObject playerObject;
-    private JSONObject petObject;
-    private JSONObject shopObject;
+    private final FileWriter fileWriter;
+    private final JSONObject playerObject;
+    private final JSONObject petObject;
+    private final JSONObject shopObject;
 
-    private PixelPetGame game;
+    private final PixelPetGame game;
 
     // EFFECTS: constructs a new persistence
     //          that saves game data to persistenceFile

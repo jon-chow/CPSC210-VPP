@@ -15,7 +15,7 @@ import static model.persistence.ConverterJsonArrays.*;
 
 // represents a player
 public class Player implements Writable {
-    private EventLog eventLog = EventLog.getInstance();
+    private final EventLog eventLog = EventLog.getInstance();
 
     private int money;
     private String playerName;

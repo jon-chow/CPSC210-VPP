@@ -14,13 +14,13 @@ public class Item implements Writable {
     private final FileLocations fileLoc = new FileLocations();
 
     private final String dataKey = "Item";
-    private final String itemsDir = fileLoc.getDataDir(dataKey);
-    private String spritesDir = fileLoc.getSpritesDir(dataKey);
-    private File itemsDataDir = new File(itemsDir);
+    private final String itemsDir = FileLocations.getDataDir(dataKey);
+    private String spritesDir = FileLocations.getSpritesDir(dataKey);
+    private final File itemsDataDir = new File(itemsDir);
 
     private JSONObject itemData;
-    private String name;
-    private String type;
+    private final String name;
+    private final String type;
 
     private int price = 0;
     private int happinessPoints = 0;

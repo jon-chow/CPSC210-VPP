@@ -56,7 +56,7 @@ public class SaveMenu {
     public static void displaySaveSuccessful(GuiApp ui, JLayeredPane menu, GameMenu gameMenu,
                                               JPanel promptContainer, int width, int height)
             throws IOException, FontFormatException {
-        new PersistenceWriter(gameMenu.persistenceFile, ui.getGame());
+        new PersistenceWriter(GameMenu.persistenceFile, ui.getGame());
 
         promptContainer.removeAll();
         createSaveSuccessfulText(menu, gameMenu, width, height);

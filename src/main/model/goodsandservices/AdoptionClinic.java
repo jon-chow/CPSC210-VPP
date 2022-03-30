@@ -35,7 +35,7 @@ public class AdoptionClinic {
     public ArrayList<String> fetchBreeds(String animalType) throws IOException {
         ArrayList<String> breeds = new ArrayList<>();
 
-        File breedsDataDir = new File(fileLoc.getDataDir(animalType));
+        File breedsDataDir = new File(FileLocations.getDataDir(animalType));
         String content = FileUtils.readFileToString(breedsDataDir, "utf-8");
         JSONObject breedsJson = new JSONObject(content);
         JSONArray breedsArray = breedsJson.getJSONArray("breeds");

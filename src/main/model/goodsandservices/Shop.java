@@ -18,15 +18,15 @@ public class Shop implements Writable {
     private final FileLocations fileLoc = new FileLocations();
     private final RandomGenerator rng = new RandomGenerator();
 
-    private String shopName;
+    private final String shopName;
 
     private ArrayList<Item> shopItems;
     private ArrayList<Integer> priceOfItems;
     private ArrayList<Integer> quantityInStock;
 
     private final String dataKey = "Item";
-    private final String itemsDir = fileLoc.getDataDir(dataKey);
-    private File itemsDataDir = new File(itemsDir);
+    private final String itemsDir = FileLocations.getDataDir(dataKey);
+    private final File itemsDataDir = new File(itemsDir);
 
     protected ArrayList<Item> allPossibleItems = new ArrayList<>();
 

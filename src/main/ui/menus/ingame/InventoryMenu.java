@@ -2,7 +2,6 @@ package ui.menus.ingame;
 
 import model.Player;
 import model.goodsandservices.Item;
-import model.goodsandservices.Shop;
 import model.pets.Pet;
 import ui.app.GuiApp;
 

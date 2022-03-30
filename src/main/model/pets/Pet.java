@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 import model.goodsandservices.Item;
 
-// import static model.persistence.ConverterJsonArrays.arrayListStringToJson;
 import static ui.app.PixelPetGame.*;
 
 // represents an abstract pet

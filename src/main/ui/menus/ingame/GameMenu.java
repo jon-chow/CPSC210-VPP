@@ -1,6 +1,5 @@
 package ui.menus.ingame;
 
-import model.Player;
 import model.configurables.FileLocations;
 import ui.app.GuiApp;
 import ui.app.PixelPetGame;

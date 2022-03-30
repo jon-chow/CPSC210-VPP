@@ -22,15 +22,14 @@ import model.goodsandservices.Shop;
 import model.goodsandservices.Item;
 
 import static model.persistence.ConverterJsonArrays.*;
-import static model.persistence.ConverterJsonArrays.jsonToArrayListItem;
 
 // reads in data from the Persistence.json to the game
 public class PersistenceReader {
-    private EventLog eventLog = EventLog.getInstance();
+    private final EventLog eventLog = EventLog.getInstance();
 
-    private String content;
-    private JSONObject savesData;
-    private JSONArray sessionsArray;
+    private final String content;
+    private final JSONObject savesData;
+    private final JSONArray sessionsArray;
 
     int id;
     String saveTime;

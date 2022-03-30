@@ -28,7 +28,7 @@ import static ui.configurables.InterfaceAesthetics.*;
 
 // class for handling game time and user input
 public class GuiApp extends JFrame {
-    private EventLog eventLog = EventLog.getInstance();
+    private final EventLog eventLog = EventLog.getInstance();
 
     private static final String gameTitle = "Pixel Pet";
 //    private final File audioFile = new File("data/");
