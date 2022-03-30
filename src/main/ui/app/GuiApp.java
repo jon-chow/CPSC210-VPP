@@ -1,14 +1,17 @@
 package ui.app;
 
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Scanner;
 
 import model.Player;
 import model.configurables.FileLocations;
 import model.exceptions.CannotFindSessionIdException;
+import model.logger.Event;
+import model.logger.EventLog;
 import model.pets.Pet;
 
 import ui.menus.ingame.*;
@@ -25,7 +28,7 @@ import static ui.configurables.InterfaceAesthetics.*;
 
 // class for handling game time and user input
 public class GuiApp extends JFrame {
-    public static final Scanner scanner = new Scanner(System.in);
+    private EventLog eventLog = EventLog.getInstance();
 
     private static final String gameTitle = "Pixel Pet";
 //    private final File audioFile = new File("data/");
@@ -48,6 +51,38 @@ public class GuiApp extends JFrame {
     private final int width;
     private final int height;
 
+    private final WindowListener windowListener = new WindowListener() {
+
+        @Override
+        public void windowOpened(WindowEvent e) {
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            logAllEvents();
+        }
+
+        @Override
+        public void windowClosed(WindowEvent e) {
+        }
+
+        @Override
+        public void windowIconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeiconified(WindowEvent e) {
+        }
+
+        @Override
+        public void windowActivated(WindowEvent e) {
+        }
+
+        @Override
+        public void windowDeactivated(WindowEvent e) {
+        }
+    };
+
     // EFFECTS: constructs a window app
     public GuiApp(int width, int height) throws IOException, InterruptedException,
             FontFormatException, CannotFindSessionIdException {
@@ -64,6 +99,7 @@ public class GuiApp extends JFrame {
         setResizable(false);
         setLayout(null);
         setVisible(true);
+        addWindowListener(windowListener);
 
         setUpRequiredInterfaces();
         startTimer();
@@ -149,6 +185,7 @@ public class GuiApp extends JFrame {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    logAllEvents();
                     exit(0);
                 }
             }
@@ -172,6 +209,15 @@ public class GuiApp extends JFrame {
 
         gameMenu.renderGraphics(game);
         getContentPane().repaint();
+    }
+
+    // TODO
+    // EFFECTS: prints out all the events that have occurred since the beginning
+    //          of the game to the console
+    private void logAllEvents() {
+        for (Event event : eventLog) {
+            System.out.println(event.toString() + "\n");
+        }
     }
 
     // GETTERS:

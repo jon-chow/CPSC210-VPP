@@ -76,7 +76,7 @@
                     15,
                     15,
                     10,
-                    10,
+                    6,
                     10
                 ],
                 "name": "Kira Kira Pets",
@@ -110,30 +110,103 @@
                     }
                 ]
             },
-            "ticksPassed": 10,
-            "secondsPassed": 1,
+            "ticksPassed": 701,
+            "secondsPassed": 8,
             "pet": {
-                "thirst": 95,
-                "happiness": 95,
+                "thirst": 94,
+                "happiness": 94,
                 "numWaste": 0,
                 "name": "ExampleAnimal",
-                "health": 95,
+                "health": 94,
                 "state": "IDLING",
                 "type": "ExampleAnimal",
                 "breed": "Aleph",
                 "age": 1,
-                "hunger": 95
+                "hunger": 94
             },
             "player": {
-                "money": 10100,
+                "money": 8720,
                 "name": "Player",
                 "inventory": {
-                    "quantities": [],
-                    "items": []
+                    "quantities": [4],
+                    "items": [{
+                        "name": "Chicken",
+                        "type": "Toy"
+                    }]
                 }
             }
         },
         "id": 1647816369,
-        "saveTime": "20-03-2022 15:48:55"
+        "saveTime": "29-03-2022 12:01:01"
+    },
+    {
+        "data": {
+            "shop": {
+                "quantities": [
+                    15,
+                    15,
+                    10,
+                    10,
+                    7
+                ],
+                "name": "Kira Kira Pets",
+                "prices": [
+                    380,
+                    230,
+                    100,
+                    80,
+                    80
+                ],
+                "items": [
+                    {
+                        "name": "Chicken",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Chicken",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Blob",
+                        "type": "Unknown"
+                    },
+                    {
+                        "name": "Ball of Yarn",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Tug O' Rope",
+                        "type": "Toy"
+                    }
+                ]
+            },
+            "ticksPassed": 640,
+            "secondsPassed": 6,
+            "pet": {
+                "thirst": 99,
+                "happiness": 99,
+                "numWaste": 0,
+                "name": "ExampleAnimal",
+                "health": 99,
+                "state": "PLAYING",
+                "type": "ExampleAnimal",
+                "breed": "Aleph",
+                "age": 0,
+                "hunger": 99
+            },
+            "player": {
+                "money": 880,
+                "name": "Player",
+                "inventory": {
+                    "quantities": [2],
+                    "items": [{
+                        "name": "Tug O' Rope",
+                        "type": "Toy"
+                    }]
+                }
+            }
+        },
+        "id": 1648602520,
+        "saveTime": "29-03-2022 18:08:51"
     }
 ]}

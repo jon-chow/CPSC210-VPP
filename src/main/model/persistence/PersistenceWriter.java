@@ -53,7 +53,7 @@ public class PersistenceWriter {
         fileWriter.flush();
         fileWriter.close();
 
-        eventLog.logEvent(new Event("Saved game session ID" + game.getSessionId() + "."));
+        eventLog.logEvent(new Event("Saved game session ID " + game.getSessionId() + "."));
     }
 
 

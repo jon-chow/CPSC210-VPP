@@ -68,7 +68,7 @@ public class PersistenceReader {
         game.setTicksPassed(ticksPassed);
         game.setSecondsPassed(secondsPassed);
 
-        eventLog.logEvent(new Event("Loaded game session ID" + sessionId + "."));
+        eventLog.logEvent(new Event("Loaded game session ID " + sessionId + "."));
     }
 
     // EFFECTS: searches for a slot in the persistence data that contains the specified sessionId

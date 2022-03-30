@@ -11,32 +11,32 @@
                 ],
                 "name": "Kira Kira Pets",
                 "prices": [
+                    80,
+                    180,
+                    30,
                     230,
-                    150,
-                    80,
-                    80,
-                    200
+                    80
                 ],
                 "items": [
-                    {
-                        "name": "Chicken",
-                        "type": "Food"
-                    },
-                    {
-                        "name": "Bone",
-                        "type": "Toy"
-                    },
-                    {
-                        "name": "Ball of Yarn",
-                        "type": "Toy"
-                    },
                     {
                         "name": "Tug O' Rope",
                         "type": "Toy"
                     },
                     {
-                        "name": "Squeaky Mouse",
-                        "type": "Toy"
+                        "name": "Chocolate",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Grapes",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Chicken",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Salmon Chunks",
+                        "type": "Food"
                     }
                 ]
             },
@@ -76,7 +76,7 @@
             }
         },
         "id": 10,
-        "saveTime": "21-03-2022 19:37:08"
+        "saveTime": "29-03-2022 18:06:09"
     },
     {
         "data": {
@@ -92,9 +92,9 @@
                 "prices": [
                     80,
                     100,
-                    150,
-                    200,
-                    380
+                    380,
+                    80,
+                    180
                 ],
                 "items": [
                     {
@@ -106,16 +106,16 @@
                         "type": "Unknown"
                     },
                     {
-                        "name": "Bone",
-                        "type": "Toy"
-                    },
-                    {
-                        "name": "Squeaky Mouse",
-                        "type": "Toy"
-                    },
-                    {
                         "name": "Chicken",
                         "type": "Toy"
+                    },
+                    {
+                        "name": "Salmon Chunks",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Chocolate",
+                        "type": "Food"
                     }
                 ]
             },
@@ -146,6 +146,6 @@
             }
         },
         "id": 9,
-        "saveTime": "21-03-2022 19:37:08"
+        "saveTime": "29-03-2022 18:06:09"
     }
 ]}

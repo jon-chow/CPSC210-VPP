@@ -55,7 +55,7 @@ public class Player implements Writable {
         }
 
         eventLog.logEvent(new Event("Added " + itemName
-                + "(x" + quantity + ") to inventory."));
+                + " (x" + quantity + ") to inventory."));
     }
 
     // MODIFIES: this
@@ -75,7 +75,7 @@ public class Player implements Writable {
         }
 
         eventLog.logEvent(new Event("Removed " + item.getName()
-                + "(x" + quantity + ") from inventory."));
+                + " (x" + quantity + ") from inventory."));
     }
 
     // MODIFIES: this, Pet
@@ -88,7 +88,7 @@ public class Player implements Writable {
 
         if (itemQuantityInInventory >= quantity) {
             eventLog.logEvent(new Event("Gave " + item.getName()
-                    + "(x" + quantity + ") to " + pet.getName() + "."));
+                    + " (x" + quantity + ") to " + pet.getName() + "."));
             removeFromInventory(item, quantity);
 
             for (int i = 0; i < quantity; i++) {
@@ -111,10 +111,10 @@ public class Player implements Writable {
 
         if (money >= price && shop.getItemQuantity(item) >= quantity) {
             money -= price;
+            eventLog.logEvent(new Event("Bought " + item.getName()
+                    + " (x" + quantity + ") from " + shop.getShopName() + "."));
             addToInventory(item, quantity);
             shop.changeItemQuantity(item, -quantity);
-            eventLog.logEvent(new Event("Bought " + item.getName()
-                    + "(x" + quantity + ") from " + shop.getShopName() + "."));
             return true;
         } else {
             return false;
