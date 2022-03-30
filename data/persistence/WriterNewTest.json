@@ -10,32 +10,32 @@
             ],
             "name": "Kira Kira Pets",
             "prices": [
-                200,
+                30,
                 80,
                 100,
-                80,
-                180
+                180,
+                150
             ],
             "items": [
                 {
-                    "name": "Squeaky Mouse",
-                    "type": "Toy"
+                    "name": "Grapes",
+                    "type": "Food"
                 },
                 {
-                    "name": "Ball of Yarn",
-                    "type": "Toy"
+                    "name": "Salmon Chunks",
+                    "type": "Food"
                 },
                 {
                     "name": "Blob",
                     "type": "Unknown"
                 },
                 {
-                    "name": "Tug O' Rope",
-                    "type": "Toy"
-                },
-                {
                     "name": "Chocolate",
                     "type": "Food"
+                },
+                {
+                    "name": "Bone",
+                    "type": "Toy"
                 }
             ]
         },
@@ -66,5 +66,5 @@
         }
     },
     "id": 0,
-    "saveTime": "29-03-2022 18:06:09"
+    "saveTime": "30-03-2022 14:53:19"
 }]}

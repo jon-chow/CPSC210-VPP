@@ -4,7 +4,8 @@
 <ul style="font-size:18px;list-style-type:circle">
     <li><a href="#project-overview">Project Overview</a></li>
     <li><a href="#user-stories">User Stories</a></li>
-    <li><a href="#phase-4:-task-2">Phase 4: Task 2</a></li>
+    <li><a href="#phase-4-task-2">Phase 4: Task 2</a></li>
+    <li><a href="#phase-4-task-3">Phase 4: Task 3</a></li>
     <li><a href="#known-issues">Known Issues</a></li>
     <li><a href="#credits">Credits</a></li>
 </ul>
@@ -58,7 +59,13 @@ Removed Bone (x1) from inventory.
 
 Tue Mar 29 18:14:46 PDT 2022
 Saved game session ID 1647816369.
-````
+```
+
+## Phase 4: Task 3
+
+<p style="font-size:18px;">UML Class Diagram:</p>
+<img src="data/Project4Task3Diagram.png">
+A rather complex diagram (thankfully no methods or fields were required)
 
 ## Known Issues
 
@@ -81,6 +88,6 @@ https://www.dafont.com/retro-gaming.font</li>
 
 <p style="font-size:18px;">Code:</p>
 <ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
-    <li>EventLog and Event class (UBC CPSC210): <br>
+    <li>EventLog and Event Class + Tests (UBC CPSC210): <br>
 https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git</li>
 </ul>
