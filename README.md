@@ -6,9 +6,10 @@
     <li><a href="#user-stories">User Stories</a></li>
     <li><a href="#phase-4-task-2">Phase 4: Task 2</a></li>
     <li><a href="#phase-4-task-3">Phase 4: Task 3</a></li>
-    <li><a href="#known-issues">Known Issues</a></li>
     <li><a href="#credits">Credits</a></li>
 </ul>
+
+[//]: # (    <li><a href="#known-issues">Known Issues</a></li>)
 
 ## Project Overview
 
@@ -64,15 +65,28 @@ Saved game session ID 1647816369.
 ## Phase 4: Task 3
 
 <p style="font-size:18px;">UML Class Diagram:</p>
-<img src="data/Project4Task3Diagram.png">
-A rather complex diagram (thankfully no methods or fields were required)
+<img src="data/Project4Task3Diagram.png" alt="A rather complex diagram (thankfully no methods or fields were required)">
 
-## Known Issues
-
-<p style="font-size:18px;">Display:</p>
-<ul style="font-size:16px;list-style-type:'❗';margin-top:-10px;">
-    <li>Problem with properly displaying UI on MacOS; possible compatibility issues with fonts</li>
+<p style="font-size:18px;">Refactoring Reflections:</p>
+There are still many things I would still like to do with this project. To name a few, I would like to have done further
+refactoring to my UI menus, particularly in:
+<ul style="margin-top:0;">
+    <li>cleaning up the SaveMenu, ShopMenu, PetStatsMenu, and InventoryMenu <br>
+so that there is better integration within the GameMenu</li>
+    <li>centralizing the LoadMenu and SaveMenu in a PersistenceMenu</li>
+    <li>adding an abstract method in Menu class for generating/creating JComponents</li>
 </ul>
+
+[//]: # (## Known Issues)
+
+[//]: # ()
+[//]: # (<p style="font-size:18px;">Display:</p>)
+
+[//]: # (<ul style="font-size:16px;list-style-type:'❗';margin-top:-10px;">)
+
+[//]: # (    <li>Problem with properly displaying UI on MacOS; possible compatibility issues with fonts</li>)
+
+[//]: # (</ul>)
 
 ## Credits
 
