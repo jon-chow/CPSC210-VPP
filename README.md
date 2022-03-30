@@ -4,6 +4,7 @@
 <ul style="font-size:18px;list-style-type:circle">
     <li><a href="#project-overview">Project Overview</a></li>
     <li><a href="#user-stories">User Stories</a></li>
+    <li><a href="#phase-4:-task-2">Phase 4: Task 2</a></li>
     <li><a href="#known-issues">Known Issues</a></li>
     <li><a href="#credits">Credits</a></li>
 </ul>
@@ -35,6 +36,30 @@ vastness of **OOP** in both a **structural** and **creative** manner.
 [//]: # (    <li>"...earn in-game money"</li>)
 </ul>
 
+## Phase 4: Task 2
+
+<p style="font-size:18px;">Sample Logging:</p>
+
+```
+Tue Mar 29 18:14:34 PDT 2022
+Loaded game session ID 1647816369.
+
+Tue Mar 29 18:14:39 PDT 2022
+Bought Bone (x1) from Kira Kira Pets.
+
+Tue Mar 29 18:14:39 PDT 2022
+Added Bone (x1) to inventory.
+
+Tue Mar 29 18:14:44 PDT 2022
+Gave Bone (x1) to ExampleAnimal.
+
+Tue Mar 29 18:14:44 PDT 2022
+Removed Bone (x1) from inventory.
+
+Tue Mar 29 18:14:46 PDT 2022
+Saved game session ID 1647816369.
+````
+
 ## Known Issues
 
 <p style="font-size:18px;">Display:</p>
@@ -46,16 +71,16 @@ vastness of **OOP** in both a **structural** and **creative** manner.
 
 <p style="font-size:18px;">Art Assets:</p>
 <ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
-    <li>Game Cat Icon (by Daniel Moreno):
+    <li>Game Cat Icon (by Daniel Moreno): <br>
 https://www.pinterest.ca/pin/344032859020619279/</li>
-    <li>Environment Room Art (by pixeled--pink):
+    <li>Environment Room Art (by pixeled--pink): <br>
 https://www.deviantart.com/pixeled--pink/art/Isometric-Pixel-Room-Mint-Studio-829957249</li>
-    <li>Pixel Retro Game Font (by Daymarius):
+    <li>Pixel Retro Game Font (by Daymarius): <br>
 https://www.dafont.com/retro-gaming.font</li>
 </ul>
 
 <p style="font-size:18px;">Code:</p>
 <ul style="font-size:16px;list-style-type:'► ';margin-top:-10px;">
-    <li>EventLog and Event class (UBC CPSC210):
+    <li>EventLog and Event class (UBC CPSC210): <br>
 https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git</li>
 </ul>

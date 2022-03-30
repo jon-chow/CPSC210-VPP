@@ -77,7 +77,7 @@
                     15,
                     10,
                     6,
-                    10
+                    8
                 ],
                 "name": "Kira Kira Pets",
                 "prices": [
@@ -110,34 +110,43 @@
                     }
                 ]
             },
-            "ticksPassed": 701,
-            "secondsPassed": 8,
+            "ticksPassed": 1420,
+            "secondsPassed": 15,
             "pet": {
-                "thirst": 94,
-                "happiness": 94,
+                "thirst": 92,
+                "happiness": 99,
                 "numWaste": 0,
                 "name": "ExampleAnimal",
-                "health": 94,
-                "state": "IDLING",
+                "health": 97,
+                "state": "PLAYING",
                 "type": "ExampleAnimal",
                 "breed": "Aleph",
                 "age": 1,
-                "hunger": 94
+                "hunger": 92
             },
             "player": {
-                "money": 8720,
+                "money": 8560,
                 "name": "Player",
                 "inventory": {
-                    "quantities": [4],
-                    "items": [{
-                        "name": "Chicken",
-                        "type": "Toy"
-                    }]
+                    "quantities": [
+                        4,
+                        1
+                    ],
+                    "items": [
+                        {
+                            "name": "Chicken",
+                            "type": "Toy"
+                        },
+                        {
+                            "name": "Bone",
+                            "type": "Toy"
+                        }
+                    ]
                 }
             }
         },
         "id": 1647816369,
-        "saveTime": "29-03-2022 12:01:01"
+        "saveTime": "29-03-2022 18:14:46"
     },
     {
         "data": {
