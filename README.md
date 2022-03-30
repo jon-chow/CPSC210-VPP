@@ -65,7 +65,7 @@ Saved game session ID 1647816369.
 ## Phase 4: Task 3
 
 <p style="font-size:18px;">UML Class Diagram:</p>
-<img src="data/Project4Task3Diagram.png" alt="A rather complex diagram (thankfully no methods or fields were required)">
+<img src="UML_Design_Diagram.png" alt="A rather complex diagram (thankfully no methods or fields were required)">
 
 <p style="font-size:18px;">Refactoring Reflections:</p>
 There are still many things I would still like to do with this project. To name a few, I would like to have done further
