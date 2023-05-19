@@ -173,9 +173,28 @@ public class GuiApp extends JFrame {
                 tick();
 
                 if (secondsPassed < game.getSecondsPassed()) {
-                    //
+
                 }
                 secondsPassed = game.getSecondsPassed();
+
+                PetEnvironment petEnvironment = gameMenu.getPetEnvironment();
+                if (petEnvironment != null) {
+                    int xVelocity = petEnvironment.getPetXVelocity() * Math.random() > 0.5 ? 1 : -1;
+                    int yVelocity = petEnvironment.getPetYVelocity() * Math.random() > 0.5 ? 1 : -1;
+
+                    // Move pet +- velocity pixel in x and y directions
+                    int x = petEnvironment.getPetX() + xVelocity;
+                    int y = petEnvironment.getPetY() + yVelocity;
+
+                    // If pet is out of bounds, set pet to be at the edge of the screen
+                    Polygon boundary = petEnvironment.getBoundary();
+                    if (!boundary.contains(x, y)) {
+                        x = Math.min(Math.max(x, 0), width - 5);
+                        y = Math.min(Math.max(y, 0), height - 5);
+                    }
+
+                    petEnvironment.translatePet(x, y);
+                }
 
                 if (game.isEnded() && game.getPet().checkIsDead()) {
                     System.out.println("Oh no! " + pet.getName() + " has died!");
@@ -211,7 +230,6 @@ public class GuiApp extends JFrame {
         getContentPane().repaint();
     }
 
-    // TODO
     // EFFECTS: prints out all the events that have occurred since the beginning
     //          of the game to the console
     private void logAllEvents() {

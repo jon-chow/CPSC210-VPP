@@ -242,7 +242,7 @@ public class GameMenu extends Menu {
     }
 
     // GETTER:
-//    public PetEnvironment getPetEnvironment() {
-//        return petEnvironment;
-//    }
+   public PetEnvironment getPetEnvironment() {
+       return petEnvironment;
+   }
 }

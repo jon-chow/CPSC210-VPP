@@ -217,5 +217,75 @@
         },
         "id": 1648602520,
         "saveTime": "29-03-2022 18:08:51"
+    },
+    {
+        "data": {
+            "shop": {
+                "quantities": [
+                    9,
+                    15,
+                    10,
+                    10,
+                    10
+                ],
+                "name": "Kira Kira Pets",
+                "prices": [
+                    230,
+                    80,
+                    180,
+                    380,
+                    200
+                ],
+                "items": [
+                    {
+                        "name": "Chicken",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Tug O' Rope",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Chocolate",
+                        "type": "Food"
+                    },
+                    {
+                        "name": "Chicken",
+                        "type": "Toy"
+                    },
+                    {
+                        "name": "Squeaky Mouse",
+                        "type": "Toy"
+                    }
+                ]
+            },
+            "ticksPassed": 3255,
+            "secondsPassed": 32,
+            "pet": {
+                "thirst": 94,
+                "happiness": 94,
+                "numWaste": 0,
+                "name": "Dog",
+                "health": 94,
+                "state": "IDLING",
+                "type": "Dog",
+                "breed": "Shiba Inu",
+                "age": 0,
+                "hunger": 94
+            },
+            "player": {
+                "money": 260,
+                "name": "Apple",
+                "inventory": {
+                    "quantities": [6],
+                    "items": [{
+                        "name": "Chicken",
+                        "type": "Food"
+                    }]
+                }
+            }
+        },
+        "id": 1684470469,
+        "saveTime": "18-05-2023 21:28:41"
     }
 ]}

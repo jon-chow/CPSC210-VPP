@@ -6,6 +6,7 @@
     <li><a href="#user-stories">User Stories</a></li>
     <li><a href="#phase-4-task-2">Phase 4: Task 2</a></li>
     <li><a href="#phase-4-task-3">Phase 4: Task 3</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#credits">Credits</a></li>
 </ul>
 
@@ -76,6 +77,24 @@ so that there is better integration within the GameMenu</li>
     <li>centralizing the LoadMenu and SaveMenu in a PersistenceMenu</li>
     <li>adding an abstract method in Menu class for generating/creating JComponents</li>
 </ul>
+
+## Screenshots
+
+<p style="font-size:18px;">Main Menu:</p>
+<img src="screenshots/main.png" alt="Main Menu">
+
+<p style="font-size:18px;">In-Game:</p>
+<img src="screenshots/game.png" alt="In-Game">
+
+<p style="font-size:18px;">Store Menu:</p>
+<img src="screenshots/store.png" alt="Store Menu">
+
+<p style="font-size:18px;">Inventory Menu:</p>
+<img src="screenshots/inventory.png" alt="Inventory Menu">
+
+<p style="font-size:18px;">Pet Stats Menu:</p>
+<img src="screenshots/petstats.png" alt="Pet Stats Menu">
+
 
 [//]: # (## Known Issues)
 
